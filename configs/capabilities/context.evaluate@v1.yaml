@@ -1,0 +1,70 @@
+# =============================================================================
+# Context Effectiveness Evaluation Capability
+# =============================================================================
+# Analyzes traces to score how effective context items were.
+# Compares assembled items vs plan citations and trace outcomes.
+
+capability_name: context.evaluate@v1
+description: |
+  Evaluate context effectiveness by analyzing recent decision traces.
+  Compares context_packet.items against plan.context_refs_used to compute
+  citation rates, and correlates items with trace outcomes (success/partial/fail).
+  Outputs per-item effectiveness scores and per-agent summary statistics.
+
+input_schema:
+  type: object
+  required: [agent_profile_ids]
+  properties:
+    agent_profile_ids:
+      type: array
+      items:
+        type: string
+      description: Agent profiles to evaluate (empty = all external agents)
+    lookback_hours:
+      type: integer
+      default: 24
+      description: Hours of traces to analyze
+    min_traces:
+      type: integer
+      default: 5
+      description: Minimum traces required for meaningful evaluation
+
+output_schema:
+  type: object
+  properties:
+    evaluations:
+      type: array
+      items:
+        type: object
+        properties:
+          agent_profile_id:
+            type: string
+          traces_analyzed:
+            type: integer
+          citation_rate:
+            type: number
+            description: Fraction of assembled items that were cited in plans
+          outcome_distribution:
+            type: object
+            description: Count of success/partial/fail outcomes
+          item_scores:
+            type: array
+            items:
+              type: object
+              properties:
+                ref_id:
+                  type: string
+                citation_count:
+                  type: integer
+                total_appearances:
+                  type: integer
+                success_correlation:
+                  type: number
+          staircase_level:
+            type: integer
+          level_eligible_for_promotion:
+            type: boolean
+
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 30000

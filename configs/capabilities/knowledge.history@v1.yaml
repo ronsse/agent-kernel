@@ -1,0 +1,39 @@
+# Context graph entity history capability
+capability_name: knowledge.history@v1
+description: Get the event clock / trajectory history for a specific entity
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.builtin.knowledge
+  function: knowledge_entity_history
+
+input_schema:
+  type: object
+  properties:
+    entity_node_id:
+      type: string
+      description: Node ID of the entity to get history for
+  required: [entity_node_id]
+
+output_schema:
+  type: object
+  properties:
+    entity_node_id:
+      type: string
+    trajectory_count:
+      type: integer
+    trajectories:
+      type: array
+      items:
+        type: object
+
+side_effect: none
+risk_level: low
+timeout_ms: 5000
+
+tags:
+  - knowledge
+  - context-graph
+  - history
+  - read-only

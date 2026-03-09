@@ -1,0 +1,64 @@
+---
+title: Memory to Retrieval Pipeline
+---
+flowchart LR
+    subgraph SOURCES["Data Sources"]
+        JIRA["Jira / Confluence"]
+        GIT["Git Documentation"]
+        TRACES["Agent Traces"]
+        TABMETA["Table Metadata"]
+        MANUAL["Manual / API Input"]
+    end
+
+    subgraph STORES["Memory Stores"]
+        DOC["Document Store<br/>(FTS)"]
+        VEC["Vector Store<br/>(Embeddings)"]
+        GRAPH["Context Graph<br/>(Nodes + Edges)"]
+        EXP["Experience Store<br/>(Cases + Lessons)"]
+    end
+
+    subgraph ASSEMBLY["Context Assembly"]
+        KW["Keyword Search"]
+        SEM["Semantic Search"]
+        GQ["Graph Query<br/>+ Freshness Scoring"]
+        EQ["Experience Retrieval"]
+        RANK["Deduplicate<br/>Rank<br/>Budget Trim"]
+    end
+
+    PKT["ContextPacket"]
+    BT["Braintrust<br/>(Prompts + Eval + Review)"]
+
+    JIRA --> DOC
+    JIRA --> VEC
+    GIT --> DOC
+    GIT --> VEC
+    TRACES --> GRAPH
+    TRACES --> EXP
+    TABMETA --> GRAPH
+    MANUAL --> GRAPH
+
+    BT -.->|"eval signals"| EXP
+    BT -.->|"prompt mgmt"| RANK
+
+    DOC --> KW
+    VEC --> SEM
+    GRAPH --> GQ
+    EXP --> EQ
+
+    KW --> RANK
+    SEM --> RANK
+    GQ --> RANK
+    EQ --> RANK
+    RANK --> PKT
+
+    class JIRA,GIT,TRACES,TABMETA,MANUAL source
+    class DOC,VEC,GRAPH,EXP memory
+    class KW,SEM,GQ,EQ,RANK context
+    class PKT agent
+    class BT external
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef external fill:#fef3c7,stroke:#d97706,color:#451a03

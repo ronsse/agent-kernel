@@ -1,0 +1,6 @@
+library_id: skills
+mappings:
+  skills.search@v1:
+    import: "agent_kernel.tools.library.skills:search_skills"
+  skills.load@v1:
+    import: "agent_kernel.tools.library.skills:load_skill"

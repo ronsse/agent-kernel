@@ -1,0 +1,57 @@
+# =============================================================================
+# Capability: notes.list@v1
+# =============================================================================
+# List notes with optional filters.
+
+capability_name: notes.list@v1
+description: List notes with optional project and folder filters
+
+input_schema:
+  type: object
+  properties:
+    project_id:
+      type: string
+      description: Filter by project
+    folder:
+      type: string
+      description: Filter by folder
+    limit:
+      type: integer
+      default: 50
+      maximum: 100
+      description: Maximum notes to return
+    offset:
+      type: integer
+      default: 0
+      description: Pagination offset
+
+output_schema:
+  type: object
+  required:
+    - notes
+    - total_count
+  properties:
+    notes:
+      type: array
+      items:
+        type: object
+      description: List of notes
+    total_count:
+      type: integer
+      description: Total number of matching notes
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 10000
+rate_limit:
+  max_calls: 100
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

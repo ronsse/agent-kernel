@@ -1,0 +1,39 @@
+library_id: code_tools
+mappings:
+  # --- Git Operations ---
+  git.status@v1:
+    import: "agent_kernel.tools.library.git_ops:git_status"
+  git.diff@v1:
+    import: "agent_kernel.tools.library.git_ops:git_diff"
+  git.log@v1:
+    import: "agent_kernel.tools.library.git_ops:git_log"
+  git.branches@v1:
+    import: "agent_kernel.tools.library.git_ops:git_branches"
+  git.commit@v1:
+    import: "agent_kernel.tools.library.git_ops:git_commit"
+  git.branch.create@v1:
+    import: "agent_kernel.tools.library.git_ops:git_create_branch"
+  git.push@v1:
+    import: "agent_kernel.tools.library.git_ops:git_push"
+
+  # --- Code Quality ---
+  code.lint@v1:
+    import: "agent_kernel.tools.library.code_quality:run_linter"
+  code.typecheck@v1:
+    import: "agent_kernel.tools.library.code_quality:run_typecheck"
+  code.test@v1:
+    import: "agent_kernel.tools.library.code_quality:run_tests"
+  code.format@v1:
+    import: "agent_kernel.tools.library.code_quality:run_formatter"
+
+  # --- GitHub Operations ---
+  github.pr.list@v1:
+    import: "agent_kernel.tools.library.github_ops:gh_pr_list"
+  github.pr.create@v1:
+    import: "agent_kernel.tools.library.github_ops:gh_pr_create"
+
+  # --- Dependency Auditing ---
+  deps.audit.python@v1:
+    import: "agent_kernel.tools.library.dep_audit:audit_python_deps"
+  deps.audit.node@v1:
+    import: "agent_kernel.tools.library.dep_audit:audit_node_deps"

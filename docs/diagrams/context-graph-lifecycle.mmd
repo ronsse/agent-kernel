@@ -1,0 +1,37 @@
+---
+title: Agent Run Lifecycle — How Context Compounds
+---
+sequenceDiagram
+    participant W as Workflow Trigger
+    participant CA as Context Assembler
+    participant GS as Context Graph
+    participant E as Agent Engine
+    participant X as Executor
+    participant TB as Tool Broker
+    participant TS as Trace Store
+    participant TD as Trace Decomposer
+
+    W->>CA: Intent + AgentProfile
+    CA->>GS: Query knowledge nodes (Layer 5)
+    GS-->>CA: Relevant concepts, insights, patterns
+    CA->>GS: Query similar trajectories (Layer 6)
+    GS-->>CA: Past decisions with outcomes
+    CA-->>CA: Assemble ContextPacket (9 layers)
+
+    CA->>E: ContextPacket
+    E-->>E: Propose Plan (with citations)
+    E->>X: Structured Plan
+
+    X->>X: Validate schema + policy
+    X->>TB: Execute actions
+    TB-->>X: ToolCallRecords
+
+    X->>TS: Write DecisionTrace
+
+    TS->>TD: on_trace_completed hook
+    TD->>GS: Create TRAJECTORY node
+    TD->>GS: Create DECISION_EVENT nodes
+    TD->>GS: Update CO_OCCURS_WITH edges
+    TD-->>TS: DecompositionResult
+
+    Note over GS: Graph grows with every run.<br/>Next query retrieves<br/>this run's knowledge.

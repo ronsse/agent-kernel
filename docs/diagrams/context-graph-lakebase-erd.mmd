@@ -1,0 +1,26 @@
+---
+title: Lakebase PostgreSQL Table Schema
+---
+erDiagram
+    NODES {
+        text node_id PK "ULID primary key"
+        text node_type "NodeType enum value"
+        jsonb properties "Typed properties (GIN indexed)"
+        timestamptz created_at "UTC creation time"
+        timestamptz updated_at "UTC last update"
+    }
+
+    EDGES {
+        text edge_id PK "ULID primary key"
+        text source_id FK "References nodes.node_id"
+        text target_id FK "References nodes.node_id"
+        text edge_type "EdgeType enum value"
+        jsonb properties "Edge metadata (GIN indexed)"
+        real confidence "0.0-1.0 for auto-extracted"
+        timestamptz valid_from "Temporal validity start"
+        timestamptz valid_to "Temporal validity end"
+        timestamptz created_at "UTC creation time"
+    }
+
+    NODES ||--o{ EDGES : "source_id"
+    NODES ||--o{ EDGES : "target_id"

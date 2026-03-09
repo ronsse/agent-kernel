@@ -1,0 +1,32 @@
+capability_name: git.push@v1
+description: Push commits to a remote repository
+adapter_type: local
+side_effect_level: external
+requires_approval_default: false
+timeout_ms: 60000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    remote:
+      type: string
+      description: Remote name (default 'origin')
+    branch:
+      type: string
+      description: Branch to push
+    set_upstream:
+      type: boolean
+      description: Set upstream tracking for the branch
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    remote:
+      type: string
+    branch:
+      type: string

@@ -1,0 +1,70 @@
+# =============================================================================
+# Capability: tasks.get@v1
+# =============================================================================
+# Get a specific task by ID.
+
+capability_name: tasks.get@v1
+description: Get a specific task by its unique identifier
+
+input_schema:
+  type: object
+  required:
+    - task_id
+  properties:
+    task_id:
+      type: string
+      description: The unique task identifier
+
+output_schema:
+  type: object
+  properties:
+    task:
+      type: object
+      properties:
+        task_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+        priority:
+          type: string
+        due_date:
+          type: string
+          format: date
+        project_id:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        completed_at:
+          type: string
+          format: date-time
+    error:
+      type: string
+      description: Error message if task not found
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 100
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

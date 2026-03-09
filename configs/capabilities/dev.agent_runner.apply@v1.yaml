@@ -1,0 +1,114 @@
+capability_name: dev.agent_runner.apply@v1
+name: Run Agent Runner (Apply)
+description: >
+  Run an external coding agent runner (e.g. Cursor CLI) in write/apply mode
+  (local filesystem changes allowed) and return structured output for tracing.
+adapter_type: local
+side_effect_level: local
+requires_approval_default: true
+
+timeout_ms: 600000
+
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    runner_id:
+      type: string
+      description: Runner identifier (e.g. "cursor").
+      examples: ["cursor"]
+
+    workspace_path:
+      type: string
+      description: Working directory for the runner (repo root).
+
+    prompt:
+      type: string
+      description: Natural-language instruction for the runner.
+
+    mode:
+      type: string
+      description: Optional agent mode hint (runner-specific). For Cursor, implemented via slash commands.
+      enum: ["default", "ask", "plan"]
+      default: "default"
+
+    model:
+      type: string
+      description: Optional model selector (runner-specific). For Cursor, passed via /model <name>.
+
+    output_format:
+      type: string
+      description: Output format requested from the runner, if supported.
+      enum: ["text", "json", "stream-json"]
+      default: "stream-json"
+
+    resume_thread_id:
+      type: string
+      description: Optional thread/session identifier to resume prior context.
+
+    timeout_ms:
+      type: integer
+      description: Hard timeout for the runner process.
+      minimum: 1000
+      default: 600000
+
+    metadata:
+      type: object
+      description: Optional opaque metadata for correlation (task_id, plan_id, etc).
+      additionalProperties: true
+
+  required: ["runner_id", "workspace_path", "prompt"]
+
+output_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    runner_id:
+      type: string
+    status:
+      type: string
+      enum: ["success", "error", "timeout"]
+    exit_code:
+      type: integer
+    duration_ms:
+      type: integer
+
+    output_format:
+      type: string
+      enum: ["text", "json", "stream-json"]
+
+    result_text:
+      type: string
+      description: Final assistant result text (best-effort).
+    thread_id:
+      type: string
+      description: Runner thread/session identifier if surfaced.
+
+    model:
+      type: string
+      description: Runner-reported model, if surfaced.
+    tool_summary:
+      type: object
+      additionalProperties: true
+      description: Best-effort summary (files_read, files_written, tool_calls, etc).
+
+    events:
+      type: array
+      description: Parsed event stream if output_format supports it. Truncated by implementation.
+      items:
+        type: object
+        additionalProperties: true
+
+    logs:
+      type: object
+      additionalProperties: false
+      properties:
+        stdout_tail:
+          type: string
+        stderr_tail:
+          type: string
+        truncated:
+          type: boolean
+      required: ["stdout_tail", "stderr_tail", "truncated"]
+
+  required: ["runner_id", "status", "exit_code", "duration_ms", "output_format", "logs"]

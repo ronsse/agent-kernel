@@ -1,0 +1,48 @@
+---
+title: Lakebase Deployment Phases
+---
+stateDiagram-v2
+    [*] --> Phase1
+
+    state "Phase 1: Schema Setup" as Phase1 {
+        state "DDL on Lakebase PostgreSQL" as S1_DDL
+        state "GIN indexes + triggers" as S1_Idx
+        state "Unity Catalog registration" as S1_UC
+        S1_DDL --> S1_Idx
+        S1_Idx --> S1_UC
+    }
+
+    state "Phase 2: Workflow Validation" as Phase2 {
+        state "MarTek POC workflows" as S2_MarTek
+        state "E2E trace capture + retrieval" as S2_E2E
+        state "Latency + correctness checks" as S2_Val
+        S2_MarTek --> S2_E2E
+        S2_E2E --> S2_Val
+    }
+
+    state "Phase 3: Production Hardening" as Phase3 {
+        state "Connection pooling tuned" as S3_Pool
+        state "Retention pipeline validated" as S3_Ret
+        state "Sync Tables → Delta Lake" as S3_Sync
+        S3_Pool --> S3_Ret
+        S3_Ret --> S3_Sync
+    }
+
+    Phase1 --> Phase2 : Schema + indexes verified
+    Phase2 --> Phase3 : p50 < 50ms, p99 < 200ms
+    Phase3 --> [*] : Production
+
+    note right of Phase1
+        Duration: 1 week
+        Risk: Low (greenfield)
+    end note
+
+    note right of Phase2
+        Duration: 1-2 weeks
+        Risk: Medium (first real traffic)
+    end note
+
+    note right of Phase3
+        Duration: 1 week
+        Risk: Low (validated)
+    end note

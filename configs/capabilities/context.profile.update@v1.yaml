@@ -1,0 +1,64 @@
+# =============================================================================
+# Context Profile Update Capability
+# =============================================================================
+# Updates an agent's learned context preferences based on effectiveness data.
+
+capability_name: context.profile.update@v1
+description: |
+  Update an agent's learned context profile with effectiveness-derived
+  preferences. Adjusts boosted/demoted item lists, preferred node types,
+  and staircase level. Creates or updates EFFECTIVE_FOR edges in the graph
+  linking knowledge nodes to agent profiles.
+
+input_schema:
+  type: object
+  required: [agent_profile_id]
+  properties:
+    agent_profile_id:
+      type: string
+      description: Agent profile to update
+    boosted_ref_ids:
+      type: array
+      items:
+        type: string
+      description: Context item ref_ids to boost (high citation rate)
+    demoted_ref_ids:
+      type: array
+      items:
+        type: string
+      description: Context item ref_ids to demote (never cited)
+    node_type_weights:
+      type: object
+      additionalProperties:
+        type: number
+      description: 'Adjusted weights per node type (e.g., {"insight": 1.3, "concept": 0.8})'
+    staircase_level:
+      type: integer
+      description: New staircase level (0-4)
+    reinforce_ref_ids:
+      type: array
+      items:
+        type: string
+      description: Graph node IDs to reinforce via FreshnessCalculator
+
+output_schema:
+  type: object
+  properties:
+    agent_profile_id:
+      type: string
+    updated_at:
+      type: string
+      format: date-time
+    edges_created:
+      type: integer
+      description: EFFECTIVE_FOR edges created/updated
+    nodes_reinforced:
+      type: integer
+      description: Nodes with freshness reinforced
+    nodes_demoted:
+      type: integer
+      description: Nodes with base_relevance reduced
+
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 15000

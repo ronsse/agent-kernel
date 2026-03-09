@@ -1,0 +1,53 @@
+# =============================================================================
+# Capability: obsidian.daily@v1
+# =============================================================================
+# Get or create a daily note in the Obsidian vault.
+
+capability_name: obsidian.daily@v1
+description: Get or create today's daily note (or for a specific date)
+
+input_schema:
+  type: object
+  properties:
+    date:
+      type: string
+      format: date
+      description: Date in YYYY-MM-DD format (default is today)
+
+output_schema:
+  type: object
+  properties:
+    note:
+      type: object
+      description: Daily note content and metadata
+      properties:
+        path:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        frontmatter:
+          type: object
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+
+# Side effect classification (may create note)
+side_effect_level: local
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 50
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

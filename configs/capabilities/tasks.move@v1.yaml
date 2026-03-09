@@ -1,0 +1,55 @@
+# Task Move Capability (v1.0.5)
+# Allows agents to move tasks between projects
+
+capability_id: tasks.move@v1
+name: Move Task
+description: |
+  Move a task to a different project or section.
+  Used for organizing tasks into appropriate projects.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  required: [task_id, to_project]
+  properties:
+    task_id:
+      type: string
+      description: Kernel task ID to move
+    to_project:
+      type: string
+      description: Target project name
+    to_section:
+      type: string
+      description: Target section within project (optional)
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    action_id:
+      type: string
+    task_id:
+      type: string
+    task_title:
+      type: string
+    from_project:
+      type: string
+    to_project:
+      type: string
+    requires_approval:
+      type: boolean
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 30
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: move_task

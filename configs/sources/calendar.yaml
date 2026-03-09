@@ -1,0 +1,74 @@
+# Calendar Source Descriptor
+# Defines the queryable schema for calendar events
+
+source_id: calendar
+description: "Calendar events from external calendars (Outlook, Google, etc.)"
+
+fields:
+  - name: event_id
+    type: string
+    allowed_ops: [eq, in]
+    description: "Unique event identifier"
+
+  - name: external_id
+    type: string
+    allowed_ops: [eq]
+    description: "External system event ID"
+
+  - name: subject
+    type: string
+    allowed_ops: [contains]
+    description: "Event subject/title"
+
+  - name: start
+    type: datetime
+    allowed_ops: [eq, gt, lt, gte, lte]
+    description: "Event start time"
+
+  - name: end
+    type: datetime
+    allowed_ops: [eq, gt, lt, gte, lte]
+    description: "Event end time"
+
+  - name: status
+    type: enum
+    allowed_ops: [eq, in]
+    description: "Event status"
+    examples: ["confirmed", "tentative", "cancelled"]
+
+  - name: visibility
+    type: enum
+    allowed_ops: [eq, in]
+    description: "Event visibility"
+    examples: ["public", "private", "confidential"]
+
+  - name: is_all_day
+    type: boolean
+    allowed_ops: [eq]
+    description: "Whether event is all-day"
+
+  - name: attendees
+    type: list_string
+    allowed_ops: [contains, any_in]
+    description: "List of attendee emails"
+
+  - name: organizer
+    type: string
+    allowed_ops: [eq]
+    description: "Event organizer email"
+
+  - name: location
+    type: string
+    allowed_ops: [contains]
+    description: "Event location"
+
+  - name: source
+    type: string
+    allowed_ops: [eq, in]
+    description: "Source calendar/adapter"
+    examples: ["outlook", "google", "apple"]
+
+constraints:
+  can_store_text: true
+  allowed_entity_types: [calendar_event]
+  notes: "Events are imported from external systems with approval gates for writes."

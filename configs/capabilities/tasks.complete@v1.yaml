@@ -1,0 +1,45 @@
+# Task Complete Capability (v1.0.5)
+# Allows agents to mark tasks as complete
+
+capability_id: tasks.complete@v1
+name: Complete Task
+description: |
+  Mark a task as complete in both the kernel and external task backend.
+  Returns an action that requires approval.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  required: [task_id]
+  properties:
+    task_id:
+      type: string
+      description: Kernel task ID to complete
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    action_id:
+      type: string
+    task_id:
+      type: string
+    task_title:
+      type: string
+    requires_approval:
+      type: boolean
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 30
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: complete_task

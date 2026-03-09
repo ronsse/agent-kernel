@@ -1,0 +1,32 @@
+capability_name: git.branch.create@v1
+description: Create a new branch in a git repository
+adapter_type: local
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 10000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path, branch_name]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    branch_name:
+      type: string
+      description: Name for the new branch
+    start_point:
+      type: string
+      description: Starting ref for the branch
+    checkout:
+      type: boolean
+      description: Checkout the new branch after creation (default true)
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    branch:
+      type: string
+    checked_out:
+      type: boolean

@@ -1,0 +1,112 @@
+# =============================================================================
+# Default Policy Configuration
+# =============================================================================
+# Defines approval, rate limiting, redaction, and scope policies.
+
+version: "1.0"
+
+# -----------------------------------------------------------------------------
+# Approval Policies
+# -----------------------------------------------------------------------------
+approval_policies:
+  # Require approval for all delete operations
+  - name: delete_approval
+    description: Require approval for delete operations
+    mode: always
+    capabilities:
+      - "*.delete@*"
+    enabled: true
+
+  # Require approval for external API calls
+  - name: external_api_approval
+    description: Require approval for external API operations
+    mode: conditional
+    conditions:
+      - field: external
+        operator: eq
+        value: true
+    capabilities:
+      - "api.*"
+    enabled: true
+
+  # Never require approval for read operations
+  - name: read_no_approval
+    description: Skip approval for read-only operations
+    mode: never
+    capabilities:
+      - "*.list@*"
+      - "*.get@*"
+      - "*.search@*"
+    enabled: true
+
+# -----------------------------------------------------------------------------
+# Rate Limit Policies
+# -----------------------------------------------------------------------------
+rate_limit_policies:
+  # Global rate limit
+  - name: global_limit
+    description: Global rate limit for all capabilities
+    max_calls: 1000
+    window_seconds: 3600
+    enabled: true
+
+  # Search-specific rate limit
+  - name: search_limit
+    description: Rate limit for search operations
+    max_calls: 100
+    window_seconds: 60
+    capabilities:
+      - "*.search@*"
+    enabled: true
+
+  # Create operations rate limit
+  - name: create_limit
+    description: Rate limit for create operations
+    max_calls: 50
+    window_seconds: 60
+    capabilities:
+      - "*.create@*"
+    enabled: true
+
+# -----------------------------------------------------------------------------
+# Redaction Policies
+# -----------------------------------------------------------------------------
+redaction_policies:
+  # Redact sensitive fields in logs
+  - name: log_redaction
+    description: Redact sensitive data in logs
+    patterns:
+      - name: api_keys
+        pattern: 'sk-[a-zA-Z0-9]{20,}'
+        mode: mask
+      - name: bearer_tokens
+        pattern: 'Bearer\s+[a-zA-Z0-9\._-]+'
+        mode: mask
+    fields:
+      - password
+      - secret
+      - api_key
+      - token
+    enabled: true
+
+# -----------------------------------------------------------------------------
+# Scope Restrictions
+# -----------------------------------------------------------------------------
+scope_restrictions:
+  # Example: Restrict certain agents to specific projects
+  # - name: project_restriction
+  #   description: Restrict agent to specific projects
+  #   allowed_projects:
+  #     - "personal"
+  #     - "work"
+  #   agents:
+  #     - "restricted_agent"
+  #   enabled: true
+
+  # Deny dangerous capabilities globally
+  - name: deny_dangerous
+    description: Deny potentially dangerous capabilities
+    denied_capabilities:
+      - "system.execute@*"
+      - "*.admin@*"
+    enabled: true

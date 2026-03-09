@@ -1,0 +1,42 @@
+# Daily Check-in Playbook
+# Provides behavioral guidance for the daily check-in workflow
+
+playbook_id: daily_checkin
+name: Daily Check-in Playbook
+description: >
+  Guides the daily check-in workflow to review tasks, calendar, and notes
+  to produce a focused daily plan.
+version: v1
+status: active
+
+selectors:
+  - workflow_id: daily_checkin
+  - intent_contains:
+      - daily
+      - checkin
+      - morning
+      - review
+
+required_entity_types:
+  - note
+  - task
+  - calendar_event
+
+required_sources:
+  - obsidian
+  - calendar
+
+checklist:
+  - Review overdue and due-today tasks
+  - Check calendar for today's meetings
+  - Review yesterday's notes for follow-ups
+  - Identify top 3 priorities for today
+  - Check for blocked tasks
+
+pitfalls:
+  - Don't overload the day with too many tasks
+  - Ensure meeting prep time is accounted for
+  - Check for conflicting calendar events
+  - Consider energy levels and deep work blocks
+
+recommended_thinking_tier: 1

@@ -1,0 +1,71 @@
+# Graph Source Descriptor
+# Defines the queryable schema for knowledge graph nodes and edges
+
+source_id: graph
+description: "Knowledge graph with notes, tasks, tags, projects, and relationships."
+
+fields:
+  # Node fields
+  - name: node_type
+    type: enum
+    allowed_ops: [eq, in]
+    description: "Type of graph node"
+    examples: ["Note", "Tag", "Task", "Project", "CalendarEvent", "Person", "Trace"]
+
+  - name: node_id
+    type: string
+    allowed_ops: [eq, in]
+    description: "Unique node identifier"
+
+  - name: label
+    type: string
+    allowed_ops: [eq, contains]
+    description: "Node label/title"
+
+  # Edge fields
+  - name: edge_type
+    type: enum
+    allowed_ops: [eq, in]
+    description: "Type of graph edge"
+    examples:
+      - NOTE_LINKS_TO_NOTE
+      - NOTE_TAGGED_WITH_TAG
+      - NOTE_HAS_TASK
+      - TASK_PART_OF_PROJECT
+      - EVENT_LINKED_TO_NOTE
+
+  - name: source_id
+    type: string
+    allowed_ops: [eq]
+    description: "Edge source node ID"
+
+  - name: target_id
+    type: string
+    allowed_ops: [eq]
+    description: "Edge target node ID"
+
+  # Common properties
+  - name: properties.created_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "When the node/edge was created"
+
+  - name: properties.updated_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "When the node/edge was last updated"
+
+  - name: properties.path
+    type: string
+    allowed_ops: [eq, prefix, contains]
+    description: "File path (for Note nodes)"
+
+  - name: properties.status
+    type: string
+    allowed_ops: [eq, in]
+    description: "Status (for Task nodes)"
+
+constraints:
+  can_store_text: false
+  allowed_entity_types: [graph_node, graph_edge]
+  notes: "Graph stores relationships only; full text is in document store."

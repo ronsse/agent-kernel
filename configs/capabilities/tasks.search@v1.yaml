@@ -1,0 +1,66 @@
+# Task Search Capability (v1.0.5)
+# Allows agents to search tasks by text
+
+capability_id: tasks.search@v1
+name: Search Tasks
+description: |
+  Search tasks by text in title and description.
+  Returns matching tasks sorted by relevance.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  required: [query]
+  properties:
+    query:
+      type: string
+      description: Search query text
+      minLength: 2
+    limit:
+      type: integer
+      minimum: 1
+      maximum: 50
+      default: 20
+    include_completed:
+      type: boolean
+      default: false
+      description: Include completed tasks in results
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    tasks:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          title:
+            type: string
+          status:
+            type: string
+          priority:
+            type: string
+          project:
+            type: string
+    count:
+      type: integer
+    query:
+      type: string
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 60
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: search_tasks

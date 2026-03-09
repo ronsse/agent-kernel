@@ -1,0 +1,87 @@
+---
+title: Agent Context Graph — Container View (Internal Components)
+---
+flowchart LR
+    subgraph SOURCES["Sources"]
+        SSOT["Databricks SSOT<br/>(Core Layer)"]
+        DOCSRC["Jira / Confluence /<br/>Git Docs"]
+        C360["Customer 360"]
+        RECSYS["Recommender Systems"]
+    end
+
+    subgraph WRITE_PATH["Write Path"]
+        INGEST["Ingestion Orchestrator<br/>(C1, C3)"]
+        HOOKS["Graph Hooks<br/>(C2)"]
+        DECOMP["Trace Decomposer<br/>(C2, C5)"]
+        TYPES["Type Registry<br/>(C4)"]
+        BRIDGE["Experience Bridge<br/>(C5)"]
+    end
+
+    subgraph READ_PATH["Read Path"]
+        QUERY["Query Service<br/>(C6)"]
+        FRESH["Freshness Calculator<br/>(C9)"]
+        CA["Context Assembler<br/>(C7)"]
+    end
+
+    subgraph MAINT["Maintenance"]
+        RETAIN["Retention Executor<br/>(C9)"]
+        COMPACT["Compaction Engine<br/>(C5, C9)"]
+    end
+
+    subgraph STORES["Backing Stores"]
+        GRAPHDB["LakebaseGraphStore<br/>(Managed PostgreSQL)"]
+        DOCDB["Document Store"]
+        VECDB["Vector Store"]
+        EXPDB["Experience Store"]
+    end
+
+    ENGINE["Agent Engine"]
+    TRACE["Trace Store"]
+    BT["Braintrust<br/>(Eval Signals)"]
+    UC["Unity Catalog"]
+
+    %% Source connections
+    SSOT -->|"Table metadata"| INGEST
+    DOCSRC --> INGEST
+    C360 -.->|"Entity enrichment"| INGEST
+    RECSYS -.->|"Shared entities"| INGEST
+
+    %% Write path to stores
+    INGEST --> GRAPHDB
+    TRACE --> HOOKS --> DECOMP --> GRAPHDB
+    TYPES --> GRAPHDB
+    BRIDGE --> GRAPHDB
+    BRIDGE --> EXPDB
+    BT -.->|"Eval signals"| BRIDGE
+
+    %% Read path from stores
+    GRAPHDB --> QUERY
+    QUERY --> FRESH
+    FRESH --> CA
+    CA --> DOCDB
+    CA --> VECDB
+    CA --> EXPDB
+    CA -->|"ContextPacket"| ENGINE
+
+    %% Maintenance
+    RETAIN --> GRAPHDB
+    COMPACT --> GRAPHDB
+
+    %% Governance
+    GRAPHDB -.-> UC
+
+    class SSOT,DOCSRC,C360,RECSYS source
+    class INGEST,HOOKS,DECOMP,TYPES,BRIDGE writeNode
+    class QUERY,FRESH,CA readNode
+    class RETAIN,COMPACT maintNode
+    class GRAPHDB,DOCDB,VECDB,EXPDB memory
+    class ENGINE agent
+    class TRACE,BT,UC governance
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef writeNode fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef readNode fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef maintNode fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef governance fill:#f4f4f4,stroke:#999999,color:#111111

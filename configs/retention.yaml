@@ -1,0 +1,61 @@
+# Retention Policy Configuration
+# Defines how long different types of data are retained
+# and when compaction/pruning occurs.
+
+retention:
+  traces:
+    # Days to keep full traces (including tool I/O)
+    hot_days: 14
+    # Days to keep compacted trace summaries + key metadata
+    warm_days: 90
+    # Days to keep case + evaluation + lessons only
+    cold_days: 365
+    # Keep failed traces longer for debugging
+    keep_failed_longer: true
+    # Multiplier for failed trace retention
+    failed_multiplier: 2.0
+
+  llm_calls:
+    # Days to keep raw request/response messages
+    keep_raw_messages_days: 7
+    # Days to keep content hashes for reproducibility
+    keep_hashes_days: 365
+
+  tool_calls:
+    # Days to keep full tool outputs
+    keep_full_output_days: 7
+    # Days to keep redacted output previews
+    keep_redacted_preview_days: 90
+    # Compress outputs larger than threshold
+    compress_large_outputs: true
+    # Threshold for large output compression (KB)
+    large_output_threshold_kb: 256
+
+  vectors:
+    # Days to keep summary embeddings (~10 years)
+    keep_summary_embeddings_days: 3650
+    # Days to keep chunk embeddings
+    keep_chunk_embeddings_days: 180
+    # Drop chunks when entity reaches these states
+    drop_chunks_when_entity_state:
+      - archived
+    # Maximum total vectors before pruning
+    max_total_vectors: 500000
+
+  graph:
+    # Days to keep human-created edges (~10 years)
+    keep_human_edges_days: 3650
+    # Prune auto edges below this confidence
+    prune_auto_edges_below_confidence: 0.55
+    # Prune auto edges older than this (days)
+    prune_auto_edges_older_than_days: 365
+
+  document_cache:
+    # TTL for sources requiring live fetch (minutes)
+    requires_live_fetch_ttl_minutes: 60
+    # Maximum document cache size (MB)
+    max_cache_size_mb: 2048
+
+  events:
+    # Days to keep event log entries (~10 years)
+    keep_event_log_days: 3650

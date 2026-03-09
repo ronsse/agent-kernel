@@ -1,0 +1,11 @@
+# Template chooser configuration
+# NOTE: GitHub Discussions must be enabled in repo Settings > General > Features,
+# or via: gh api -X PATCH /repos/ORG/REPO -f has_discussions=true
+blank_issues_enabled: false
+contact_links:
+  - name: Question / Discussion
+    url: https://github.com/ORG/REPO/discussions
+    about: Ask questions and start discussions here
+  - name: Documentation
+    url: https://ORG.github.io/REPO/
+    about: Check the documentation before opening an issue

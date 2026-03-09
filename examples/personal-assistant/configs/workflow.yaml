@@ -1,0 +1,19 @@
+# Daily review workflow specification
+workflow_id: daily_review
+name: Daily Review
+description: Review tasks and create a daily summary
+
+trigger:
+  type: manual
+
+agent_profile_id: assistant
+
+steps:
+  - assemble_context
+  - propose_plan
+  - validate
+  - gate_approvals
+  - execute
+  - emit_trace
+
+on_error: halt

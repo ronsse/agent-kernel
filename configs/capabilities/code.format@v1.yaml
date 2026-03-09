@@ -1,0 +1,37 @@
+capability_name: code.format@v1
+description: Run code formatter on a repository
+adapter_type: local
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 60000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    tool:
+      type: string
+      enum: [ruff]
+      description: Formatter to use (default ruff)
+    paths:
+      type: array
+      items:
+        type: string
+      description: Specific paths to format
+    check_only:
+      type: boolean
+      description: Only check, do not modify files
+output_schema:
+  type: object
+  properties:
+    tool:
+      type: string
+    check_only:
+      type: boolean
+    files_changed:
+      type: integer
+    already_formatted:
+      type: boolean

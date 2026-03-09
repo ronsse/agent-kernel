@@ -1,0 +1,64 @@
+# =============================================================================
+# Capability: notes.create@v1
+# =============================================================================
+# Create a new note.
+
+capability_name: notes.create@v1
+description: Create a new note with title, content, and optional metadata
+
+input_schema:
+  type: object
+  required:
+    - title
+  properties:
+    title:
+      type: string
+      maxLength: 500
+      description: Note title
+    content:
+      type: string
+      description: Note content (markdown supported)
+    project_id:
+      type: string
+      description: Associated project ID
+    folder:
+      type: string
+      description: Folder path for organization
+    tags:
+      type: array
+      items:
+        type: string
+      description: Tags for categorization
+    source:
+      type: string
+      description: Source reference (e.g., file path, URL)
+
+output_schema:
+  type: object
+  required:
+    - note_id
+  properties:
+    note_id:
+      type: string
+      description: Unique note identifier
+    title:
+      type: string
+    created_at:
+      type: string
+      format: date-time
+
+# Side effect classification
+side_effect_level: local
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 50
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

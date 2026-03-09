@@ -1,0 +1,113 @@
+# =============================================================================
+# Capability: trace_analysis.query@v1
+# =============================================================================
+# Query and filter decision traces for analysis and debugging.
+
+capability_id: trace_analysis.query@v1
+capability_name: trace_analysis.query@v1
+description: |
+  Query decision traces with filtering by agent, workflow, time range, and status.
+  Returns DecisionTrace objects with full execution details for analysis.
+
+category: observability
+version: "1.0.0"
+
+# Input schema
+input_schema:
+  type: object
+  properties:
+    limit:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 20
+      description: Maximum number of traces to return
+    offset:
+      type: integer
+      minimum: 0
+      default: 0
+      description: Number of traces to skip (for pagination)
+    agent_profile_id:
+      type: string
+      description: Filter by agent profile ID
+    workflow_id:
+      type: string
+      description: Filter by workflow ID
+    status:
+      type: string
+      enum: [completed, partial, failed, needs_approval, cancelled]
+      description: Filter by outcome status
+    has_errors:
+      type: boolean
+      description: Filter traces that have errors
+    since_hours:
+      type: integer
+      minimum: 1
+      maximum: 720
+      description: Only traces from the last N hours
+    trace_ids:
+      type: array
+      items:
+        type: string
+      description: Specific trace IDs to retrieve
+    sort_by:
+      type: string
+      enum: [timestamp, duration, tool_count]
+      default: timestamp
+      description: How to sort results
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    traces:
+      type: array
+      items:
+        type: object
+        properties:
+          trace_id:
+            type: string
+          run_id:
+            type: string
+          workflow_id:
+            type: string
+          agent_profile_id:
+            type: string
+          intent:
+            type: string
+          timestamp:
+            type: string
+            format: date-time
+          outcome_status:
+            type: string
+          tool_call_count:
+            type: integer
+          error_count:
+            type: integer
+          total_duration_ms:
+            type: integer
+          plan_summary:
+            type: string
+    total_count:
+      type: integer
+      description: Total matching traces (may be > returned)
+    filter_applied:
+      type: object
+      description: Filters that were applied
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_seconds: 30
+rate_limit:
+  requests_per_minute: 60
+
+# Adapter configuration
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.trace_adapter
+  function: query_traces

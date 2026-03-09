@@ -1,0 +1,117 @@
+# Task Sync Capability - Sync tasks to external systems
+#
+# Syncs kernel tasks to external task management systems (external task backend, Linear, etc.).
+# Requires approval as it creates external side effects.
+
+capability_name: tasks.sync@v1
+display_name: Sync Tasks to External System
+description: |
+  Synchronizes tasks from the kernel graph to an external task management system.
+  This capability requires approval as it creates/updates external resources.
+
+adapter_type: local
+
+# Input schema
+input_schema:
+  type: object
+  additionalProperties: false
+  required:
+    - adapter_id
+  properties:
+    adapter_id:
+      type: string
+      description: ID of the target adapter (e.g., 'linear', 'linear')
+    operation:
+      type: string
+      enum: [create, update, complete, delete, sync_all]
+      default: sync_all
+      description: Type of sync operation
+    kernel_task_id:
+      type: string
+      description: Specific kernel task ID (for single-task operations)
+    external_id:
+      type: string
+      description: External task ID (for update/delete operations)
+    task:
+      type: object
+      description: Task data for create/update operations
+    config:
+      type: object
+      description: Sync configuration
+      properties:
+        projects:
+          type: array
+          items:
+            type: string
+          description: Filter by project names
+        tags:
+          type: array
+          items:
+            type: string
+          description: Filter by tag names
+        include_completed:
+          type: boolean
+          default: false
+          description: Include completed tasks
+        include_linked_only:
+          type: boolean
+          default: false
+          description: Only include tasks already linked to the adapter
+        dry_run:
+          type: boolean
+          default: false
+          description: Log what would sync without syncing
+        update_only:
+          type: boolean
+          default: false
+          description: Only update linked tasks; do not create new tasks
+        enrichment_mode:
+          type: boolean
+          default: false
+          description: Only update high-confidence fields for linked tasks
+        max_creates:
+          type: integer
+          default: 25
+          description: Maximum creates allowed in a single run (safety gate)
+        max_updates:
+          type: integer
+          default: 25
+          description: Maximum updates allowed in a single run
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    operation:
+      type: string
+    created:
+      type: integer
+    updated:
+      type: integer
+    failed:
+      type: integer
+    pending_approval:
+      type: integer
+    error:
+      type: string
+
+# Execution policy
+side_effect_level: external  # Creates external resources
+requires_approval_default: false  # Always require user approval
+idempotency:
+  required: true
+  key_fields: [adapter_id, kernel_task_id, operation]
+
+# Rate limiting
+rate_limit:
+  max_calls_per_minute: 60
+  max_calls_per_hour: 1000
+
+# Tags for discovery
+tags:
+  - tasks
+  - sync
+  - external
+  - integration

@@ -1,0 +1,38 @@
+capability_name: github.pr.create@v1
+description: Create a pull request on GitHub
+adapter_type: local
+side_effect_level: external
+requires_approval_default: false
+timeout_ms: 60000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path, title, body]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    title:
+      type: string
+      description: Pull request title
+    body:
+      type: string
+      description: Pull request body/description
+    base:
+      type: string
+      description: Base branch (default main)
+    head:
+      type: string
+      description: Head branch (defaults to current branch)
+    draft:
+      type: boolean
+      description: Create as draft PR
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    url:
+      type: string
+    title:
+      type: string

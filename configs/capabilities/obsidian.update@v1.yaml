@@ -1,0 +1,65 @@
+# =============================================================================
+# Capability: obsidian.update@v1
+# =============================================================================
+# Update an existing note in the Obsidian vault.
+
+capability_name: obsidian.update@v1
+description: Update an existing note in the Obsidian vault
+
+input_schema:
+  type: object
+  required:
+    - path
+  properties:
+    path:
+      type: string
+      description: Note path relative to vault root
+    content:
+      type: string
+      description: New content or content to append
+    append:
+      type: boolean
+      default: false
+      description: If true, append content instead of replacing
+    tags:
+      type: array
+      items:
+        type: string
+      description: Tags to add/update in frontmatter
+    frontmatter:
+      type: object
+      additionalProperties: true
+      description: Optional frontmatter fields to merge
+    skip_if_no_change:
+      type: boolean
+      default: false
+      description: Skip write if content and frontmatter are unchanged
+
+output_schema:
+  type: object
+  properties:
+    note:
+      type: object
+      description: Updated note content and metadata
+    skipped:
+      type: boolean
+      description: True if no changes were applied
+    error:
+      type: string
+      description: Error message if note not found
+
+# Side effect classification
+side_effect_level: local
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 30
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

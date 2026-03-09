@@ -1,0 +1,44 @@
+# =============================================================================
+# Capability: notes.delete@v1
+# =============================================================================
+# Delete a note permanently.
+
+capability_name: notes.delete@v1
+description: Delete a note permanently (cannot be undone)
+
+input_schema:
+  type: object
+  required:
+    - note_id
+  properties:
+    note_id:
+      type: string
+      description: The unique note identifier
+
+output_schema:
+  type: object
+  required:
+    - deleted
+  properties:
+    deleted:
+      type: boolean
+      description: Whether the note was deleted
+    note_id:
+      type: string
+      description: The note ID that was deleted
+
+# Side effect classification
+side_effect_level: local
+
+# Default approval requirement - require approval for delete
+requires_approval_default: true
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 20
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

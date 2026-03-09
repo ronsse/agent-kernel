@@ -1,0 +1,145 @@
+# =============================================================================
+# Enrichment Rules Configuration
+# =============================================================================
+# Standardized rules for enriching tasks across all workflows.
+# Used by: task_sync, task_enrichment, obsidian_enrichment
+
+# -----------------------------------------------------------------------------
+# Origin Labels
+# -----------------------------------------------------------------------------
+# These labels indicate where a task originated from.
+# Used to prevent over-enrichment (don't re-enrich already-enriched tasks)
+
+origin_labels:
+  obsidian: "obsidian-origin"      # Task came from Obsidian note
+  external_capture: "phone-capture" # Task captured in external task app
+  calendar: "calendar-origin"      # Task derived from calendar event
+
+# -----------------------------------------------------------------------------
+# Work Detection
+# -----------------------------------------------------------------------------
+# Rules for determining if a task is work-related
+
+work_detection:
+  # Label to apply to work tasks
+  work_label: "work"
+
+  # Keywords that indicate work (case-insensitive)
+  keywords:
+    - "meeting"
+    - "review"
+    - "PR"
+    - "pull request"
+    - "deploy"
+    - "bug"
+    - "feature"
+    - "architecture"
+    - "design"
+    - "code"
+    - "test"
+    - "release"
+    - "sprint"
+    - "standup"
+    - "1:1"
+    - "sync"
+    - "demo"
+    - "presentation"
+
+  # Projects that are always work
+  work_projects:
+    - "My Work"
+    - "Agent System"
+    - "Work"
+
+  # Labels that indicate work
+  work_labels:
+    - "work"
+    - "meeting"
+    - "project"
+
+# -----------------------------------------------------------------------------
+# Enrichment Skip Rules
+# -----------------------------------------------------------------------------
+# When to skip enrichment (prevent over-enrichment)
+
+skip_enrichment:
+  # Skip if task has any of these labels
+  labels:
+    - "obsidian-origin"  # Already enriched from note context
+    - "no-enrich"        # User opted out
+
+  # Skip if task has description with source link
+  has_source_link: true
+
+  # Skip if task already has 3+ labels
+  min_existing_labels: 3
+
+# -----------------------------------------------------------------------------
+# Project Assignment Rules
+# -----------------------------------------------------------------------------
+# How to assign tasks to projects
+
+project_assignment:
+  # Default project for work tasks
+  default_work_project: "My Work"
+
+  # Don't move tasks FROM these projects
+  protected_projects:
+    - "My Work"  # Already in right place
+
+  # Map note project tags to external projects
+  project_mapping:
+    "agent-system": "My Work"
+    "work": "My Work"
+    # Add more mappings as needed
+
+  # Confidence threshold for auto-assigning project
+  auto_assign_confidence: 0.8
+
+# -----------------------------------------------------------------------------
+# Label Standardization
+# -----------------------------------------------------------------------------
+# Ensure consistent label format
+
+label_format:
+  # Convert to lowercase
+  lowercase: true
+
+  # Replace spaces with hyphens
+  hyphenate: true
+
+  # Max labels per task
+  max_labels: 3
+
+  # Priority labels (uses p1-p4 priority levels)
+  priority_mapping:
+    urgent: 4
+    high: 3
+    medium: 2
+    normal: 1
+
+# -----------------------------------------------------------------------------
+# Label Strategy
+# -----------------------------------------------------------------------------
+# Labels are NOT hardcoded. The enrichment workflow fetches existing labels
+# from task backend at runtime and uses them as the primary vocabulary.
+#
+# Strategy:
+# 1. Prefer existing backend labels that fit the task topic
+# 2. If no existing label fits, suggest a new descriptive one
+# 3. New labels should be concrete (hunting, outdoor-gear, legal, fitness)
+# 4. Keep labels lowercase, hyphenated, 1-3 per task
+
+# -----------------------------------------------------------------------------
+# Enrichment Confidence Thresholds
+# -----------------------------------------------------------------------------
+
+confidence_thresholds:
+  # Minimum confidence to auto-apply enrichments
+  auto_apply: 0.75
+
+  # Minimum confidence to suggest (but not auto-apply)
+  suggest: 0.5
+
+  # Below this, don't even suggest
+  ignore: 0.3

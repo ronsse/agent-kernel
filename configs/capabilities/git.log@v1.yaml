@@ -1,0 +1,40 @@
+capability_name: git.log@v1
+description: Show commit log for a git repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 10000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    max_count:
+      type: integer
+      minimum: 1
+      maximum: 100
+      description: Maximum number of commits to return
+    ref:
+      type: string
+      description: Git ref to start from
+    oneline:
+      type: boolean
+      description: Use oneline format (default true)
+    since:
+      type: string
+      description: Show commits since this date (e.g. '2 weeks ago')
+    author:
+      type: string
+      description: Filter by author
+output_schema:
+  type: object
+  properties:
+    commits:
+      type: array
+      items:
+        type: object
+    count:
+      type: integer

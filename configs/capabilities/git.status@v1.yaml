@@ -1,0 +1,27 @@
+capability_name: git.status@v1
+description: Get working tree status for a git repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 10000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+output_schema:
+  type: object
+  properties:
+    branch:
+      type: string
+    files:
+      type: array
+      items:
+        type: object
+    file_count:
+      type: integer
+    clean:
+      type: boolean

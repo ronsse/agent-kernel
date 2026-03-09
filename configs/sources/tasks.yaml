@@ -1,0 +1,60 @@
+# Tasks Source Descriptor
+# Defines the queryable schema for extracted task entities
+
+source_id: tasks
+description: "Task entities extracted from Obsidian notes."
+
+fields:
+  - name: task_id
+    type: string
+    allowed_ops: [eq, in]
+    description: "Stable task identifier"
+    examples: ["task_01JXY123ABC"]
+
+  - name: status
+    type: enum
+    allowed_ops: [eq, in, neq]
+    description: "Task completion status"
+    examples: ["incomplete", "complete", "in_progress", "cancelled"]
+
+  - name: priority
+    type: enum
+    allowed_ops: [eq, in]
+    description: "Task priority level"
+    examples: ["high", "medium", "low", "none"]
+
+  - name: due_date
+    type: datetime
+    allowed_ops: [eq, gt, lt, gte, lte, exists, not_exists]
+    description: "Task due date (if set)"
+
+  - name: tags
+    type: list_string
+    allowed_ops: [contains, any_in, all_in]
+    description: "Tags attached to the task"
+    examples: ["follow-up", "urgent", "blocked"]
+
+  - name: contexts
+    type: list_string
+    allowed_ops: [contains, any_in]
+    description: "GTD-style contexts (@home, @work, @computer)"
+    examples: ["home", "work", "computer", "phone"]
+
+  - name: source_note_id
+    type: string
+    allowed_ops: [eq, in]
+    description: "ID of the note containing this task"
+
+  - name: created_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "When the task was first indexed"
+
+  - name: text
+    type: string
+    allowed_ops: [contains]
+    description: "Task description text"
+
+constraints:
+  can_store_text: true
+  allowed_entity_types: [task]

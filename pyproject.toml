@@ -1,0 +1,147 @@
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[project]
+name = "agentkernel"
+dynamic = ["version"]
+description = "Framework-agnostic foundation for building AI agent systems"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Agent Kernel Contributors" }]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Typing :: Typed",
+]
+dependencies = [
+    "pydantic>=2.0.0,<3.0.0",
+    "pydantic-settings>=2.0.0,<3.0.0",
+    "structlog>=23.0.0,<26.0.0",
+    "ulid-py>=1.1.0,<2.0.0",
+    "python-dateutil>=2.8.0,<3.0.0",
+    "pyyaml>=6.0",
+    "typer>=0.9",
+    "rich>=13.0",
+    "jsonschema>=4.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+vectors = [
+    "lancedb>=0.3.0,<1.0.0",
+    "pyarrow>=14.0.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24",
+]
+api = [
+    "fastapi>=0.100",
+    "uvicorn[standard]>=0.20",
+    "jinja2>=3.1.4",
+]
+mcp = ["mcp>=1.0.0"]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=4.0",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "pre-commit>=4.0",
+]
+docs = [
+    "mkdocs-material>=9.5,<10.0",
+    "mkdocstrings[python]>=0.25",
+    "mkdocs-gen-files>=0.5",
+    "mkdocs-literate-nav>=0.6",
+    "mkdocs-section-index>=0.3",
+    "mkdocs-mermaid2-plugin>=1.0",
+]
+all = ["agentkernel[vectors,api,mcp]"]
+
+[project.scripts]
+agent-kernel = "agent_kernel.cli:main"
+
+[project.entry-points."agentkernel.engines"]
+custom = "agent_kernel.engine.custom_engine:CustomEngine"
+
+[project.entry-points."agentkernel.stores.vector"]
+sqlite = "agent_kernel.memory.vector_store:SQLiteVectorStore"
+lancedb = "agent_kernel.memory.vector_store:LanceDBVectorStore"
+
+[project.entry-points."agentkernel.stores.graph"]
+sqlite = "agent_kernel.memory.graph_store:SQLiteGraphStore"
+
+[project.entry-points."agentkernel.stores.document"]
+sqlite = "agent_kernel.memory.document_store:SQLiteDocumentStore"
+
+[project.entry-points."agentkernel.stores.trace"]
+sqlite = "agent_kernel.tracing.sinks.sqlite_sink:SQLiteTraceSink"
+jsonl = "agent_kernel.tracing.sinks.jsonl_sink:JSONLTraceSink"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/agent_kernel/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/agent_kernel"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E", "F", "B", "W", "I", "N", "UP", "ANN", "S", "C4",
+    "DTZ", "T10", "EM", "ISC", "ICN", "LOG", "G", "PIE", "PT",
+    "RET", "SIM", "TCH", "ARG", "PTH", "ERA", "PL", "TRY",
+    "FLY", "PERF", "FURB", "RUF",
+]
+ignore = [
+    "ANN401",  # dynamically typed expressions (Any)
+    "S101",    # use of assert (ok in tests)
+    "PLR0913", # too many arguments
+    "TC001",   # move import into TYPE_CHECKING block
+    "TC003",   # move stdlib import into TYPE_CHECKING block
+    "RUF022",  # __all__ not sorted
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "ANN", "PLR2004", "ARG002", "ARG005"]
+"src/agent_kernel/mcp_server/**/*.py" = ["PLC0415"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --tb=short"
+pythonpath = ["src"]
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv", "examples"]
+skips = ["B101"]
+
+[tool.coverage.run]
+source = ["src/agent_kernel"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "raise NotImplementedError",
+]

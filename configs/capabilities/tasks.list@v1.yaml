@@ -1,0 +1,71 @@
+# Task List Capability (v1.0.6)
+# Allows agents to list and filter tasks from the kernel
+
+capability_name: tasks.list@v1
+description: |
+  List tasks with optional filtering by status, project, and due date.
+  Returns task records from the kernel task store.
+
+category: task_management
+version: "1.0.6"
+adapter_type: local
+
+# Input schema - matches actual list_tasks function in tools/builtin/tasks.py
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    status:
+      type: string
+      enum: [open, completed, all]
+      default: open
+      description: Filter by task status
+    project_id:
+      type: string
+      description: Filter by project ID
+    due_before:
+      type: string
+      description: Filter tasks due before this date (YYYY-MM-DD)
+    due_after:
+      type: string
+      description: Filter tasks due after this date (YYYY-MM-DD)
+    limit:
+      type: integer
+      minimum: 1
+      maximum: 100
+      default: 50
+      description: Maximum tasks to return
+    include_completed:
+      type: boolean
+      default: false
+      description: Include completed tasks in results
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    tasks:
+      type: array
+      items:
+        type: object
+        properties:
+          task_id:
+            type: string
+          title:
+            type: string
+          status:
+            type: string
+          priority:
+            type: string
+          due_date:
+            type: string
+          project_id:
+            type: string
+          tags:
+            type: array
+    total_count:
+      type: integer
+
+# Execution config
+requires_approval_default: false
+timeout_ms: 30000

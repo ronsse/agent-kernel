@@ -1,0 +1,61 @@
+# Context graph knowledge search capability
+capability_name: knowledge.search@v1
+description: Search knowledge graph for relevant concepts, insights, systems, and past trajectories
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.builtin.knowledge
+  function: knowledge_search
+
+input_schema:
+  type: object
+  properties:
+    intent:
+      type: string
+      description: Search query / intent to match against
+    node_types:
+      type: array
+      items:
+        type: string
+      description: Filter by node types (e.g., concept, insight, system)
+    tags:
+      type: array
+      items:
+        type: string
+      description: Filter by tags
+    include_trajectories:
+      type: boolean
+      default: true
+      description: Include similar past trajectories in results
+    limit:
+      type: integer
+      default: 20
+      description: Maximum results to return
+  required: [intent]
+
+output_schema:
+  type: object
+  properties:
+    knowledge:
+      type: array
+      items:
+        type: object
+    trajectories:
+      type: array
+      items:
+        type: object
+    total_candidates:
+      type: integer
+    query_time_ms:
+      type: integer
+
+side_effect: none
+risk_level: low
+timeout_ms: 5000
+
+tags:
+  - knowledge
+  - context-graph
+  - search
+  - read-only

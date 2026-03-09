@@ -1,0 +1,77 @@
+# Task Update Capability (v1.0.5)
+# Allows agents to update existing tasks
+
+capability_id: tasks.update@v1
+name: Update Task
+description: |
+  Update an existing task's properties (title, priority, labels, due date, etc.).
+  Returns an action that requires approval before execution.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  required: [task_id]
+  properties:
+    task_id:
+      type: string
+      description: Kernel task ID to update
+    title:
+      type: string
+      description: New title (optional)
+    description:
+      type: string
+      description: New description (optional)
+    priority:
+      type: string
+      enum: [p1, p2, p3, p4]
+      description: New priority (optional)
+    labels:
+      type: array
+      items:
+        type: string
+      description: Replace labels (optional)
+    add_labels:
+      type: array
+      items:
+        type: string
+      description: Labels to add (keeps existing)
+    remove_labels:
+      type: array
+      items:
+        type: string
+      description: Labels to remove
+    due_date:
+      type: string
+      format: date
+      description: New due date (YYYY-MM-DD)
+    project:
+      type: string
+      description: Move to project
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    action_id:
+      type: string
+    task_id:
+      type: string
+    requires_approval:
+      type: boolean
+    changes:
+      type: object
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 30
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: update_task

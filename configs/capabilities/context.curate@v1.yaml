@@ -1,0 +1,71 @@
+# =============================================================================
+# Context Curation Capability
+# =============================================================================
+# Pre-assembles optimized warm context packages for external agents.
+# Uses learned preferences from effectiveness evaluation.
+
+capability_name: context.curate@v1
+description: |
+  Pre-assemble warm context packages for external agents. Queries the
+  context graph for top-K knowledge nodes (boosted by effectiveness scores),
+  recent trajectories, active lessons, and patterns. Packages results as
+  a warm context blob and stores in the context cache.
+
+input_schema:
+  type: object
+  required: [agent_profile_id]
+  properties:
+    agent_profile_id:
+      type: string
+      description: Agent profile to curate context for
+    max_items:
+      type: integer
+      default: 30
+      description: Maximum context items to include
+    max_tokens:
+      type: integer
+      default: 4000
+      description: Token budget for warm context
+    ttl_seconds:
+      type: integer
+      default: 14400
+      description: Cache TTL (default 4 hours)
+    include_trajectories:
+      type: boolean
+      default: true
+      description: Include recent trajectory summaries
+    include_lessons:
+      type: boolean
+      default: true
+      description: Include active lessons and insights
+    include_patterns:
+      type: boolean
+      default: true
+      description: Include detected patterns
+
+output_schema:
+  type: object
+  properties:
+    agent_profile_id:
+      type: string
+    curated_at:
+      type: string
+      format: date-time
+    items_included:
+      type: integer
+    items_boosted:
+      type: integer
+      description: Items with effectiveness boost applied
+    items_demoted:
+      type: integer
+      description: Items deprioritized due to low citation
+    estimated_tokens:
+      type: integer
+    staircase_level:
+      type: integer
+    cache_key:
+      type: string
+
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 30000

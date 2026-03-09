@@ -1,0 +1,25 @@
+capability_name: deps.audit.node@v1
+description: Audit Node.js dependencies for vulnerabilities
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 60000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+output_schema:
+  type: object
+  properties:
+    language:
+      type: string
+    total_dependencies:
+      type: integer
+    vulnerabilities:
+      type: object
+    advisories_count:
+      type: integer

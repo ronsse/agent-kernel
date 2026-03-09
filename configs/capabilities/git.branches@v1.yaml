@@ -1,0 +1,31 @@
+capability_name: git.branches@v1
+description: List branches in a git repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 10000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    remote:
+      type: boolean
+      description: List remote branches only
+    all_branches:
+      type: boolean
+      description: List both local and remote branches
+output_schema:
+  type: object
+  properties:
+    branches:
+      type: array
+      items:
+        type: object
+    count:
+      type: integer
+    current:
+      type: string

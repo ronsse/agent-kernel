@@ -1,0 +1,18 @@
+runner_id: claude
+type: claude_code
+bin_candidates: ["claude"]
+bin_env_var: CLAUDE_CODE_BIN
+default_output_format: stream-json
+default_timeout_ms: 300000
+
+# Cost control: cap per-invocation spend (uses claude --max-budget-usd)
+default_max_budget_usd: 5.00
+
+# Rate limit handling: wait and retry instead of failing
+rate_limit_max_retries: 3
+rate_limit_default_wait_seconds: 60
+
+supports:
+  force_apply: true    # allow_write=True lets it write files
+  resume: false        # --resume not supported (sessions don't persist)
+  stream_partial_output: true

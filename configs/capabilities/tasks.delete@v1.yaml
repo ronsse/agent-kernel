@@ -1,0 +1,44 @@
+# =============================================================================
+# Capability: tasks.delete@v1
+# =============================================================================
+# Delete a task permanently.
+
+capability_name: tasks.delete@v1
+description: Delete a task permanently (cannot be undone)
+
+input_schema:
+  type: object
+  required:
+    - task_id
+  properties:
+    task_id:
+      type: string
+      description: The unique task identifier
+
+output_schema:
+  type: object
+  required:
+    - deleted
+  properties:
+    deleted:
+      type: boolean
+      description: Whether the task was deleted
+    task_id:
+      type: string
+      description: The task ID that was deleted
+
+# Side effect classification
+side_effect_level: local
+
+# Default approval requirement - require approval for delete
+requires_approval_default: true
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 20
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

@@ -1,0 +1,38 @@
+capability_name: code.typecheck@v1
+description: Run type checker on a code repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 120000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    tool:
+      type: string
+      enum: [mypy]
+      description: Type checker to use (default mypy)
+    paths:
+      type: array
+      items:
+        type: string
+      description: Specific paths to check
+output_schema:
+  type: object
+  properties:
+    tool:
+      type: string
+    issue_count:
+      type: integer
+    error_count:
+      type: integer
+    issues:
+      type: array
+      items:
+        type: object
+    success:
+      type: boolean

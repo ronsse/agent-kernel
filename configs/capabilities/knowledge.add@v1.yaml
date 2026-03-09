@@ -1,0 +1,64 @@
+# Context graph knowledge creation capability
+capability_name: knowledge.add@v1
+description: Add a knowledge node (concept, insight, system, domain, etc.) to the context graph
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.builtin.knowledge
+  function: knowledge_add
+
+input_schema:
+  type: object
+  properties:
+    node_type:
+      type: string
+      enum: [domain, system, concept, insight, pattern, data_object, rule]
+      description: Type of knowledge node to create
+    title:
+      type: string
+      description: Title of the knowledge node
+    description:
+      type: string
+      description: Detailed description of the knowledge
+    tags:
+      type: array
+      items:
+        type: string
+      description: Tags for categorization
+    confidence:
+      type: number
+      minimum: 0
+      maximum: 1
+      default: 1.0
+      description: Confidence score for this knowledge
+    edges:
+      type: array
+      items:
+        type: object
+        properties:
+          target_id:
+            type: string
+          edge_type:
+            type: string
+      description: Optional edges to connect to existing nodes
+  required: [node_type, title]
+
+output_schema:
+  type: object
+  properties:
+    node_id:
+      type: string
+    node_type:
+      type: string
+    title:
+      type: string
+
+side_effect: internal_write
+risk_level: low
+timeout_ms: 5000
+
+tags:
+  - knowledge
+  - context-graph
+  - write

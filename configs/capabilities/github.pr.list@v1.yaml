@@ -1,0 +1,38 @@
+capability_name: github.pr.list@v1
+description: List pull requests for a GitHub repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 30000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    state:
+      type: string
+      enum: [open, closed, merged, all]
+      description: PR state filter (default open)
+    limit:
+      type: integer
+      minimum: 1
+      maximum: 100
+      description: Maximum number of PRs to return
+    base:
+      type: string
+      description: Filter by base branch
+    author:
+      type: string
+      description: Filter by author
+output_schema:
+  type: object
+  properties:
+    pull_requests:
+      type: array
+      items:
+        type: object
+    count:
+      type: integer

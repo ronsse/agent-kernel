@@ -1,0 +1,63 @@
+---
+title: GraphStore Adapter Pattern
+---
+classDiagram
+    class GraphStore {
+        <<ABC>>
+        +upsert_node(node_id, node_type, properties) str
+        +upsert_edge(source_id, target_id, edge_type, properties) str
+        +get_node(node_id) dict
+        +get_nodes_bulk(node_ids) list
+        +get_subgraph(seed_ids, depth, edge_types) dict
+        +query(node_type, properties, limit) list
+        +query_by_property(path, value, node_type, limit) list
+        +delete_node(node_id) bool
+        +delete_edge(edge_id) bool
+        +delete_nodes_bulk(node_ids) int
+        +get_edges_for_nodes(node_ids, direction, edge_type) dict
+        +count_nodes() int
+        +count_edges() int
+        +close() void
+    }
+
+    class LakebaseGraphStore {
+        -_pool: asyncpg.Pool
+        -_dsn: str
+        +Uses JSONB operators
+        +GIN indexes on properties
+        +ON CONFLICT upsert
+        +ANY($1::text[]) for batch
+        +Unity Catalog governed
+    }
+
+    class InMemoryGraphStore {
+        -_nodes: dict
+        -_edges: dict
+        For testing only
+    }
+
+    GraphStore <|-- LakebaseGraphStore : implements
+    GraphStore <|-- InMemoryGraphStore : implements
+
+    class ContextGraphQueryService {
+        -_graph_store: GraphStore
+        +find_relevant_knowledge(query, limit) list
+        +find_similar_trajectories(intent, limit) list
+        +find_by_entity(entity_type, entity_id) list
+        +find_related_nodes(node_id, depth) list
+        +search_graph(query, node_types, limit) list
+    }
+
+    class TraceDecomposer {
+        -_graph_store: GraphStore
+        +decompose(trace) DecompositionResult
+    }
+
+    class RetentionExecutor {
+        -_graph_store: GraphStore
+        +execute(policy) RetentionReport
+    }
+
+    ContextGraphQueryService --> GraphStore : uses
+    TraceDecomposer --> GraphStore : uses
+    RetentionExecutor --> GraphStore : uses

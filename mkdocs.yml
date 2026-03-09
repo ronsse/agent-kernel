@@ -1,0 +1,109 @@
+site_name: Agent Kernel
+site_description: Framework-agnostic foundation for AI agent systems
+site_url: https://agent-kernel.github.io/agent-kernel/
+repo_url: https://github.com/agent-kernel/agent-kernel
+repo_name: agent-kernel/agent-kernel
+
+validation:
+  nav:
+    omitted_files: info
+    not_found: warn
+    absolute_links: info
+  links:
+    not_found: info
+    anchors: info
+    unrecognized_links: info
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: amber
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+plugins:
+  - search
+  - gen-files:
+      scripts:
+        - scripts/gen_ref_pages.py
+  - literate-nav:
+      nav_file: SUMMARY.md
+  - section-index
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            show_symbol_type_heading: true
+            members_order: source
+            merge_init_into_class: true
+            show_if_no_docstring: false
+            signature_crossrefs: true
+  - mermaid2
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+  - pymdownx.tabbed:
+      alternate_style: true
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - Quickstart: getting-started/quickstart.md
+  - Concepts:
+      - concepts/index.md
+      - Schema Contracts: concepts/schemas.md
+      - Tool Broker: concepts/tool-broker.md
+      - Executor: concepts/executor.md
+      - Context Assembler: concepts/context-assembler.md
+      - Tracing: concepts/tracing.md
+  - Guides:
+      - guides/index.md
+      - Architecture: guides/architecture.md
+      - Framework Agnosticism: guides/framework-agnosticism.md
+      - Trust Boundaries: guides/trust-boundaries.md
+      - Thinking Escalation: guides/thinking-escalation.md
+      - Skills System: guides/skills.md
+      - Public/Private Separation: guides/public-private.md
+  - Examples:
+      - examples/index.md
+      - Minimal Agent: examples/minimal-agent.md
+      - Personal Assistant: examples/personal-assistant.md
+      - Multi-Agent Debate: examples/multi-agent-debate.md
+      - Tool Workflow: examples/tool-workflow.md
+  - API Reference: reference/
+  - Contributing: contributing.md
+  - Changelog: changelog.md

@@ -1,0 +1,59 @@
+---
+title: Context Graph — Episodic Memory & Trace Decomposition
+---
+flowchart TB
+    TRACE_INPUT["DecisionTrace<br/><i>Completed agent run</i>"]
+
+    subgraph DECOMPOSE["Trace Decomposition"]
+        TRAJ["TRAJECTORY<br/><i>Full run path</i>"]
+        DECISION["DECISION_EVENT<br/><i>Specific choices made</i>"]
+        OBS["OBSERVATION<br/><i>Runtime observations</i>"]
+    end
+
+    subgraph TOUCHED["Entities Touched"]
+        NOTE["NOTE"]
+        TASK["TASK"]
+        KPI["KPI_METRIC"]
+        CONCEPT["CONCEPT"]
+    end
+
+    subgraph TEMPORAL["Temporal Relationships"]
+        TRAJ2["Prior TRAJECTORY"]
+        DECISION2["Prior DECISION_EVENT"]
+    end
+
+    subgraph GROWTH["Growth Management"]
+        SUMMARY["SUMMARY<br/><i>Compacted history</i>"]
+        INSIGHT["INSIGHT<br/><i>Distilled learning</i>"]
+    end
+
+    %% Decomposition
+    TRACE_INPUT -->|"decompose"| TRAJ
+    TRAJ -->|"decided"| DECISION
+    TRAJ -->|"observed"| OBS
+
+    %% What trajectories touch
+    TRAJ -->|"touched"| NOTE
+    TRAJ -->|"touched"| TASK
+    TRAJ -->|"touched"| KPI
+    TRAJ -->|"produced"| NOTE
+    DECISION -->|"about"| CONCEPT
+
+    %% Temporal links
+    TRAJ -.->|"similar_to"| TRAJ2
+    DECISION -->|"preceded_by"| DECISION2
+
+    %% Growth management
+    SUMMARY -->|"summary_of"| TRAJ
+    SUMMARY -->|"supersedes"| INSIGHT
+
+    class TRACE_INPUT schema
+    class TRAJ,DECISION,OBS context
+    class NOTE,TASK,KPI,CONCEPT source
+    class TRAJ2,DECISION2 context
+    class SUMMARY,INSIGHT graphLayer
+
+    classDef schema fill:#e8a838,stroke:#b8832c,color:#fff
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00

@@ -1,0 +1,42 @@
+# =============================================================================
+# Capability: notes.get@v1
+# =============================================================================
+# Get a specific note by ID.
+
+capability_name: notes.get@v1
+description: Get a specific note by its unique identifier
+
+input_schema:
+  type: object
+  required:
+    - note_id
+  properties:
+    note_id:
+      type: string
+      description: The unique note identifier
+
+output_schema:
+  type: object
+  properties:
+    note:
+      type: object
+      description: Full note object
+    error:
+      type: string
+      description: Error message if note not found
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 100
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

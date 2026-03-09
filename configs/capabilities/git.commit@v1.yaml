@@ -1,0 +1,34 @@
+capability_name: git.commit@v1
+description: Stage and commit changes in a git repository
+adapter_type: local
+side_effect_level: local
+requires_approval_default: false
+timeout_ms: 15000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path, message]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    message:
+      type: string
+      description: Commit message
+    files:
+      type: array
+      items:
+        type: string
+      description: Specific files to stage and commit
+    all_tracked:
+      type: boolean
+      description: Stage all tracked files (git add -u)
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    commit_hash:
+      type: string
+    message:
+      type: string

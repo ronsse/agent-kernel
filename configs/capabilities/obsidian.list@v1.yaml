@@ -1,0 +1,45 @@
+# =============================================================================
+# Capability: obsidian.list@v1
+# =============================================================================
+# List notes in the Obsidian vault.
+
+capability_name: obsidian.list@v1
+description: List notes in the Obsidian vault
+
+input_schema:
+  type: object
+  properties:
+    folder:
+      type: string
+      description: Folder to list (empty for root)
+    recursive:
+      type: boolean
+      default: true
+      description: Include notes in subfolders
+
+output_schema:
+  type: object
+  properties:
+    notes:
+      type: array
+      items:
+        type: string
+      description: List of note paths
+    total_count:
+      type: integer
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 10000
+rate_limit:
+  max_calls: 50
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

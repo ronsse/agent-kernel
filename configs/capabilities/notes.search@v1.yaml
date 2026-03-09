@@ -1,0 +1,95 @@
+# =============================================================================
+# Capability: notes.search@v1
+# =============================================================================
+# Search notes using semantic and keyword search.
+
+capability_name: notes.search@v1
+description: Search notes using semantic similarity and keyword matching
+
+input_schema:
+  type: object
+  required:
+    - query
+  properties:
+    query:
+      type: string
+      minLength: 1
+      maxLength: 500
+      description: Search query (semantic + keyword)
+    limit:
+      type: integer
+      default: 10
+      maximum: 50
+      description: Maximum results to return
+    min_score:
+      type: number
+      default: 0.5
+      minimum: 0
+      maximum: 1
+      description: Minimum relevance score (0-1)
+    filters:
+      type: object
+      properties:
+        project_id:
+          type: string
+          description: Filter by project
+        tags:
+          type: array
+          items:
+            type: string
+          description: Filter by tags (any match)
+        created_after:
+          type: string
+          format: date
+          description: Created after this date
+        created_before:
+          type: string
+          format: date
+          description: Created before this date
+
+output_schema:
+  type: object
+  required:
+    - results
+  properties:
+    results:
+      type: array
+      items:
+        type: object
+        properties:
+          note_id:
+            type: string
+          title:
+            type: string
+          excerpt:
+            type: string
+            description: Relevant excerpt from the note
+          score:
+            type: number
+            description: Relevance score (0-1)
+          tags:
+            type: array
+            items:
+              type: string
+          created_at:
+            type: string
+            format: date-time
+    total_count:
+      type: integer
+      description: Total matching notes (may be > returned)
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 15000
+rate_limit:
+  max_calls: 60
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

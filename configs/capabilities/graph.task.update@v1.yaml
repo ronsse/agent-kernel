@@ -1,0 +1,59 @@
+# Graph task update capability - update task node properties
+capability_name: graph.task.update@v1
+description: Update a task node in the kernel graph by external_task_id or task_id
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.graph_adapter
+  function: graph_task_update
+
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    task_id:
+      type: string
+      description: Kernel task ID (if known)
+    external_task_id:
+      type: string
+      description: external task backend external task ID (used for lookup if task_id not provided)
+    status:
+      type: string
+      enum: [active, completed, cancelled]
+      description: Task status to set
+    completed_at:
+      type: string
+      format: date-time
+      description: When the task was completed (ISO 8601)
+    properties:
+      type: object
+      description: Additional properties to update
+      additionalProperties: true
+  anyOf:
+    - required: [task_id]
+    - required: [external_task_id]
+
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    task_id:
+      type: string
+    found:
+      type: boolean
+      description: Whether the task was found in the graph
+    message:
+      type: string
+
+side_effect: internal_write
+risk_level: low
+requires_approval_default: false
+timeout_ms: 5000
+
+tags:
+  - graph
+  - task
+  - update
+  - sync

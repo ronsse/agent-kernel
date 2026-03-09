@@ -1,0 +1,46 @@
+# Graph query capability - query nodes by type and properties
+capability_name: graph.query@v1
+description: Query graph nodes by type and/or properties
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.graph_adapter
+  function: graph_query
+
+input_schema:
+  type: object
+  properties:
+    node_type:
+      type: string
+      description: Filter by node type (e.g., "person", "project", "note")
+    properties:
+      type: object
+      description: Filter by property values
+      additionalProperties: true
+    limit:
+      type: integer
+      default: 50
+      description: Maximum results to return
+  required: []
+
+output_schema:
+  type: array
+  items:
+    type: object
+    properties:
+      node_id:
+        type: string
+      node_type:
+        type: string
+      properties:
+        type: object
+
+side_effect: none
+risk_level: low
+timeout_ms: 5000
+
+tags:
+  - graph
+  - query
+  - read-only

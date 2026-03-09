@@ -1,0 +1,44 @@
+capability_name: code.test@v1
+description: Run tests on a code repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 300000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    tool:
+      type: string
+      enum: [pytest]
+      description: Test runner to use (default pytest)
+    paths:
+      type: array
+      items:
+        type: string
+      description: Specific test paths to run
+    marker:
+      type: string
+      description: Pytest marker expression (-m)
+    keyword:
+      type: string
+      description: Pytest keyword expression (-k)
+output_schema:
+  type: object
+  properties:
+    tool:
+      type: string
+    passed:
+      type: integer
+    failed:
+      type: integer
+    errors:
+      type: integer
+    skipped:
+      type: integer
+    success:
+      type: boolean

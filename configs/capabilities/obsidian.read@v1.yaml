@@ -1,0 +1,65 @@
+# =============================================================================
+# Capability: obsidian.read@v1
+# =============================================================================
+# Read a note from the Obsidian vault.
+
+capability_name: obsidian.read@v1
+description: Read a note from the Obsidian vault by path
+
+input_schema:
+  type: object
+  required:
+    - path
+  properties:
+    path:
+      type: string
+      description: Note path relative to vault root (with or without .md extension)
+
+output_schema:
+  type: object
+  properties:
+    note:
+      type: object
+      description: Note content and metadata
+      properties:
+        path:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        frontmatter:
+          type: object
+        created:
+          type: string
+          format: date-time
+        modified:
+          type: string
+          format: date-time
+        tags:
+          type: array
+          items:
+            type: string
+        links:
+          type: array
+          items:
+            type: string
+    error:
+      type: string
+      description: Error message if note not found
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 100
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

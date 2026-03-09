@@ -1,0 +1,24 @@
+# Personal assistant agent profile
+agent_profile_id: assistant
+name: Personal Assistant
+description: Helps with daily task review and summarization
+engine: stub
+
+llm_config:
+  provider: stub
+  model: stub
+  temperature: 0.3
+
+allowed_capabilities:
+  - tasks.list@v1
+  - summary.create@v1
+
+context_policy:
+  max_tokens: 4000
+  must_cite: false
+
+approval_policy:
+  auto_approve_side_effects:
+    - none
+    - read
+    - local

@@ -1,0 +1,59 @@
+# =============================================================================
+# Capability: obsidian.create@v1
+# =============================================================================
+# Create a new note in the Obsidian vault.
+
+capability_name: obsidian.create@v1
+description: Create a new note in the Obsidian vault
+
+input_schema:
+  type: object
+  required:
+    - path
+    - content
+  properties:
+    path:
+      type: string
+      description: Note path relative to vault root (folder/filename)
+    content:
+      type: string
+      description: Note content (markdown)
+    title:
+      type: string
+      description: Optional title (added as H1 heading)
+    tags:
+      type: array
+      items:
+        type: string
+      description: Tags to add to frontmatter
+    frontmatter:
+      type: object
+      additionalProperties: true
+      description: Optional frontmatter fields to merge
+
+output_schema:
+  type: object
+  properties:
+    path:
+      type: string
+    title:
+      type: string
+    created:
+      type: string
+      format: date-time
+
+# Side effect classification
+side_effect_level: local
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 5000
+rate_limit:
+  max_calls: 30
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

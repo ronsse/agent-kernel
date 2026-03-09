@@ -1,0 +1,84 @@
+# Obsidian Source Descriptor
+# Defines the queryable schema for Obsidian vault notes
+
+source_id: obsidian
+description: "Obsidian vault notes indexed by frontmatter, tags, and timestamps."
+
+fields:
+  # Path and identification
+  - name: path
+    type: string
+    allowed_ops: [eq, prefix, contains]
+    description: "File path relative to vault root"
+    examples: ["03-Projects/Agent SDLC.md", "01-Daily/2026-01-14.md"]
+
+  - name: title
+    type: string
+    allowed_ops: [eq, contains]
+    description: "Note title (from filename or frontmatter)"
+    examples: ["Agent System Overview", "2026-01-14"]
+
+  - name: note_id
+    type: string
+    allowed_ops: [eq, in]
+    description: "Stable note ID from frontmatter"
+    examples: ["note_01JXYZABC123"]
+
+  # Timestamps
+  - name: modified_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "When the file was last modified"
+
+  - name: created_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "When the file was created"
+
+  # Tags (human and machine)
+  - name: tags
+    type: list_string
+    allowed_ops: [contains, any_in, all_in]
+    description: "Human-defined tags from frontmatter"
+    examples: ["project/agent-system", "meeting", "follow-up"]
+
+  - name: auto.tags
+    type: list_string
+    allowed_ops: [contains, any_in, all_in]
+    description: "LLM-generated tags"
+    examples: ["architecture", "workflow", "memory"]
+
+  # Frontmatter fields
+  - name: frontmatter.type
+    type: string
+    allowed_ops: [eq, in]
+    description: "Note type from frontmatter"
+    examples: ["daily", "task", "project", "meeting", "resource"]
+
+  - name: frontmatter.status
+    type: string
+    allowed_ops: [eq, in]
+    description: "Note status from frontmatter"
+    examples: ["active", "pending", "completed", "archived"]
+
+  - name: frontmatter.project
+    type: string
+    allowed_ops: [eq, in]
+    description: "Project association from frontmatter"
+    examples: ["agent-system", "data-search"]
+
+  - name: frontmatter.priority
+    type: number
+    allowed_ops: [eq, gt, lt, gte, lte]
+    description: "Priority level (1-5, 1 is highest)"
+
+  # Auto-enrichment fields
+  - name: auto.class
+    type: string
+    allowed_ops: [eq, in]
+    description: "LLM-classified document type"
+    examples: ["architecture", "meeting", "reference", "daily"]
+
+constraints:
+  can_store_text: true
+  allowed_entity_types: [note]

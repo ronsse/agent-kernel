@@ -1,0 +1,59 @@
+# =============================================================================
+# Capability: obsidian.search@v1
+# =============================================================================
+# Search notes in the Obsidian vault by content.
+
+capability_name: obsidian.search@v1
+description: Search notes in the Obsidian vault by content
+
+input_schema:
+  type: object
+  required:
+    - query
+  properties:
+    query:
+      type: string
+      description: Search query
+    folder:
+      type: string
+      description: Limit search to specific folder
+    limit:
+      type: integer
+      default: 10
+      maximum: 50
+      description: Maximum number of results
+
+output_schema:
+  type: object
+  properties:
+    results:
+      type: array
+      items:
+        type: object
+        properties:
+          path:
+            type: string
+          title:
+            type: string
+          score:
+            type: number
+          excerpt:
+            type: string
+    total_count:
+      type: integer
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_ms: 10000
+rate_limit:
+  max_calls: 50
+  window_seconds: 60
+
+# Adapter configuration
+adapter_type: local
+adapter_config: {}

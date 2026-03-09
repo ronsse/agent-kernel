@@ -1,0 +1,133 @@
+# =============================================================================
+# Obsidian Note Enrichment Configuration
+# =============================================================================
+# This config defines how Obsidian notes are enriched with LLM-generated metadata.
+# The enrichment service uses this to determine prompts, thresholds, and outputs.
+
+source_id: obsidian
+entity_types:
+  - note
+  - document
+
+description: |
+  Configuration for enriching Obsidian vault notes. Extracts tags, classification,
+  and summaries using LLM analysis. All output is written to the `auto:` namespace
+  in frontmatter, keeping human-authored content separate.
+
+# =============================================================================
+# Prompt Configuration
+# =============================================================================
+system_prompt: |
+  You are an expert at analyzing notes and documents to suggest metadata.
+
+  Your task is to analyze the content and suggest:
+  1. **Tags**: 2-5 relevant topic tags (lowercase, hyphenated)
+  2. **Classification**: A single category that best describes the note type
+  3. **Summary**: A concise 1-2 sentence summary that captures the main topic and purpose
+
+  Available classifications: {classifications}
+
+  IMPORTANT RULES:
+  - Tags should be general topics, not specific to the note content
+  - Use existing tag patterns if the note has human tags
+  - Classification must be from the provided list
+  - Summary MUST always be provided - it will be used for semantic search
+  - Summary should be semantic-rich: include key concepts, entities, and relationships
+  - Consider [[wiki-links]] as important relationships between concepts
+  - Be conservative - only suggest high-confidence tags
+
+  Respond in JSON format:
+  {{
+    "tags": ["tag1", "tag2"],
+    "class": "classification",
+    "summary": "Concise summary capturing the main topic, key concepts, and purpose.",
+    "tag_confidence": 0.85,
+    "class_confidence": 0.90
+  }}
+
+user_prompt_template: |
+  Analyze this {entity_type} and suggest metadata:
+
+  ---
+  Title: {title}
+  {existing_tags_section}
+  ---
+
+  {content}
+
+  ---
+
+  Respond with JSON only, no markdown formatting.{summary_instruction}
+
+# =============================================================================
+# Output Schema
+# =============================================================================
+extract_summary: true
+extract_tags: true
+extract_classification: true
+
+classifications:
+  - meeting
+  - architecture
+  - reference
+  - journal
+  - project
+  - brainstorm
+  - documentation
+  - task-list
+  - research
+  - notes
+  - planning
+  - review
+  - retrospective
+
+# =============================================================================
+# LLM Settings
+# =============================================================================
+# Model override (null = use default from settings)
+model: null
+
+# Temperature (lower = more consistent)
+temperature: 0.3
+
+# Max content characters to send to LLM
+max_content_length: 4000
+
+# =============================================================================
+# Thresholds
+# =============================================================================
+thresholds:
+  # Size thresholds (0 = disabled)
+  min_char_count: 500
+  min_word_count: 100
+
+  # Entity types to exclude
+  excluded_entity_types: []
+
+  # Path prefixes to exclude from summarization
+  excluded_paths:
+    - "Daily Notes/"
+    - "Journal/"
+    - "Templates/"
+    - ".obsidian/"
+
+  # Tags that exclude a note from summarization
+  excluded_tags:
+    - no-summary
+    - private
+    - draft
+    - wip
+
+  # Classifications to exclude from summarization
+  excluded_classifications:
+    - journal
+    - daily-note
+
+  # Tags that force summarization even if otherwise excluded
+  force_include_tags:
+    - summarize
+    - important
+    - publish
+
+  # Behavior when excluded: skip_entirely | enrich_no_summary
+  skip_behavior: enrich_no_summary

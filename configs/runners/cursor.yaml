@@ -1,0 +1,22 @@
+runner_id: cursor
+type: cursor_cli
+bin_candidates: ["agent", "cursor-agent", "cursor_agent"]
+default_output_format: stream-json
+default_timeout_ms: 300000
+
+# NOTE: Cursor CLI does not work in the FanDuel VPC environment on company laptops.
+# Disable in that environment via CURSOR_RUNNER_ENABLED=false.
+
+# Cursor supports:
+# - print mode (-p/--print)
+# - output formats (text/json/stream-json)
+# - write/apply via --force
+# - history via --resume <thread id>
+supports:
+  force_apply: true
+  resume: true
+  stream_partial_output: true
+
+# Optional environment variable to locate the binary explicitly.
+# If set, overrides bin_candidates.
+bin_env_var: CURSOR_AGENT_BIN

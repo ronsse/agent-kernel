@@ -1,0 +1,145 @@
+# =============================================================================
+# Capability: trace_analysis.summarize@v1
+# =============================================================================
+# Summarize patterns and statistics across multiple decision traces.
+
+capability_id: trace_analysis.summarize@v1
+capability_name: trace_analysis.summarize@v1
+description: |
+  Analyze and summarize patterns across decision traces. Provides statistics
+  on success rates, errors, performance, and tool usage patterns.
+
+category: observability
+version: "1.0.0"
+
+# Input schema
+input_schema:
+  type: object
+  properties:
+    trace_ids:
+      type: array
+      items:
+        type: string
+      description: Specific trace IDs to summarize (if provided, other filters ignored)
+    agent_profile_id:
+      type: string
+      description: Summarize traces for a specific agent
+    workflow_id:
+      type: string
+      description: Summarize traces for a specific workflow
+    since_hours:
+      type: integer
+      minimum: 1
+      maximum: 720
+      default: 24
+      description: Summarize traces from the last N hours
+    focus:
+      type: string
+      enum: [errors, performance, decisions, tool_usage, all]
+      default: all
+      description: What aspect to focus on
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    summary:
+      type: object
+      properties:
+        total_traces:
+          type: integer
+        time_range:
+          type: string
+        agent_profiles:
+          type: array
+          items:
+            type: string
+        workflows:
+          type: array
+          items:
+            type: string
+    performance:
+      type: object
+      properties:
+        avg_duration_ms:
+          type: number
+        median_duration_ms:
+          type: number
+        max_duration_ms:
+          type: integer
+        avg_tool_calls:
+          type: number
+    outcomes:
+      type: object
+      properties:
+        completed:
+          type: integer
+        failed:
+          type: integer
+        partial:
+          type: integer
+        needs_approval:
+          type: integer
+        success_rate:
+          type: number
+    errors:
+      type: object
+      properties:
+        total_errors:
+          type: integer
+        error_rate:
+          type: number
+        common_errors:
+          type: array
+          items:
+            type: object
+            properties:
+              error_message:
+                type: string
+              count:
+                type: integer
+    tool_usage:
+      type: object
+      properties:
+        most_used_capabilities:
+          type: array
+          items:
+            type: object
+            properties:
+              capability:
+                type: string
+              count:
+                type: integer
+        capability_success_rates:
+          type: object
+    reasoning:
+      type: object
+      properties:
+        avg_tier:
+          type: number
+        escalation_rate:
+          type: number
+        critic_usage_rate:
+          type: number
+    insights:
+      type: array
+      items:
+        type: string
+      description: Key insights and patterns identified
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_seconds: 60
+rate_limit:
+  requests_per_minute: 30
+
+# Adapter configuration
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.trace_adapter
+  function: summarize_traces

@@ -1,0 +1,20 @@
+capability_name: skills.search@v1
+description: Search available skill manifests by query
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 30000
+input_schema:
+  type: object
+  properties:
+    query:
+      type: string
+    top_k:
+      type: integer
+      minimum: 1
+      maximum: 50
+  required:
+    - query
+output_schema:
+  type: object
+  additionalProperties: true

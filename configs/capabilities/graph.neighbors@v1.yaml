@@ -1,0 +1,52 @@
+# Graph neighbors capability - get subgraph around seed nodes
+capability_name: graph.neighbors@v1
+description: Get nodes and edges within N hops of seed nodes
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.graph_adapter
+  function: graph_neighbors
+
+input_schema:
+  type: object
+  properties:
+    seed_ids:
+      type: array
+      items:
+        type: string
+      description: Starting node IDs for traversal
+    depth:
+      type: integer
+      default: 2
+      minimum: 1
+      maximum: 4
+      description: Number of hops to traverse
+    edge_types:
+      type: array
+      items:
+        type: string
+      description: Optional filter for edge types to follow
+  required:
+    - seed_ids
+
+output_schema:
+  type: object
+  properties:
+    nodes:
+      type: array
+      items:
+        type: object
+    edges:
+      type: array
+      items:
+        type: object
+
+side_effect: none
+risk_level: low
+timeout_ms: 10000
+
+tags:
+  - graph
+  - traversal
+  - read-only

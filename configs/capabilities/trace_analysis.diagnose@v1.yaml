@@ -1,0 +1,133 @@
+# =============================================================================
+# Capability: trace_analysis.diagnose@v1
+# =============================================================================
+# Diagnose issues and anomalies in decision traces.
+
+capability_id: trace_analysis.diagnose@v1
+capability_name: trace_analysis.diagnose@v1
+description: |
+  Diagnose problems in decision traces by analyzing error patterns,
+  performance anomalies, and execution issues. Provides root cause
+  analysis and recommendations.
+
+category: observability
+version: "1.0.0"
+
+# Input schema
+input_schema:
+  type: object
+  properties:
+    trace_id:
+      type: string
+      description: Specific trace to diagnose
+    symptom:
+      type: string
+      enum: [failure, timeout, error, slow_performance, approval_denied, no_results, unexpected_outcome]
+      description: The symptom to investigate
+    workflow_id:
+      type: string
+      description: Diagnose recent failures for a workflow
+    agent_profile_id:
+      type: string
+      description: Diagnose issues for a specific agent
+    since_hours:
+      type: integer
+      minimum: 1
+      maximum: 168
+      default: 24
+      description: Look back N hours for pattern analysis
+    include_context:
+      type: boolean
+      default: true
+      description: Include context details in diagnosis
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    diagnosis:
+      type: object
+      properties:
+        symptom:
+          type: string
+        affected_traces:
+          type: integer
+        first_occurrence:
+          type: string
+          format: date-time
+        last_occurrence:
+          type: string
+          format: date-time
+        frequency:
+          type: string
+          enum: [isolated, occasional, frequent, persistent]
+    root_cause:
+      type: object
+      properties:
+        category:
+          type: string
+          enum: [configuration, data, external_service, tool_error, planning_error, timeout, approval, unknown]
+        description:
+          type: string
+        evidence:
+          type: array
+          items:
+            type: string
+    error_details:
+      type: array
+      items:
+        type: object
+        properties:
+          trace_id:
+            type: string
+          timestamp:
+            type: string
+          error_code:
+            type: string
+          error_message:
+            type: string
+          capability:
+            type: string
+    performance_analysis:
+      type: object
+      properties:
+        avg_duration_normal_ms:
+          type: number
+        avg_duration_affected_ms:
+          type: number
+        slowest_step:
+          type: string
+    recommendations:
+      type: array
+      items:
+        type: object
+        properties:
+          priority:
+            type: string
+            enum: [critical, high, medium, low]
+          action:
+            type: string
+          rationale:
+            type: string
+    related_traces:
+      type: array
+      items:
+        type: string
+      description: Other traces showing similar patterns
+
+# Side effect classification
+side_effect_level: none
+
+# Default approval requirement
+requires_approval_default: false
+
+# Execution limits
+timeout_seconds: 60
+rate_limit:
+  requests_per_minute: 20
+
+# Adapter configuration
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.trace_adapter
+  function: diagnose_traces

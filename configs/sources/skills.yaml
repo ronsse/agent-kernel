@@ -1,0 +1,36 @@
+source_id: skills
+description: "Agent Skills repository (SKILL.md documents)"
+
+fields:
+  - name: skill_id
+    type: string
+    allowed_ops: [eq, in, contains, prefix]
+    description: "Stable skill identifier"
+    examples: ["daily-planner-synthesis"]
+  - name: name
+    type: string
+    allowed_ops: [eq, contains]
+    description: "Skill name"
+  - name: description
+    type: string
+    allowed_ops: [contains]
+    description: "Short skill description"
+  - name: allowed_tools
+    type: list_string
+    allowed_ops: [contains, any_in]
+    description: "Tools the skill allows (if specified)"
+  - name: tags
+    type: list_string
+    allowed_ops: [contains, any_in, all_in]
+    description: "Optional skill tags"
+    examples: ["planning", "calendar", "tasks"]
+
+  - name: updated_at
+    type: datetime
+    allowed_ops: [gt, lt, gte, lte]
+    description: "Last modified timestamp"
+
+constraints:
+  can_store_text: true
+  allowed_entity_types: [skill]
+  requires_live_fetch: false

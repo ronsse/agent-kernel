@@ -1,0 +1,32 @@
+capability_name: git.diff@v1
+description: Show diff output for a git repository
+adapter_type: local
+side_effect_level: none
+requires_approval_default: false
+timeout_ms: 15000
+input_schema:
+  type: object
+  additionalProperties: false
+  required: [repo_path]
+  properties:
+    repo_path:
+      type: string
+      description: Absolute path to the git repository
+    ref:
+      type: string
+      description: Git ref to diff against (e.g. HEAD~1, main)
+    staged:
+      type: boolean
+      description: Show only staged changes
+    path_filter:
+      type: string
+      description: Limit diff to a specific file path
+output_schema:
+  type: object
+  properties:
+    diff:
+      type: string
+    truncated:
+      type: boolean
+    stat_summary:
+      type: string

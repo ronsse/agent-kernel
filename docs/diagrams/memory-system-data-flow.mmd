@@ -1,0 +1,82 @@
+---
+title: Agent Kernel — Data Flow Pipeline
+---
+flowchart LR
+    subgraph SOURCES["External Sources"]
+        Vault["Obsidian Vault<br/><i>.md files</i>"]
+        Calendar["Calendar<br/><i>Outlook / Google</i>"]
+        TaskSys["Task Systems<br/><i>Todoist / Linear</i>"]
+    end
+
+    subgraph INGEST["Ingestion Pipeline"]
+        Watcher["VaultWatcher<br/><i>Polling + debounce</i>"]
+        Indexer["VaultIndexer"]
+
+        S1["<b>Stage 1</b><br/>Deterministic Parse<br/><i>frontmatter, wikilinks,<br/>tags, checkboxes</i>"]
+        S2["<b>Stage 2</b><br/>Embedding<br/><i>chunk → embed</i>"]
+        S3["<b>Stage 3</b><br/>LLM Enrichment<br/><i>auto.tags, auto.class</i>"]
+
+        TaskParser["TaskParser<br/><i>Checkbox extraction</i>"]
+        IndexState["IndexStateStore<br/><i>Consistency tracking</i>"]
+
+        Watcher -->|"file change"| Indexer
+        Indexer --> S1
+        S1 --> S2
+        S2 --> S3
+        Indexer -->|"- [ ] items"| TaskParser
+        Indexer -.->|"status"| IndexState
+    end
+
+    subgraph STORES["Memory Stores"]
+        DocStore["<b>DocumentStore</b><br/>FTS5 full-text search"]
+        VecStore["<b>VectorStore</b><br/>Semantic similarity"]
+        GraphStore["<b>GraphStore</b><br/>Entities + relationships"]
+        EntityStore["<b>EntityStore</b><br/>Cross-source mapping"]
+        ExperienceStore["<b>ExperienceStore</b><br/>Cases + Lessons"]
+    end
+
+    subgraph ASSEMBLY["Context Assembly"]
+        KW["Keyword Search"]
+        SEM["Semantic Search"]
+        GQ["Graph Query<br/>+ Freshness"]
+        EQ["Experience<br/>Retrieval"]
+        RANK["Deduplicate<br/>Rank<br/>Budget Trim"]
+
+        KW --> RANK
+        SEM --> RANK
+        GQ --> RANK
+        EQ --> RANK
+    end
+
+    PKT["<b>ContextPacket</b><br/><i>Bounded agent input</i>"]
+
+    %% Source → Ingest
+    Vault -->|"watch"| Watcher
+    Calendar -.->|"import"| EntityStore
+    TaskSys -.->|"sync"| EntityStore
+
+    %% Ingest → Stores
+    S1 -->|"content"| DocStore
+    S1 -->|"nodes + edges"| GraphStore
+    S2 -->|"vectors"| VecStore
+    S3 -.->|"auto.* writeback"| Vault
+    TaskParser -->|"TASK nodes"| GraphStore
+
+    %% Stores → Assembly
+    DocStore --> KW
+    VecStore --> SEM
+    GraphStore --> GQ
+    ExperienceStore --> EQ
+
+    %% Assembly → Output
+    RANK --> PKT
+
+    classDef store fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    classDef schema fill:#e8a838,stroke:#b8832c,color:#fff
+    classDef ingest fill:#5cb85c,stroke:#3d7e3d,color:#fff
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+
+    class DocStore,VecStore,GraphStore,EntityStore,ExperienceStore store
+    class PKT schema
+    class Watcher,Indexer,S1,S2,S3,TaskParser,IndexState ingest
+    class KW,SEM,GQ,EQ,RANK context

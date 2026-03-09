@@ -1,0 +1,8 @@
+library_id: context_curator
+mappings:
+  context.evaluate@v1:
+    import: "agent_kernel.tools.library.context_curator:evaluate_effectiveness"
+  context.curate@v1:
+    import: "agent_kernel.tools.library.context_curator:curate_context"
+  context.profile.update@v1:
+    import: "agent_kernel.tools.library.context_curator:update_context_profile"

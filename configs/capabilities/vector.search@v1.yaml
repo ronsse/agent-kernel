@@ -1,0 +1,58 @@
+# Vector search capability - semantic similarity search
+capability_name: vector.search@v1
+description: Search for semantically similar items using embeddings
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.vector_adapter
+  function: vector_search
+
+input_schema:
+  type: object
+  properties:
+    query:
+      type: string
+      description: Text query to search for (will be embedded)
+    embedding:
+      type: array
+      items:
+        type: number
+      description: Pre-computed embedding vector (alternative to query)
+    top_k:
+      type: integer
+      default: 10
+      minimum: 1
+      maximum: 100
+      description: Number of results to return
+    filters:
+      type: object
+      description: Metadata filters to apply
+      additionalProperties: true
+  # Either query or embedding required
+  oneOf:
+    - required: [query]
+    - required: [embedding]
+
+output_schema:
+  type: array
+  items:
+    type: object
+    properties:
+      item_id:
+        type: string
+      score:
+        type: number
+        description: Similarity score (0-1, higher is more similar)
+      metadata:
+        type: object
+
+side_effect: none
+risk_level: low
+timeout_ms: 5000
+
+tags:
+  - vector
+  - search
+  - semantic
+  - read-only

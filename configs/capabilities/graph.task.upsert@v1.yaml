@@ -1,0 +1,89 @@
+# Graph task upsert capability - create or update task nodes
+capability_name: graph.task.upsert@v1
+description: Create or update a task node in the kernel graph from external task backend
+version: "1.0.0"
+
+adapter_type: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.graph_adapter
+  function: graph_task_upsert
+
+input_schema:
+  type: object
+  additionalProperties: false
+  properties:
+    external_task_id:
+      type: string
+      description: external task backend task ID (used as lookup key) - REQUIRED
+    content:
+      type: string
+      description: Task content/title - REQUIRED, do not use null
+    description:
+      type: string
+      description: Task description
+    status:
+      type: string
+      enum: [active, completed]
+      default: active
+      description: Task status
+    priority:
+      type: integer
+      minimum: 1
+      maximum: 4
+      description: Priority level (1=normal, 4=urgent)
+    due_date:
+      type: string
+      format: date
+      description: Due date (YYYY-MM-DD)
+    labels:
+      type: array
+      items:
+        type: string
+      description: Labels/tags from external task backend
+    external_project:
+      type: string
+      description: external task backend project name
+    kernel_project_id:
+      type: string
+      description: Kernel project ID to link to
+    source_note_id:
+      type: string
+      description: Source note ID if task originated from Obsidian
+    created_at:
+      type: string
+      format: date-time
+      description: When the task was created
+    completed_at:
+      type: string
+      format: date-time
+      description: When the task was completed (if applicable)
+  required: [external_task_id, content]
+
+output_schema:
+  type: object
+  properties:
+    success:
+      type: boolean
+    task_id:
+      type: string
+      description: Kernel task ID (generated or existing)
+    action:
+      type: string
+      enum: [created, updated, unchanged]
+      description: What action was taken
+    external_task_id:
+      type: string
+    message:
+      type: string
+
+side_effect: internal_write
+risk_level: low
+requires_approval_default: false
+timeout_ms: 5000
+
+tags:
+  - graph
+  - task
+  - upsert
+  - sync
+  - task-sync

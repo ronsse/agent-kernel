@@ -1,0 +1,58 @@
+# Task Projects Capability (v1.0.5)
+# Allows agents to list and query projects
+
+capability_id: tasks.projects@v1
+name: List Projects
+description: |
+  List all projects from the task backend (external task backend).
+  Returns project names, IDs, and task counts.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  properties:
+    include_archived:
+      type: boolean
+      default: false
+      description: Include archived projects
+    include_task_counts:
+      type: boolean
+      default: true
+      description: Include task counts per project
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    projects:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          scope:
+            type: string
+          is_inbox:
+            type: boolean
+          task_count:
+            type: integer
+    count:
+      type: integer
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 60
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: list_projects

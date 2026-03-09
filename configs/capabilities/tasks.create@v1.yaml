@@ -1,0 +1,76 @@
+# Task Create Capability (v1.0.5)
+# Allows agents to create new tasks
+
+capability_id: tasks.create@v1
+name: Create Task
+description: |
+  Create a new task in the kernel and sync to external task backend.
+  Returns an action that requires approval before execution.
+
+category: task_management
+version: "1.0.5"
+
+# Input schema
+input_schema:
+  type: object
+  required: [title]
+  properties:
+    title:
+      type: string
+      description: Task title/content
+      minLength: 1
+      maxLength: 500
+    description:
+      type: string
+      description: Extended description
+      maxLength: 2000
+    project:
+      type: string
+      description: Project name to assign to
+    priority:
+      type: string
+      enum: [p1, p2, p3, p4]
+      default: p4
+      description: Priority (p1=urgent, p4=low)
+    scope:
+      type: string
+      enum: [work, personal]
+      default: personal
+    labels:
+      type: array
+      items:
+        type: string
+      description: Labels to apply
+    due_date:
+      type: string
+      format: date
+      description: Due date (YYYY-MM-DD)
+    due_string:
+      type: string
+      description: Natural language due (e.g., "tomorrow", "next Monday")
+
+# Output schema
+output_schema:
+  type: object
+  properties:
+    action_id:
+      type: string
+      description: Action ID for approval
+    task_title:
+      type: string
+    requires_approval:
+      type: boolean
+    message:
+      type: string
+
+# Execution config
+requires_approval: false
+rate_limit:
+  requests_per_minute: 30
+timeout_seconds: 30
+
+# Adapter
+adapter: local_function
+adapter_config:
+  module: agent_kernel.tools.adapters.task_adapter
+  function: create_task

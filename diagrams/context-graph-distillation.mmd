@@ -1,0 +1,74 @@
+---
+title: Knowledge Distillation Pipeline
+---
+flowchart LR
+    subgraph CAPTURE["Capture"]
+        TRACE["DecisionTrace"]
+        SSOT["Table Metadata"]
+        MANUAL["Manual Entry"]
+        FEEDS["Jira / Confluence"]
+    end
+
+    subgraph DECOMPOSE["Decompose"]
+        TD["TraceDecomposer"]
+        SC["Metadata Connector"]
+        ME["ManualExtractor"]
+        IO["IngestionOrchestrator"]
+    end
+
+    subgraph GRAPH["Graph Representation"]
+        TRAJ["TRAJECTORY"]
+        DE["DECISION_EVENT"]
+        ENTITY["Business Entities"]
+        COOC["CO_OCCURS_WITH<br/>edges (weighted)"]
+    end
+
+    subgraph DISTILL["Distillation"]
+        EB["ExperienceBridge"]
+        CASES["ExperienceCases<br/>→ Lessons"]
+        COMPACT["CompactionEngine"]
+    end
+
+    subgraph KNOWLEDGE["Knowledge Layer"]
+        INSIGHT["INSIGHT nodes"]
+        PATTERN["PATTERN nodes"]
+        PRACTICE["PRACTICE nodes"]
+        SUMMARY["SUMMARY nodes"]
+    end
+
+    TRACE --> TD
+    SSOT --> SC
+    MANUAL --> ME
+    FEEDS --> IO
+
+    TD --> TRAJ
+    TD --> DE
+    TD --> COOC
+    SC --> ENTITY
+    ME --> ENTITY
+    ME -.->|"curated insights"| INSIGHT
+    IO --> TRAJ
+
+    TRAJ --> EB
+    DE --> EB
+    COOC --> EB
+    EB --> CASES
+
+    CASES --> INSIGHT
+    CASES --> PRACTICE
+    COOC --> PATTERN
+
+    TRAJ --> COMPACT
+    COMPACT --> SUMMARY
+
+    class TRACE,SSOT,MANUAL,FEEDS source
+    class TD,SC,ME,IO governance
+    class TRAJ,DE,ENTITY,COOC memory
+    class EB,CASES,COMPACT context
+    class INSIGHT,PATTERN,PRACTICE,SUMMARY graphLayer
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00

@@ -1,0 +1,73 @@
+---
+title: Agent Kernel — Feedback & Learning Loop
+---
+flowchart LR
+    DecisionTrace["<b>DecisionTrace</b><br/><i>Full audit record</i>"]
+
+    subgraph PERSIST["Trace Persistence"]
+        TraceStore["<b>TraceStore</b><br/><i>SQLite + JSONL sinks</i>"]
+        EventLog["<b>EventLog</b><br/><i>Immutable append-only</i>"]
+    end
+
+    subgraph DECOMPOSE["Context Graph Decomposition"]
+        CGHooks["ContextGraphHooks<br/><i>Auto-decompose traces</i>"]
+        CGIngest["ContextGraphIngestion<br/><i>Trace → nodes + edges</i>"]
+        CGHooks --> CGIngest
+    end
+
+    GraphStore["<b>GraphStore</b><br/><i>Entities + relationships</i>"]
+
+    subgraph LEARN["Experience Learning"]
+        Evaluate["Outcome Evaluation<br/><i>success / partial / failure</i>"]
+        Cases["ExperienceCases<br/><i>What happened</i>"]
+        Lessons["Lessons Learned<br/><i>Actionable guidance</i>"]
+        Playbooks["Playbooks<br/><i>Versioned best practices</i>"]
+        Evaluate --> Cases
+        Cases --> Lessons
+        Cases --> Playbooks
+    end
+
+    ExperienceStore["<b>ExperienceStore</b><br/><i>Cases + Lessons + Playbooks</i>"]
+
+    subgraph ADAPTIVE["Adaptive Optimization"]
+        AdaptCtrl["AdaptiveThinkingController<br/><i>Trace-based tier tuning</i>"]
+        SuccessRouter["SuccessRateRouter<br/><i>Model routing</i>"]
+        CostDetect["CostAnomalyDetector<br/><i>Spike detection</i>"]
+    end
+
+    NEXT["Next Context Assembly<br/><i>Enriched with experience</i>"]
+
+    %% Trace → Persistence
+    DecisionTrace -->|"persist"| TraceStore
+    DecisionTrace -->|"events"| EventLog
+
+    %% Trace → Graph Decomposition
+    DecisionTrace -->|"decompose"| CGHooks
+    CGIngest -->|"TRAJECTORY +<br/>DECISION_EVENT"| GraphStore
+
+    %% Trace → Experience Learning
+    DecisionTrace -->|"evaluate"| Evaluate
+    Lessons --> ExperienceStore
+    Playbooks --> ExperienceStore
+
+    %% Trace → Adaptive Optimization
+    TraceStore -->|"historical stats"| AdaptCtrl
+    TraceStore -->|"success rates"| SuccessRouter
+    TraceStore -->|"cost data"| CostDetect
+
+    %% Feedback into next run
+    GraphStore -->|"knowledge nodes"| NEXT
+    ExperienceStore -->|"lessons + playbooks"| NEXT
+    AdaptCtrl -->|"tier adjustment"| NEXT
+
+    classDef store fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    classDef schema fill:#e8a838,stroke:#b8832c,color:#fff
+    classDef engine fill:#7b68ee,stroke:#5a4cba,color:#fff
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+
+    class TraceStore,EventLog,GraphStore,ExperienceStore store
+    class DecisionTrace schema
+    class AdaptCtrl,SuccessRouter,CostDetect engine
+    class CGHooks,CGIngest,Evaluate,Cases,Lessons,Playbooks context
+    class NEXT governance

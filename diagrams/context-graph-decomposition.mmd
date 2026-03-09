@@ -1,0 +1,48 @@
+---
+title: Trace Decomposition Algorithm (9 Steps)
+---
+flowchart TB
+    TRACE["DecisionTrace<br/>(input)"]
+
+    S1["1. Create TRAJECTORY node<br/>intent, agent, workflow, outcome"]
+    S2["2. Extract entities from context_refs<br/>Note, Task, Project references"]
+    S3["3. Create TRAJECTORY_TOUCHED edges<br/>Trajectory → each entity (step_order)"]
+    S4["4. Create DECISION_EVENT nodes<br/>One per ToolCallRecord"]
+    S5["5. Create TRAJECTORY_DECIDED edges<br/>Trajectory → each DecisionEvent"]
+    S6["6. Create DECISION_ABOUT edges<br/>DecisionEvent → affected entities"]
+    S7["7. Create PRECEDED_BY edges<br/>Causal chain between events"]
+    S8["8. Create TRAJECTORY_PRODUCED edges<br/>Trajectory → outcome artifacts"]
+    S9["9. Update CO_OCCURS_WITH edges<br/>Increment weight for entity pairs"]
+
+    RESULT["DecompositionResult<br/>trajectory_node_id<br/>decision_event_ids<br/>entities_linked<br/>co_occurrence_edges_updated"]
+
+    TRACE --> S1
+    S1 --> S2
+    S2 --> S3
+    S3 --> S4
+    S4 --> S5
+    S5 --> S6
+    S6 --> S7
+    S7 --> S8
+    S8 --> S9
+    S9 --> RESULT
+
+    GS["GraphStore"]
+    S1 -->|"upsert_node"| GS
+    S3 -->|"upsert_edge"| GS
+    S4 -->|"upsert_node"| GS
+    S5 -->|"upsert_edge"| GS
+    S6 -->|"upsert_edge"| GS
+    S7 -->|"upsert_edge"| GS
+    S8 -->|"upsert_edge"| GS
+    S9 -->|"upsert_edge"| GS
+
+    class TRACE,RESULT agent
+    class S1,S4 graphLayer
+    class S2,S3,S5,S6,S7,S8,S9 context
+    class GS memory
+
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a

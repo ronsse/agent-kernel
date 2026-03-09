@@ -1,0 +1,71 @@
+---
+title: Agent Kernel — Workflow Execution Cycle
+---
+flowchart TB
+    subgraph ORCH["Workflow Orchestration"]
+        Runner["<b>WorkflowRunner</b><br/><i>State machine + checkpoints</i>"]
+        WfStore["WorkflowRunStore<br/><i>Persistent run state</i>"]
+        Runner -.->|"checkpoints"| WfStore
+    end
+
+    subgraph CONTEXT["Context Assembly"]
+        Assembler["<b>ContextAssembler</b>"]
+        CGQuery["ContextGraphQueryService<br/><i>Knowledge + episodic memory</i>"]
+        ExpHooks["ExperienceMemoryHooks<br/><i>Similar past situations</i>"]
+
+        CGQuery -->|"knowledge nodes"| Assembler
+        ExpHooks -->|"lessons + playbooks"| Assembler
+    end
+
+    ContextPacket["<b>ContextPacket</b><br/><i>Bounded agent input</i>"]
+
+    subgraph ENGINES["Agent Engines (Pluggable)"]
+        EngineProto["<b>AgentEngine Protocol</b><br/><i>propose(context, profile) → Plan</i>"]
+        CustomEng["CustomEngine<br/><i>Direct LLM</i>"]
+        LangGraphEng["LangGraphAdapter<br/><i>Graph-based</i>"]
+        ThinkCtrl["ThinkingPolicyController<br/><i>Tier selection + escalation</i>"]
+
+        EngineProto --- CustomEng
+        EngineProto --- LangGraphEng
+    end
+
+    Plan["<b>Plan</b><br/><i>Actions + citations + risk</i>"]
+
+    subgraph EXEC["Execution Layer"]
+        Executor["<b>DeterministicExecutor</b><br/><i>Validate → Gate → Execute</i>"]
+        Broker["<b>ToolBroker</b><br/><i>Capability registry<br/>Retry + Circuit breaker</i>"]
+        ApprovalGate["ApprovalGate<br/><i>Persist + resolve</i>"]
+
+        Executor -->|"per action"| Broker
+        Executor -->|"external writes"| ApprovalGate
+    end
+
+    DecisionTrace["<b>DecisionTrace</b><br/><i>Full audit record</i>"]
+
+    %% Runner orchestrates the cycle
+    Runner -->|"1. assemble"| Assembler
+    Runner -->|"2. propose"| EngineProto
+    Runner -->|"3. execute"| Executor
+    Runner -->|"4. trace"| DecisionTrace
+
+    %% Main flow
+    Assembler -->|"bounded input"| ContextPacket
+    ContextPacket -->|"+ AgentProfile"| EngineProto
+    ThinkCtrl -->|"ThinkingPolicy"| EngineProto
+    EngineProto -->|"structured output"| Plan
+    Plan --> Executor
+    Executor -->|"ToolCallRecords"| DecisionTrace
+
+    classDef store fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    classDef schema fill:#e8a838,stroke:#b8832c,color:#fff
+    classDef engine fill:#7b68ee,stroke:#5a4cba,color:#fff
+    classDef exec fill:#dc5c5c,stroke:#a84444,color:#fff
+    classDef runner fill:#9b59b6,stroke:#7d3f98,color:#fff
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+
+    class DocStore,VecStore,GraphStore store
+    class ContextPacket,Plan,DecisionTrace schema
+    class EngineProto,CustomEng,LangGraphEng,ThinkCtrl engine
+    class Executor,Broker,ApprovalGate exec
+    class Runner,WfStore runner
+    class Assembler,CGQuery,ExpHooks context

@@ -1,0 +1,224 @@
+---
+title: Agent Kernel — Memory System Architecture
+---
+graph TB
+    %% ═══════════════════════════════════════════════
+    %% EXTERNAL SOURCES
+    %% ═══════════════════════════════════════════════
+    subgraph External["External Sources"]
+        Vault["Obsidian Vault<br/><i>.md files</i>"]
+        Calendar["Calendar<br/><i>Outlook / Google</i>"]
+        TaskSys["Task Systems<br/><i>Todoist / Linear</i>"]
+    end
+
+    %% ═══════════════════════════════════════════════
+    %% INGESTION PIPELINE
+    %% ═══════════════════════════════════════════════
+    subgraph Ingestion["Ingestion Pipeline"]
+        direction TB
+        Watcher["VaultWatcher<br/><i>services/vault_watcher.py</i><br/>Polling + debounce"]
+        Indexer["VaultIndexer<br/><i>services/vault_indexer.py</i>"]
+
+        subgraph Stages["3-Stage Processing"]
+            direction LR
+            S1["<b>Stage 1</b><br/>Deterministic Parse<br/><i>frontmatter, wikilinks,<br/>tags, checkboxes</i>"]
+            S2["<b>Stage 2</b><br/>Embedding<br/><i>chunk → embed →<br/>vector upsert</i>"]
+            S3["<b>Stage 3</b><br/>LLM Enrichment<br/><i>auto.tags, auto.class,<br/>auto.summary</i>"]
+            S1 --> S2 --> S3
+        end
+
+        TaskParser["TaskParser<br/><i>services/task_parser.py</i><br/>Checkbox extraction"]
+        Enrichment["EnrichmentService<br/><i>services/enrichment.py</i><br/>LLM-powered auto.* fields"]
+        EmbeddingSvc["EmbeddingService<br/><i>services/embedding.py</i><br/>Text → vectors"]
+        IndexState["IndexStateStore<br/><i>services/index_state.py</i><br/>Eventual consistency tracking"]
+
+        Watcher -->|"file change"| Indexer
+        Indexer --> Stages
+        Indexer -->|"- [ ] items"| TaskParser
+        Indexer -->|"content"| Enrichment
+        Indexer -->|"chunks"| EmbeddingSvc
+        Indexer -.->|"status"| IndexState
+    end
+
+    %% ═══════════════════════════════════════════════
+    %% MEMORY STORES (Core)
+    %% ═══════════════════════════════════════════════
+    subgraph Memory["Memory Subsystem — Kernel-Owned"]
+        direction TB
+
+        subgraph PrimaryStores["Primary Stores"]
+            DocStore["<b>DocumentStore</b><br/><i>memory/document_store.py</i><br/>FTS5 full-text search<br/>Content + metadata"]
+            VecStore["<b>VectorStore</b><br/><i>memory/vector_store.py</i><br/>Semantic similarity<br/>SQLite or LanceDB"]
+            GraphStore["<b>GraphStore</b><br/><i>memory/graph_store.py</i><br/>Entities + relationships<br/>Recursive CTE traversal"]
+        end
+
+        subgraph AuditStores["Audit & Events"]
+            EventLog["<b>EventLog</b><br/><i>memory/event_log.py</i><br/>Immutable append-only<br/>All system events"]
+            TraceStore["<b>TraceStore</b><br/><i>tracing/trace_store.py</i><br/>DecisionTrace records<br/>Multi-sink (SQLite + JSONL)"]
+        end
+
+        subgraph EntityLayer["Universal Entity Layer (v1.0.4)"]
+            EntityStore["<b>EntityStore</b><br/><i>memory/entity_store.py</i><br/>Cross-source entity mapping<br/>Canonical IDs"]
+            ExperienceStore["<b>ExperienceStore</b><br/><i>memory/experience_store.py</i><br/>Cases, Lessons, Playbooks<br/>Learning memory"]
+        end
+
+        Factory["<b>StoreFactory</b><br/><i>memory/factory.py</i><br/>Backend selection:<br/>SQLite ↔ PostgreSQL"]
+    end
+
+    %% ═══════════════════════════════════════════════
+    %% CONTEXT ASSEMBLY
+    %% ═══════════════════════════════════════════════
+    subgraph ContextLayer["Context Assembly"]
+        direction TB
+        Assembler["<b>ContextAssembler</b><br/><i>context/assembler.py</i>"]
+
+        subgraph AssemblerPipeline["Assembly Pipeline"]
+            direction LR
+            PackResolve["Pack Resolution<br/><i>Scope matching</i>"]
+            RetPlan["Retrieval Planning<br/><i>Source selection</i>"]
+            RetExec["Retrieval Execution<br/><i>Parallel queries</i>"]
+            Gates["Quality Gates<br/><i>Coverage, recency</i>"]
+            Budget["Budget Enforcement<br/><i>Token + item limits</i>"]
+            PackResolve --> RetPlan --> RetExec --> Gates --> Budget
+        end
+
+        CGQuery["ContextGraphQueryService<br/><i>context_graph/query.py</i><br/>Knowledge + episodic memory"]
+        ExpHooks["ExperienceMemoryHooks<br/><i>memory/experience_hooks.py</i><br/>Similar past situations"]
+
+        Assembler --> AssemblerPipeline
+    end
+
+    ContextPacket["<b>ContextPacket</b><br/><i>core/schemas</i><br/>Bounded agent input"]
+
+    %% ═══════════════════════════════════════════════
+    %% AGENT ENGINES
+    %% ═══════════════════════════════════════════════
+    subgraph Engines["Agent Engines (Pluggable)"]
+        direction TB
+        EngineProto["<b>AgentEngine Protocol</b><br/><i>engine/agent_engine.py</i><br/>propose(context, profile, policy) → Plan"]
+        CustomEng["CustomEngine<br/><i>Direct LLM calls</i>"]
+        LangGraphEng["LangGraphAdapter<br/><i>Graph-based planning</i>"]
+        ThinkCtrl["ThinkingPolicyController<br/><i>engine/thinking_policy.py</i><br/>Tier selection + escalation"]
+        AdaptCtrl["AdaptiveThinkingController<br/><i>engine/adaptive_thinking.py</i><br/>Trace-based optimization"]
+
+        EngineProto --- CustomEng
+        EngineProto --- LangGraphEng
+        ThinkCtrl --- AdaptCtrl
+    end
+
+    Plan["<b>Plan</b><br/><i>core/schemas</i><br/>Actions + citations + risk"]
+
+    %% ═══════════════════════════════════════════════
+    %% EXECUTION LAYER
+    %% ═══════════════════════════════════════════════
+    subgraph Execution["Execution Layer"]
+        direction TB
+        Executor["<b>DeterministicExecutor</b><br/><i>executor/executor.py</i><br/>Validate → Gate → Execute"]
+        Broker["<b>ToolBroker</b><br/><i>tools/broker.py</i><br/>Capability registry<br/>Retry + Circuit breaker"]
+        ApprovalGate["ApprovalGate<br/><i>Persist + resolve approvals</i>"]
+
+        Executor -->|"per action"| Broker
+        Executor -->|"external writes"| ApprovalGate
+    end
+
+    %% ═══════════════════════════════════════════════
+    %% WORKFLOW ORCHESTRATION
+    %% ═══════════════════════════════════════════════
+    subgraph Orchestration["Workflow Orchestration"]
+        Runner["<b>WorkflowRunner</b><br/><i>workflows/runner.py</i><br/>State machine + checkpoints"]
+        WfStore["WorkflowRunStore<br/><i>workflows/store.py</i><br/>Persistent run state"]
+        Runner -.->|"checkpoints"| WfStore
+    end
+
+    %% ═══════════════════════════════════════════════
+    %% CONTEXT GRAPH (v1.0.6)
+    %% ═══════════════════════════════════════════════
+    subgraph ContextGraph["Context Graph (v1.0.6)"]
+        CGHooks["ContextGraphHooks<br/><i>context_graph/hooks.py</i><br/>Auto-decompose traces"]
+        CGIngest["ContextGraphIngestion<br/><i>Trace → TRAJECTORY +<br/>DECISION_EVENT nodes</i>"]
+        CGHooks --> CGIngest
+    end
+
+    DecisionTrace["<b>DecisionTrace</b><br/><i>core/schemas</i><br/>Full audit record"]
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Ingestion → Memory
+    %% ═══════════════════════════════════════════════
+    Vault -->|"watch"| Watcher
+    Calendar -.->|"import"| EntityStore
+    TaskSys -.->|"sync"| EntityStore
+
+    S1 -->|"content"| DocStore
+    S1 -->|"nodes + edges"| GraphStore
+    S2 -->|"vectors"| VecStore
+    S3 -.->|"auto.* writeback"| Vault
+    TaskParser -->|"TASK nodes"| GraphStore
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Memory → Context Assembly
+    %% ═══════════════════════════════════════════════
+    DocStore -->|"keyword search"| Assembler
+    VecStore -->|"semantic search"| Assembler
+    GraphStore -->|"subgraph slice"| Assembler
+    CGQuery -->|"knowledge nodes"| Assembler
+    ExpHooks -->|"lessons + playbooks"| Assembler
+    ExperienceStore -->|"past cases"| ExpHooks
+    GraphStore -->|"scored nodes"| CGQuery
+
+    Assembler -->|"bounded input"| ContextPacket
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Context → Engines → Plan
+    %% ═══════════════════════════════════════════════
+    ContextPacket -->|"+ AgentProfile"| EngineProto
+    EngineProto -->|"structured output"| Plan
+    TraceStore -->|"historical stats"| AdaptCtrl
+    ThinkCtrl -->|"ThinkingPolicy"| EngineProto
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Plan → Execution → Trace
+    %% ═══════════════════════════════════════════════
+    Plan --> Executor
+    Executor -->|"ToolCallRecords"| DecisionTrace
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Trace → Feedback Loop
+    %% ═══════════════════════════════════════════════
+    DecisionTrace -->|"persist"| TraceStore
+    DecisionTrace -->|"events"| EventLog
+    DecisionTrace -->|"decompose"| CGHooks
+    CGIngest -->|"graph nodes"| GraphStore
+    DecisionTrace -.->|"evaluate"| ExperienceStore
+
+    %% ═══════════════════════════════════════════════
+    %% CONNECTIONS — Runner orchestrates all
+    %% ═══════════════════════════════════════════════
+    Runner -->|"1. assemble"| Assembler
+    Runner -->|"2. propose"| EngineProto
+    Runner -->|"3. execute"| Executor
+    Runner -->|"4. trace"| DecisionTrace
+
+    Factory -.->|"creates"| DocStore
+    Factory -.->|"creates"| VecStore
+    Factory -.->|"creates"| GraphStore
+    Factory -.->|"creates"| EventLog
+    Factory -.->|"creates"| EntityStore
+    Factory -.->|"creates"| ExperienceStore
+    Factory -.->|"creates"| TraceStore
+
+    %% ═══════════════════════════════════════════════
+    %% STYLES
+    %% ═══════════════════════════════════════════════
+    classDef store fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    classDef schema fill:#e8a838,stroke:#b8832c,color:#fff
+    classDef engine fill:#7b68ee,stroke:#5a4cba,color:#fff
+    classDef exec fill:#dc5c5c,stroke:#a84444,color:#fff
+    classDef ingest fill:#5cb85c,stroke:#3d7e3d,color:#fff
+    classDef runner fill:#9b59b6,stroke:#7d3f98,color:#fff
+
+    class DocStore,VecStore,GraphStore,EventLog,TraceStore,EntityStore,ExperienceStore store
+    class ContextPacket,Plan,DecisionTrace schema
+    class EngineProto,CustomEng,LangGraphEng,ThinkCtrl,AdaptCtrl engine
+    class Executor,Broker,ApprovalGate exec
+    class Watcher,Indexer,TaskParser,Enrichment,EmbeddingSvc,IndexState ingest
+    class Runner,WfStore runner

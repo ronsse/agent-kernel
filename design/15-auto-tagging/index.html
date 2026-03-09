@@ -1,0 +1,4481 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Framework-agnostic foundation for AI agent systems" name="description"/>
+<link href="https://agent-kernel.github.io/agent-kernel/design/15-auto-tagging/" rel="canonical"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.4" name="generator"/>
+<title>15. Auto-Tagging &amp; Entity Enrichment (v1.0.5) - Agent Kernel</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#15-auto-tagging-entity-enrichment-v105">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Agent Kernel" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Agent Kernel">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Agent Kernel
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              15. Auto-Tagging &amp; Entity Enrichment (v1.0.5)
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/agent-kernel/agent-kernel" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    agent-kernel/agent-kernel
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../concepts/">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../guides/">
+        
+  
+  
+    
+  
+  Guides
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../examples/">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../reference/agent_kernel/_import_utils/">
+          
+  
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../contributing/">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../changelog/">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Agent Kernel" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Agent Kernel">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Agent Kernel
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/agent-kernel/agent-kernel" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    agent-kernel/agent-kernel
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../getting-started/">
+<span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../concepts/">
+<span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/schemas/">
+<span class="md-ellipsis">
+    
+  
+    Schema Contracts
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/tool-broker/">
+<span class="md-ellipsis">
+    
+  
+    Tool Broker
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/executor/">
+<span class="md-ellipsis">
+    
+  
+    Executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/context-assembler/">
+<span class="md-ellipsis">
+    
+  
+    Context Assembler
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/tracing/">
+<span class="md-ellipsis">
+    
+  
+    Tracing
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../guides/">
+<span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/architecture/">
+<span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/framework-agnosticism/">
+<span class="md-ellipsis">
+    
+  
+    Framework Agnosticism
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/trust-boundaries/">
+<span class="md-ellipsis">
+    
+  
+    Trust Boundaries
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/thinking-escalation/">
+<span class="md-ellipsis">
+    
+  
+    Thinking Escalation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/skills/">
+<span class="md-ellipsis">
+    
+  
+    Skills System
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../guides/public-private/">
+<span class="md-ellipsis">
+    
+  
+    Public/Private Separation
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../examples/">
+<span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/minimal-agent/">
+<span class="md-ellipsis">
+    
+  
+    Minimal Agent
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/personal-assistant/">
+<span class="md-ellipsis">
+    
+  
+    Personal Assistant
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/multi-agent-debate/">
+<span class="md-ellipsis">
+    
+  
+    Multi-Agent Debate
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/tool-workflow/">
+<span class="md-ellipsis">
+    
+  
+    Tool Workflow
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/_import_utils/">
+<span class="md-ellipsis">
+    
+  
+    _import_utils
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/_version/">
+<span class="md-ellipsis">
+    
+  
+    _version
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/api/">
+<span class="md-ellipsis">
+    
+  
+    api
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    api
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/api/server/">
+<span class="md-ellipsis">
+    
+  
+    server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/capabilities/">
+<span class="md-ellipsis">
+    
+  
+    capabilities
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    capabilities
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/capabilities/dev_agent_runner/">
+<span class="md-ellipsis">
+    
+  
+    dev_agent_runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/">
+<span class="md-ellipsis">
+    
+  
+    context
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_5_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/assembler/">
+<span class="md-ellipsis">
+    
+  
+    assembler
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/gates/">
+<span class="md-ellipsis">
+    
+  
+    gates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/pack_resolver/">
+<span class="md-ellipsis">
+    
+  
+    pack_resolver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/planner/">
+<span class="md-ellipsis">
+    
+  
+    planner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/playbook_resolver/">
+<span class="md-ellipsis">
+    
+  
+    playbook_resolver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/source_registry/">
+<span class="md-ellipsis">
+    
+  
+    source_registry
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/">
+<span class="md-ellipsis">
+    
+  
+    context_graph
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    context_graph
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/compaction/">
+<span class="md-ellipsis">
+    
+  
+    compaction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/decomposer/">
+<span class="md-ellipsis">
+    
+  
+    decomposer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/experience_bridge/">
+<span class="md-ellipsis">
+    
+  
+    experience_bridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_6_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/">
+<span class="md-ellipsis">
+    
+  
+    extractors
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_6_4" id="__nav_6_6_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_6_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_6_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    extractors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/manual_extractor/">
+<span class="md-ellipsis">
+    
+  
+    manual_extractor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/trace_extractor/">
+<span class="md-ellipsis">
+    
+  
+    trace_extractor
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/freshness/">
+<span class="md-ellipsis">
+    
+  
+    freshness
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/hooks/">
+<span class="md-ellipsis">
+    
+  
+    hooks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/ingestion/">
+<span class="md-ellipsis">
+    
+  
+    ingestion
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/query/">
+<span class="md-ellipsis">
+    
+  
+    query
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/retention/">
+<span class="md-ellipsis">
+    
+  
+    retention
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/types/">
+<span class="md-ellipsis">
+    
+  
+    types
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/">
+<span class="md-ellipsis">
+    
+  
+    core
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_7_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    core
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/config/">
+<span class="md-ellipsis">
+    
+  
+    config
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/errors/">
+<span class="md-ellipsis">
+    
+  
+    errors
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/ids/">
+<span class="md-ellipsis">
+    
+  
+    ids
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/migrations/">
+<span class="md-ellipsis">
+    
+  
+    migrations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_7_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/">
+<span class="md-ellipsis">
+    
+  
+    schemas
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_7_5" id="__nav_6_7_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_7_5_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_7_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/agent/">
+<span class="md-ellipsis">
+    
+  
+    agent
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/base/">
+<span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/capability/">
+<span class="md-ellipsis">
+    
+  
+    capability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/context/">
+<span class="md-ellipsis">
+    
+  
+    context
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/context_pack/">
+<span class="md-ellipsis">
+    
+  
+    context_pack
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/enrichment_config/">
+<span class="md-ellipsis">
+    
+  
+    enrichment_config
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/entity/">
+<span class="md-ellipsis">
+    
+  
+    entity
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/experience/">
+<span class="md-ellipsis">
+    
+  
+    experience
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/graph/">
+<span class="md-ellipsis">
+    
+  
+    graph
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/knowledge/">
+<span class="md-ellipsis">
+    
+  
+    knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/llm/">
+<span class="md-ellipsis">
+    
+  
+    llm
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/note/">
+<span class="md-ellipsis">
+    
+  
+    note
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/plan/">
+<span class="md-ellipsis">
+    
+  
+    plan
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/retention/">
+<span class="md-ellipsis">
+    
+  
+    retention
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/retrieval/">
+<span class="md-ellipsis">
+    
+  
+    retrieval
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/skill/">
+<span class="md-ellipsis">
+    
+  
+    skill
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/source_descriptor/">
+<span class="md-ellipsis">
+    
+  
+    source_descriptor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/task/">
+<span class="md-ellipsis">
+    
+  
+    task
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/thinking/">
+<span class="md-ellipsis">
+    
+  
+    thinking
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/trace/">
+<span class="md-ellipsis">
+    
+  
+    trace
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/workflow/">
+<span class="md-ellipsis">
+    
+  
+    workflow
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_8" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/">
+<span class="md-ellipsis">
+    
+  
+    engine
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_8" id="__nav_6_8_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_8_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    engine
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/adaptive_thinking/">
+<span class="md-ellipsis">
+    
+  
+    adaptive_thinking
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/agent_engine/">
+<span class="md-ellipsis">
+    
+  
+    agent_engine
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/cost_anomaly/">
+<span class="md-ellipsis">
+    
+  
+    cost_anomaly
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/critic/">
+<span class="md-ellipsis">
+    
+  
+    critic
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/custom_engine/">
+<span class="md-ellipsis">
+    
+  
+    custom_engine
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/escalation/">
+<span class="md-ellipsis">
+    
+  
+    escalation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/integration_tier/">
+<span class="md-ellipsis">
+    
+  
+    integration_tier
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/success_rate_router/">
+<span class="md-ellipsis">
+    
+  
+    success_rate_router
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/thinking_metrics/">
+<span class="md-ellipsis">
+    
+  
+    thinking_metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/thinking_policy/">
+<span class="md-ellipsis">
+    
+  
+    thinking_policy
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_9" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_9_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_9">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    executor
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/approval/">
+<span class="md-ellipsis">
+    
+  
+    approval
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/approval_store/">
+<span class="md-ellipsis">
+    
+  
+    approval_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/interactive/">
+<span class="md-ellipsis">
+    
+  
+    interactive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/notifiers/">
+<span class="md-ellipsis">
+    
+  
+    notifiers
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/policies/">
+<span class="md-ellipsis">
+    
+  
+    policies
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/quality_gates/">
+<span class="md-ellipsis">
+    
+  
+    quality_gates
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_10" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/">
+<span class="md-ellipsis">
+    
+  
+    integrations
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_10" id="__nav_6_10_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_10_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_10">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    integrations
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/calendar_sync/">
+<span class="md-ellipsis">
+    
+  
+    calendar_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/calendar_sync_service/">
+<span class="md-ellipsis">
+    
+  
+    calendar_sync_service
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/google/">
+<span class="md-ellipsis">
+    
+  
+    google
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_backend/">
+<span class="md-ellipsis">
+    
+  
+    task_backend
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync/">
+<span class="md-ellipsis">
+    
+  
+    task_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync_orchestrator/">
+<span class="md-ellipsis">
+    
+  
+    task_sync_orchestrator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync_service/">
+<span class="md-ellipsis">
+    
+  
+    task_sync_service
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_11" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/">
+<span class="md-ellipsis">
+    
+  
+    memory
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_11_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_11">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    memory
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/derivation_store/">
+<span class="md-ellipsis">
+    
+  
+    derivation_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/document_store/">
+<span class="md-ellipsis">
+    
+  
+    document_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/entity_store/">
+<span class="md-ellipsis">
+    
+  
+    entity_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/event_log/">
+<span class="md-ellipsis">
+    
+  
+    event_log
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/experience_hooks/">
+<span class="md-ellipsis">
+    
+  
+    experience_hooks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/experience_store/">
+<span class="md-ellipsis">
+    
+  
+    experience_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/factory/">
+<span class="md-ellipsis">
+    
+  
+    factory
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/graph_store/">
+<span class="md-ellipsis">
+    
+  
+    graph_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_11_9" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/">
+<span class="md-ellipsis">
+    
+  
+    postgres
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_11_9" id="__nav_6_11_9_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_11_9_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_11_9">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    postgres
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/connection/">
+<span class="md-ellipsis">
+    
+  
+    connection
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/derivation_store/">
+<span class="md-ellipsis">
+    
+  
+    derivation_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/document_store/">
+<span class="md-ellipsis">
+    
+  
+    document_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/entity_store/">
+<span class="md-ellipsis">
+    
+  
+    entity_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/event_log/">
+<span class="md-ellipsis">
+    
+  
+    event_log
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/experience_store/">
+<span class="md-ellipsis">
+    
+  
+    experience_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/graph_store/">
+<span class="md-ellipsis">
+    
+  
+    graph_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/vector_store/">
+<span class="md-ellipsis">
+    
+  
+    vector_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/vector_store/">
+<span class="md-ellipsis">
+    
+  
+    vector_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/notifications/">
+<span class="md-ellipsis">
+    
+  
+    notifications
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/plugins/">
+<span class="md-ellipsis">
+    
+  
+    plugins
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_14" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/">
+<span class="md-ellipsis">
+    
+  
+    prompting
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_14" id="__nav_6_14_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_14_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_14">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    prompting
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/serializers/">
+<span class="md-ellipsis">
+    
+  
+    serializers
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/system_prompts/">
+<span class="md-ellipsis">
+    
+  
+    system_prompts
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_15" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/">
+<span class="md-ellipsis">
+    
+  
+    scheduler
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_15" id="__nav_6_15_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_15_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_15">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    scheduler
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/file_watcher/">
+<span class="md-ellipsis">
+    
+  
+    file_watcher
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/scheduler/">
+<span class="md-ellipsis">
+    
+  
+    scheduler
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_16" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/">
+<span class="md-ellipsis">
+    
+  
+    services
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_16" id="__nav_6_16_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_16_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    services
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/approval_optimizer/">
+<span class="md-ellipsis">
+    
+  
+    approval_optimizer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/embedding/">
+<span class="md-ellipsis">
+    
+  
+    embedding
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/enrichment/">
+<span class="md-ellipsis">
+    
+  
+    enrichment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/enrichment_registry/">
+<span class="md-ellipsis">
+    
+  
+    enrichment_registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/experience_miner/">
+<span class="md-ellipsis">
+    
+  
+    experience_miner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/health/">
+<span class="md-ellipsis">
+    
+  
+    health
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/hybrid_search/">
+<span class="md-ellipsis">
+    
+  
+    hybrid_search
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/index_state/">
+<span class="md-ellipsis">
+    
+  
+    index_state
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/llm/">
+<span class="md-ellipsis">
+    
+  
+    llm
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/llm_cache/">
+<span class="md-ellipsis">
+    
+  
+    llm_cache
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/reserved_blocks/">
+<span class="md-ellipsis">
+    
+  
+    reserved_blocks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/resource_extraction/">
+<span class="md-ellipsis">
+    
+  
+    resource_extraction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/retention_jobs/">
+<span class="md-ellipsis">
+    
+  
+    retention_jobs
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/task_manager/">
+<span class="md-ellipsis">
+    
+  
+    task_manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/task_parser/">
+<span class="md-ellipsis">
+    
+  
+    task_parser
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_indexer/">
+<span class="md-ellipsis">
+    
+  
+    vault_indexer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_sync/">
+<span class="md-ellipsis">
+    
+  
+    vault_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_watcher/">
+<span class="md-ellipsis">
+    
+  
+    vault_watcher
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/workflow_debug/">
+<span class="md-ellipsis">
+    
+  
+    workflow_debug
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_17" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/">
+<span class="md-ellipsis">
+    
+  
+    skills
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_17" id="__nav_6_17_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_17_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_17">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    skills
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/graph_sync/">
+<span class="md-ellipsis">
+    
+  
+    graph_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/policy/">
+<span class="md-ellipsis">
+    
+  
+    policy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/script_registry/">
+<span class="md-ellipsis">
+    
+  
+    script_registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/store/">
+<span class="md-ellipsis">
+    
+  
+    store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/">
+<span class="md-ellipsis">
+    
+  
+    tools
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18" id="__nav_6_18_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_18">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    tools
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/">
+<span class="md-ellipsis">
+    
+  
+    adapters
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_1" id="__nav_6_18_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    adapters
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/base/">
+<span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/graph_adapter/">
+<span class="md-ellipsis">
+    
+  
+    graph_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/http/">
+<span class="md-ellipsis">
+    
+  
+    http
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/local_function/">
+<span class="md-ellipsis">
+    
+  
+    local_function
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/mcp/">
+<span class="md-ellipsis">
+    
+  
+    mcp
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/skill_script/">
+<span class="md-ellipsis">
+    
+  
+    skill_script
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/subprocess/">
+<span class="md-ellipsis">
+    
+  
+    subprocess
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/task_adapter/">
+<span class="md-ellipsis">
+    
+  
+    task_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/trace_adapter/">
+<span class="md-ellipsis">
+    
+  
+    trace_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/vector_adapter/">
+<span class="md-ellipsis">
+    
+  
+    vector_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adaptive_timeout/">
+<span class="md-ellipsis">
+    
+  
+    adaptive_timeout
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/broker/">
+<span class="md-ellipsis">
+    
+  
+    broker
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/">
+<span class="md-ellipsis">
+    
+  
+    builtin
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_4" id="__nav_6_18_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    builtin
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/knowledge/">
+<span class="md-ellipsis">
+    
+  
+    knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/notes/">
+<span class="md-ellipsis">
+    
+  
+    notes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/obsidian/">
+<span class="md-ellipsis">
+    
+  
+    obsidian
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/register/">
+<span class="md-ellipsis">
+    
+  
+    register
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/tasks/">
+<span class="md-ellipsis">
+    
+  
+    tasks
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/idempotency/">
+<span class="md-ellipsis">
+    
+  
+    idempotency
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/">
+<span class="md-ellipsis">
+    
+  
+    library
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_6" id="__nav_6_18_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_6_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    library
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/code_quality/">
+<span class="md-ellipsis">
+    
+  
+    code_quality
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/context_curator/">
+<span class="md-ellipsis">
+    
+  
+    context_curator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/dep_audit/">
+<span class="md-ellipsis">
+    
+  
+    dep_audit
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/git_ops/">
+<span class="md-ellipsis">
+    
+  
+    git_ops
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/github_ops/">
+<span class="md-ellipsis">
+    
+  
+    github_ops
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/loader/">
+<span class="md-ellipsis">
+    
+  
+    loader
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/skills/">
+<span class="md-ellipsis">
+    
+  
+    skills
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/mcp/">
+<span class="md-ellipsis">
+    
+  
+    mcp
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_7" id="__nav_6_18_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_7_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    mcp
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/mcp/server_manager/">
+<span class="md-ellipsis">
+    
+  
+    server_manager
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/rate_limiter/">
+<span class="md-ellipsis">
+    
+  
+    rate_limiter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/retry/">
+<span class="md-ellipsis">
+    
+  
+    retry
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_19" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/">
+<span class="md-ellipsis">
+    
+  
+    tracing
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_19" id="__nav_6_19_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_19_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_19">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    tracing
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_19_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/">
+<span class="md-ellipsis">
+    
+  
+    sinks
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_19_1" id="__nav_6_19_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_19_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_19_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    sinks
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/jsonl_sink/">
+<span class="md-ellipsis">
+    
+  
+    jsonl_sink
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/postgres_sink/">
+<span class="md-ellipsis">
+    
+  
+    postgres_sink
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/sqlite_sink/">
+<span class="md-ellipsis">
+    
+  
+    sqlite_sink
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/trace_store/">
+<span class="md-ellipsis">
+    
+  
+    trace_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_20" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/">
+<span class="md-ellipsis">
+    
+  
+    validators
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_20" id="__nav_6_20_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_20_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_20">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    validators
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/config_validator/">
+<span class="md-ellipsis">
+    
+  
+    config_validator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/results/">
+<span class="md-ellipsis">
+    
+  
+    results
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/skill_validator/">
+<span class="md-ellipsis">
+    
+  
+    skill_validator
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_21" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/">
+<span class="md-ellipsis">
+    
+  
+    workflows
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_21" id="__nav_6_21_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_21_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_21">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    workflows
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/config_cache/">
+<span class="md-ellipsis">
+    
+  
+    config_cache
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/runner/">
+<span class="md-ellipsis">
+    
+  
+    runner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/spec/">
+<span class="md-ellipsis">
+    
+  
+    spec
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/store/">
+<span class="md-ellipsis">
+    
+  
+    store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../contributing/">
+<span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../changelog/">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      
+        Design Principles
+      
+    </span>
+</a>
+<nav aria-label="Design Principles" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-human-vs-machine-separation">
+<span class="md-ellipsis">
+      
+        1. Human vs. Machine Separation
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-non-destructive">
+<span class="md-ellipsis">
+      
+        2. Non-Destructive
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-graph-integration">
+<span class="md-ellipsis">
+      
+        3. Graph Integration
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#architecture">
+<span class="md-ellipsis">
+      
+        Architecture
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#components">
+<span class="md-ellipsis">
+      
+        Components
+      
+    </span>
+</a>
+<nav aria-label="Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enrichmentservice">
+<span class="md-ellipsis">
+      
+        EnrichmentService
+      
+    </span>
+</a>
+<nav aria-label="EnrichmentService" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enrichmentresult">
+<span class="md-ellipsis">
+      
+        EnrichmentResult
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#default-classifications">
+<span class="md-ellipsis">
+      
+        Default Classifications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#llm-prompts">
+<span class="md-ellipsis">
+      
+        LLM Prompts
+      
+    </span>
+</a>
+<nav aria-label="LLM Prompts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-prompt">
+<span class="md-ellipsis">
+      
+        System Prompt
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#user-prompt">
+<span class="md-ellipsis">
+      
+        User Prompt
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#frontmatter-structure">
+<span class="md-ellipsis">
+      
+        Frontmatter Structure
+      
+    </span>
+</a>
+<nav aria-label="Frontmatter Structure" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#before-enrichment">
+<span class="md-ellipsis">
+      
+        Before Enrichment
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#after-enrichment">
+<span class="md-ellipsis">
+      
+        After Enrichment
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graph-integration">
+<span class="md-ellipsis">
+      
+        Graph Integration
+      
+    </span>
+</a>
+<nav aria-label="Graph Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#edge-properties">
+<span class="md-ellipsis">
+      
+        Edge Properties
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#stale-edge-deletion">
+<span class="md-ellipsis">
+      
+        Stale Edge Deletion
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cli-commands">
+<span class="md-ellipsis">
+      
+        CLI Commands
+      
+    </span>
+</a>
+<nav aria-label="CLI Commands" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#vault-sync-with-enrichment">
+<span class="md-ellipsis">
+      
+        Vault Sync with Enrichment
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#options">
+<span class="md-ellipsis">
+      
+        Options
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration">
+<span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+</a>
+<nav aria-label="Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variables">
+<span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enrichment-config">
+<span class="md-ellipsis">
+      
+        Enrichment Config
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#summarization-thresholds-v105">
+<span class="md-ellipsis">
+      
+        Summarization Thresholds (v1.0.5)
+      
+    </span>
+</a>
+<nav aria-label="Summarization Thresholds (v1.0.5)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration-schema">
+<span class="md-ellipsis">
+      
+        Configuration Schema
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#environment-variables_1">
+<span class="md-ellipsis">
+      
+        Environment Variables
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#skip-behaviors">
+<span class="md-ellipsis">
+      
+        Skip Behaviors
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision-flow">
+<span class="md-ellipsis">
+      
+        Decision Flow
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cli-options">
+<span class="md-ellipsis">
+      
+        CLI Options
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#priority-order">
+<span class="md-ellipsis">
+      
+        Priority Order
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#cost-considerations">
+<span class="md-ellipsis">
+      
+        Cost Considerations
+      
+    </span>
+</a>
+<nav aria-label="Cost Considerations" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#per-note-cost-gpt-4o-mini">
+<span class="md-ellipsis">
+      
+        Per-Note Cost (gpt-4o-mini)
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#batch-processing">
+<span class="md-ellipsis">
+      
+        Batch Processing
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#optimization-tips">
+<span class="md-ellipsis">
+      
+        Optimization Tips
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#writeback-safety">
+<span class="md-ellipsis">
+      
+        Writeback Safety
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-with-embedding-strategy">
+<span class="md-ellipsis">
+      
+        Integration with Embedding Strategy
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#troubleshooting">
+<span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+</a>
+<nav aria-label="Troubleshooting" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#notes-not-getting-enriched">
+<span class="md-ellipsis">
+      
+        Notes Not Getting Enriched
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#auto-tags-not-in-graph">
+<span class="md-ellipsis">
+      
+        Auto-Tags Not in Graph
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#wrong-classifications">
+<span class="md-ellipsis">
+      
+        Wrong Classifications
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#universal-entity-enrichment-v105">
+<span class="md-ellipsis">
+      
+        Universal Entity Enrichment (v1.0.5)
+      
+    </span>
+</a>
+<nav aria-label="Universal Entity Enrichment (v1.0.5)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#source-configuration-structure">
+<span class="md-ellipsis">
+      
+        Source Configuration Structure
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#yaml-configuration">
+<span class="md-ellipsis">
+      
+        YAML Configuration
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adding-new-sources">
+<span class="md-ellipsis">
+      
+        Adding New Sources
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#enrichmentconfigregistry">
+<span class="md-ellipsis">
+      
+        EnrichmentConfigRegistry
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#backwards-compatibility">
+<span class="md-ellipsis">
+      
+        Backwards Compatibility
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      
+        References
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="15-auto-tagging-entity-enrichment-v105">15. Auto-Tagging &amp; Entity Enrichment (v1.0.5)<a class="headerlink" href="#15-auto-tagging-entity-enrichment-v105" title="Permanent link">¶</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>Auto-tagging uses LLM analysis to generate metadata, stored in a separate <code>auto:</code> namespace. This keeps human-authored content distinct from machine-generated suggestions.</p>
+<p><strong>v1.0.5 Updates</strong>:
+- Added summarization thresholds to control when summaries are generated
+- <strong>Generalized to Universal Entity Model</strong>: Enrichment now works with any entity type (notes, Slack messages, emails, etc.) using source-specific prompts
+- Introduced <code>SourceEnrichmentConfig</code> for per-source customization
+- Added <code>EnrichmentConfigRegistry</code> for YAML-based configuration</p>
+<hr/>
+<h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">¶</a></h2>
+<h3 id="1-human-vs-machine-separation">1. Human vs. Machine Separation<a class="headerlink" href="#1-human-vs-machine-separation" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1"># Human-authored (never touched by LLM)</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">project/agent-system</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">meeting</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="c1"># Machine-generated (auto: namespace)</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="nt">auto</span><span class="p">:</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">  </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">architecture</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">planning</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">ai-ml</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">  </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meeting</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">  </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="s">"Discussion</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">agent</span><span class="nv"> </span><span class="s">architecture..."</span>
+</code></pre></div>
+<h3 id="2-non-destructive">2. Non-Destructive<a class="headerlink" href="#2-non-destructive" title="Permanent link">¶</a></h3>
+<ul>
+<li>Auto-tagging <strong>never</strong> modifies human content</li>
+<li>Only writes to <code>auto:</code> namespace</li>
+<li>Can always be regenerated from content</li>
+<li>Safe for automatic application (no approval needed)</li>
+</ul>
+<h3 id="3-graph-integration">3. Graph Integration<a class="headerlink" href="#3-graph-integration" title="Permanent link">¶</a></h3>
+<p>Both human and auto-tags are wired into the knowledge graph:</p>
+<table>
+<thead>
+<tr>
+<th>Tag Type</th>
+<th>Frontmatter</th>
+<th>Graph Edge Property</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human</td>
+<td><code>tags: [...]</code></td>
+<td><code>source: "human"</code></td>
+</tr>
+<tr>
+<td>Auto</td>
+<td><code>auto.tags: [...]</code></td>
+<td><code>source: "auto"</code></td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>┌─────────────────────────────────────────────────────────────────────────┐
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>│                         AUTO-TAGGING PIPELINE                           │
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>├─────────────────────────────────────────────────────────────────────────┤
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>│                                                                         │
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>│  1. NOTE CONTENT                                                        │
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>│     └── Title + Body + Existing Tags                                    │
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>│                                                                         │
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>│  2. LLM ANALYSIS (EnrichmentService)                                    │
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>│     └── Prompt: "Analyze this note and suggest metadata..."             │
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a>│     └── Model: gpt-4o-mini (configurable)                               │
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a>│     └── Output: JSON with tags, class, summary, confidence              │
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a>│                                                                         │
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a>│  3. FRONTMATTER INJECTION (_inject_auto_fields)                         │
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a>│     └── Parse existing YAML                                             │
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a>│     └── Update `auto:` namespace only                                   │
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a>│     └── Check file hasn't changed (writeback safety)                    │
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a>│     └── Write updated content                                           │
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a>│                                                                         │
+<a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a>│  4. GRAPH WIRING                                                        │
+<a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a>│     └── Create tag nodes (upsert)                                       │
+<a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a>│     └── Create note→tag edges with source="auto"                        │
+<a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a>│     └── Delete stale auto-tag edges                                     │
+<a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a>│                                                                         │
+<a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a>└─────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr/>
+<h2 id="components">Components<a class="headerlink" href="#components" title="Permanent link">¶</a></h2>
+<h3 id="enrichmentservice">EnrichmentService<a class="headerlink" href="#enrichmentservice" title="Permanent link">¶</a></h3>
+<p>Located: <code>src/agent_kernel/services/enrichment.py</code></p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">EnrichmentService</span><span class="p">:</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">    </span><span class="sd">"""LLM-powered metadata generation for notes."""</span>
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich</span><span class="p">(</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>        <span class="bp">self</span><span class="p">,</span>
+<a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>        <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">,</span>
+<a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>        <span class="n">existing_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a>        <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># v1.0.5</span>
+<a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
+<a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="w">        </span><span class="sd">"""Generate auto-tags, classification, and optionally summary.</span>
+<a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>
+<a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a><span class="sd">        Args:</span>
+<a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a><span class="sd">            content: Note content (markdown).</span>
+<a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="sd">            title: Note title.</span>
+<a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="sd">            existing_tags: Existing human-authored tags.</span>
+<a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a><span class="sd">            include_summary: Whether to generate summary (v1.0.5).</span>
+<a href="#__codelineno-2-18" id="__codelineno-2-18" name="__codelineno-2-18"></a><span class="sd">        """</span>
+</code></pre></div>
+<h4 id="enrichmentresult">EnrichmentResult<a class="headerlink" href="#enrichmentresult" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nd">@dataclass</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">EnrichmentResult</span><span class="p">:</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a>    <span class="n">auto_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>        <span class="c1"># e.g., ["architecture", "planning"]</span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a>    <span class="n">auto_class</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>      <span class="c1"># e.g., "meeting"</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="n">auto_summary</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>    <span class="c1"># e.g., "Discussion of..."</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">tag_confidence</span><span class="p">:</span> <span class="nb">float</span>       <span class="c1"># 0.0 - 1.0</span>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="n">class_confidence</span><span class="p">:</span> <span class="nb">float</span>     <span class="c1"># 0.0 - 1.0</span>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="n">success</span><span class="p">:</span> <span class="nb">bool</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="n">error</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span>
+</code></pre></div>
+<h3 id="default-classifications">Default Classifications<a class="headerlink" href="#default-classifications" title="Permanent link">¶</a></h3>
+<p>The LLM classifies notes into one of these categories:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="n">DEFAULT_CLASSIFICATIONS</span> <span class="o">=</span> <span class="p">[</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>    <span class="s2">"meeting"</span><span class="p">,</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="s2">"architecture"</span><span class="p">,</span> 
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="s2">"reference"</span><span class="p">,</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="s2">"journal"</span><span class="p">,</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>    <span class="s2">"project"</span><span class="p">,</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>    <span class="s2">"brainstorm"</span><span class="p">,</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>    <span class="s2">"documentation"</span><span class="p">,</span>
+<a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>    <span class="s2">"task-list"</span><span class="p">,</span>
+<a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="s2">"research"</span><span class="p">,</span>
+<a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="s2">"notes"</span><span class="p">,</span>
+<a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a><span class="p">]</span>
+</code></pre></div>
+<hr/>
+<h2 id="llm-prompts">LLM Prompts<a class="headerlink" href="#llm-prompts" title="Permanent link">¶</a></h2>
+<h3 id="system-prompt">System Prompt<a class="headerlink" href="#system-prompt" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a>You are an expert at analyzing notes and documents to suggest metadata.
+<a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
+<a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>Your task is to analyze the content and suggest:
+<a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>1. **Tags**: 2-5 relevant topic tags (lowercase, hyphenated)
+<a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>2. **Classification**: A single category that best describes the note type
+<a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>3. **Summary**: A brief 1-sentence summary (optional, only if the note is long)
+<a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>
+<a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>Available classifications: meeting, architecture, reference, ...
+<a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>
+<a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>IMPORTANT RULES:
+<a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>- Tags should be general topics, not specific to the note content
+<a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>- Use existing tag patterns if the note has human tags
+<a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a>- Classification must be from the provided list
+<a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a>- Summary should capture the main purpose/topic
+<a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a>- Be conservative - only suggest high-confidence tags
+<a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>
+<a href="#__codelineno-5-17" id="__codelineno-5-17" name="__codelineno-5-17"></a>Respond in JSON format:
+<a href="#__codelineno-5-18" id="__codelineno-5-18" name="__codelineno-5-18"></a>{
+<a href="#__codelineno-5-19" id="__codelineno-5-19" name="__codelineno-5-19"></a>  "tags": ["tag1", "tag2"],
+<a href="#__codelineno-5-20" id="__codelineno-5-20" name="__codelineno-5-20"></a>  "class": "classification",
+<a href="#__codelineno-5-21" id="__codelineno-5-21" name="__codelineno-5-21"></a>  "summary": "Brief summary if note is long, null otherwise",
+<a href="#__codelineno-5-22" id="__codelineno-5-22" name="__codelineno-5-22"></a>  "tag_confidence": 0.85,
+<a href="#__codelineno-5-23" id="__codelineno-5-23" name="__codelineno-5-23"></a>  "class_confidence": 0.90
+<a href="#__codelineno-5-24" id="__codelineno-5-24" name="__codelineno-5-24"></a>}
+</code></pre></div>
+<h3 id="user-prompt">User Prompt<a class="headerlink" href="#user-prompt" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a>Analyze this note and suggest metadata:
+<a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>
+<a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a>---
+<a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a>Title: {title}
+<a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>Existing tags: {existing_tags}
+<a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>---
+<a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>
+<a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>{content}
+<a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>
+<a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>---
+<a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a>
+<a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a>Respond with JSON only, no markdown formatting.
+</code></pre></div>
+<hr/>
+<h2 id="frontmatter-structure">Frontmatter Structure<a class="headerlink" href="#frontmatter-structure" title="Permanent link">¶</a></h2>
+<h3 id="before-enrichment">Before Enrichment<a class="headerlink" href="#before-enrichment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="nn">---</span>
+<a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">note_01J...</span>
+<a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">project/agent-system</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">meeting</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="nn">---</span>
+<a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>
+<a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="c1"># Meeting Notes</span>
+<a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="nn">...</span>
+</code></pre></div>
+<h3 id="after-enrichment">After Enrichment<a class="headerlink" href="#after-enrichment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="nn">---</span>
+<a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">note_01J...</span>
+<a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">project/agent-system</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">meeting</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="nt">auto</span><span class="p">:</span>
+<a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">  </span><span class="nt">tags</span><span class="p">:</span>
+<a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">architecture</span>
+<a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">planning</span>
+<a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ai-ml</span>
+<a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a><span class="w">  </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meeting</span>
+<a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a><span class="w">  </span><span class="nt">summary</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Discussion of agent architecture and planning decisions.</span>
+<a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a><span class="nn">---</span>
+<a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a>
+<a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a><span class="c1"># Meeting Notes</span>
+<a href="#__codelineno-8-14" id="__codelineno-8-14" name="__codelineno-8-14"></a><span class="nn">...</span>
+</code></pre></div>
+<hr/>
+<h2 id="graph-integration">Graph Integration<a class="headerlink" href="#graph-integration" title="Permanent link">¶</a></h2>
+<h3 id="edge-properties">Edge Properties<a class="headerlink" href="#edge-properties" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Human Tags</th>
+<th>Auto Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>edge_type</code></td>
+<td><code>note_tagged_with_tag</code></td>
+<td><code>note_tagged_with_tag</code></td>
+</tr>
+<tr>
+<td><code>source</code></td>
+<td><code>"human"</code></td>
+<td><code>"auto"</code></td>
+</tr>
+<tr>
+<td><code>confidence</code></td>
+<td><code>1.0</code></td>
+<td>LLM confidence (0.0-1.0)</td>
+</tr>
+<tr>
+<td><code>extracted_by</code></td>
+<td><code>"vault_indexer"</code></td>
+<td><code>"enrichment_service"</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="stale-edge-deletion">Stale Edge Deletion<a class="headerlink" href="#stale-edge-deletion" title="Permanent link">¶</a></h3>
+<p>When a note is re-indexed:</p>
+<ol>
+<li><strong>Human tags</strong>: Compare current <code>tags:</code> to existing edges with <code>source="human"</code></li>
+<li><strong>Auto tags</strong>: Compare current <code>auto.tags</code> to existing edges with <code>source="auto"</code></li>
+<li><strong>Delete</strong>: Edges where target is no longer in the respective tag list</li>
+</ol>
+<p>This ensures:
+- Removed human tags → edges deleted
+- Changed auto-tags → old edges deleted, new edges created
+- Human and auto edges are managed independently</p>
+<hr/>
+<h2 id="cli-commands">CLI Commands<a class="headerlink" href="#cli-commands" title="Permanent link">¶</a></h2>
+<h3 id="vault-sync-with-enrichment">Vault Sync with Enrichment<a class="headerlink" href="#vault-sync-with-enrichment" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="c1"># Sync + enrich all notes</span>
+<a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>agent-kernel<span class="w"> </span>obsidian-sync<span class="w"> </span>--with-enrichment
+<a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a>
+<a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="c1"># Force re-enrich (even if already has auto: section)</span>
+<a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>agent-kernel<span class="w"> </span>obsidian-sync<span class="w"> </span>--force<span class="w"> </span>--with-enrichment
+<a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a>
+<a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="c1"># Specific folder</span>
+<a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>agent-kernel<span class="w"> </span>obsidian-sync<span class="w"> </span>--folder<span class="w"> </span><span class="s2">"03-Projects"</span><span class="w"> </span>--with-enrichment
+<a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a>
+<a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="c1"># Summarize all notes (override thresholds)</span>
+<a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a>agent-kernel<span class="w"> </span>obsidian-sync<span class="w"> </span>--with-enrichment<span class="w"> </span>--summarize-all
+</code></pre></div>
+<h3 id="options">Options<a class="headerlink" href="#options" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--with-enrichment</code></td>
+<td>Enable LLM enrichment (auto.* fields)</td>
+</tr>
+<tr>
+<td><code>--enrichment-model</code></td>
+<td>LLM model (default: gpt-4o-mini)</td>
+</tr>
+<tr>
+<td><code>--force</code>, <code>-f</code></td>
+<td>Re-index even if unchanged (re-enrich)</td>
+</tr>
+<tr>
+<td><code>--folder</code></td>
+<td>Specific folder to process</td>
+</tr>
+<tr>
+<td><code>--summarize-all</code></td>
+<td>Override thresholds and summarize all notes</td>
+</tr>
+<tr>
+<td><code>--summarization-skip</code></td>
+<td>Override skip behavior (<code>skip_entirely</code> | <code>enrich_no_summary</code>)</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># Required</span>
+<a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="nv">OPENAI_API_KEY</span><span class="o">=</span>sk-...
+<a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a>
+<a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="c1"># Optional (set in .env or config)</span>
+<a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="nv">OBSIDIAN_VAULT_PATH</span><span class="o">=</span>/path/to/vault
+</code></pre></div>
+<h3 id="enrichment-config">Enrichment Config<a class="headerlink" href="#enrichment-config" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># configs/enrichment.yaml</span>
+<a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">enrichment</span><span class="p">:</span>
+<a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4o-mini</span>
+<a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">  </span><span class="nt">max_content_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
+<a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">  </span><span class="nt">classifications</span><span class="p">:</span>
+<a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meeting</span>
+<a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">architecture</span>
+<a href="#__codelineno-11-9" id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reference</span>
+<a href="#__codelineno-11-10" id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">journal</span>
+<a href="#__codelineno-11-11" id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">project</span>
+<a href="#__codelineno-11-12" id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">brainstorm</span>
+<a href="#__codelineno-11-13" id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">documentation</span>
+<a href="#__codelineno-11-14" id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">task-list</span>
+<a href="#__codelineno-11-15" id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">research</span>
+<a href="#__codelineno-11-16" id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">notes</span>
+<a href="#__codelineno-11-17" id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">  </span><span class="nt">tag_rules</span><span class="p">:</span>
+<a href="#__codelineno-11-18" id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">    </span><span class="nt">min_tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
+<a href="#__codelineno-11-19" id="__codelineno-11-19" name="__codelineno-11-19"></a><span class="w">    </span><span class="nt">max_tags</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<a href="#__codelineno-11-20" id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">    </span><span class="nt">use_existing_patterns</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<hr/>
+<h2 id="summarization-thresholds-v105">Summarization Thresholds (v1.0.5)<a class="headerlink" href="#summarization-thresholds-v105" title="Permanent link">¶</a></h2>
+<p>Not all notes need summaries. Short notes, daily journals, and private content can skip summarization to save API costs while still getting tags and classification.</p>
+<h3 id="configuration-schema">Configuration Schema<a class="headerlink" href="#configuration-schema" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SummarizationConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a><span class="w">    </span><span class="sd">"""Configuration for when to generate summaries."""</span>
+<a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>
+<a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a>    <span class="c1"># Size thresholds (0 = disabled)</span>
+<a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>    <span class="n">min_char_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">500</span>
+<a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>    <span class="n">min_word_count</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span>
+<a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a>
+<a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>    <span class="c1"># Type exclusions</span>
+<a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="n">excluded_classifications</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"journal"</span><span class="p">,</span> <span class="s2">"daily-note"</span><span class="p">]</span>
+<a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a>    <span class="n">excluded_folders</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"Daily Notes/"</span><span class="p">,</span> <span class="s2">"Journal/"</span><span class="p">]</span>
+<a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a>    <span class="n">excluded_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"no-summary"</span><span class="p">,</span> <span class="s2">"private"</span><span class="p">]</span>
+<a href="#__codelineno-12-12" id="__codelineno-12-12" name="__codelineno-12-12"></a>
+<a href="#__codelineno-12-13" id="__codelineno-12-13" name="__codelineno-12-13"></a>    <span class="c1"># Force include (overrides exclusions)</span>
+<a href="#__codelineno-12-14" id="__codelineno-12-14" name="__codelineno-12-14"></a>    <span class="n">force_include_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"summarize"</span><span class="p">,</span> <span class="s2">"important"</span><span class="p">]</span>
+<a href="#__codelineno-12-15" id="__codelineno-12-15" name="__codelineno-12-15"></a>
+<a href="#__codelineno-12-16" id="__codelineno-12-16" name="__codelineno-12-16"></a>    <span class="c1"># Behavior when excluded</span>
+<a href="#__codelineno-12-17" id="__codelineno-12-17" name="__codelineno-12-17"></a>    <span class="n">skip_behavior</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"skip_entirely"</span><span class="p">,</span> <span class="s2">"enrich_no_summary"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"enrich_no_summary"</span>
+</code></pre></div>
+<h3 id="environment-variables_1">Environment Variables<a class="headerlink" href="#environment-variables_1" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># .env configuration</span>
+<a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>
+<a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="c1"># Size thresholds</span>
+<a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a><span class="nv">SUMMARIZATION_MIN_CHARS</span><span class="o">=</span><span class="m">500</span>
+<a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="nv">SUMMARIZATION_MIN_WORDS</span><span class="o">=</span><span class="m">100</span>
+<a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a>
+<a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="c1"># Exclusions (comma-separated)</span>
+<a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="nv">SUMMARIZATION_EXCLUDED_FOLDERS</span><span class="o">=</span>Daily<span class="w"> </span>Notes/,Journal/
+<a href="#__codelineno-13-9" id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="nv">SUMMARIZATION_EXCLUDED_TAGS</span><span class="o">=</span>no-summary,private
+<a href="#__codelineno-13-10" id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="nv">SUMMARIZATION_EXCLUDED_CLASSIFICATIONS</span><span class="o">=</span>journal,daily-note
+<a href="#__codelineno-13-11" id="__codelineno-13-11" name="__codelineno-13-11"></a>
+<a href="#__codelineno-13-12" id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="c1"># Force include (overrides exclusions)</span>
+<a href="#__codelineno-13-13" id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="nv">SUMMARIZATION_FORCE_INCLUDE_TAGS</span><span class="o">=</span>summarize,important
+<a href="#__codelineno-13-14" id="__codelineno-13-14" name="__codelineno-13-14"></a>
+<a href="#__codelineno-13-15" id="__codelineno-13-15" name="__codelineno-13-15"></a><span class="c1"># Behavior: skip_entirely | enrich_no_summary</span>
+<a href="#__codelineno-13-16" id="__codelineno-13-16" name="__codelineno-13-16"></a><span class="nv">SUMMARIZATION_SKIP_BEHAVIOR</span><span class="o">=</span>enrich_no_summary
+</code></pre></div>
+<h3 id="skip-behaviors">Skip Behaviors<a class="headerlink" href="#skip-behaviors" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Behavior</th>
+<th>Tags/Class</th>
+<th>Summary</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enrich_no_summary</code></td>
+<td>✅ Generated</td>
+<td>❌ Skipped</td>
+<td>Most cases: get metadata, skip expensive summary</td>
+</tr>
+<tr>
+<td><code>skip_entirely</code></td>
+<td>❌ Skipped</td>
+<td>❌ Skipped</td>
+<td>Truly private/excluded content</td>
+</tr>
+</tbody>
+</table>
+<h3 id="decision-flow">Decision Flow<a class="headerlink" href="#decision-flow" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    Note[Note Content] --&gt; ForceCheck{Has force_include_tag?}
+    ForceCheck --&gt;|Yes| FullEnrich[Full Enrichment]
+    ForceCheck --&gt;|No| ExcludeCheck{Excluded by tag/folder/class?}
+
+    ExcludeCheck --&gt;|Yes| SkipDecision{skip_behavior}
+    ExcludeCheck --&gt;|No| SizeCheck{Meets size threshold?}
+
+    SizeCheck --&gt;|No| SkipDecision
+    SizeCheck --&gt;|Yes| FullEnrich
+
+    SkipDecision --&gt;|skip_entirely| NoEnrich[No Enrichment]
+    SkipDecision --&gt;|enrich_no_summary| PartialEnrich[Tags + Class Only]
+
+    FullEnrich --&gt; SummaryTags[Summary + Tags + Class]
+    PartialEnrich --&gt; TagsOnly[Tags + Class Only]
+</code></pre>
+<h3 id="cli-options">CLI Options<a class="headerlink" href="#cli-options" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># Use config from .env</span>
+<a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>agent-kernel<span class="w"> </span>vault-sync<span class="w"> </span>--with-enrichment
+<a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a>
+<a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="c1"># Override: summarize everything (ignore thresholds)</span>
+<a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a>agent-kernel<span class="w"> </span>vault-sync<span class="w"> </span>--with-enrichment<span class="w"> </span>--summarize-all
+<a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a>
+<a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="c1"># Override skip behavior</span>
+<a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a>agent-kernel<span class="w"> </span>vault-sync<span class="w"> </span>--with-enrichment<span class="w"> </span>--summarization-skip<span class="w"> </span>skip_entirely
+</code></pre></div>
+<h3 id="priority-order">Priority Order<a class="headerlink" href="#priority-order" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Force include tags</strong> (highest): <code>summarize</code>, <code>important</code> → always summarize</li>
+<li><strong>Excluded tags</strong>: <code>no-summary</code>, <code>private</code> → skip based on behavior</li>
+<li><strong>Excluded folders</strong>: <code>Daily Notes/</code>, <code>Journal/</code> → skip based on behavior</li>
+<li><strong>Excluded classifications</strong>: <code>journal</code>, <code>daily-note</code> → skip based on behavior</li>
+<li><strong>Size thresholds</strong>: <code>min_char_count</code>, <code>min_word_count</code> → skip if below</li>
+</ol>
+<hr/>
+<h2 id="cost-considerations">Cost Considerations<a class="headerlink" href="#cost-considerations" title="Permanent link">¶</a></h2>
+<h3 id="per-note-cost-gpt-4o-mini">Per-Note Cost (gpt-4o-mini)<a class="headerlink" href="#per-note-cost-gpt-4o-mini" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input tokens</td>
+<td>~300-500</td>
+</tr>
+<tr>
+<td>Output tokens</td>
+<td>~50-100</td>
+</tr>
+<tr>
+<td>Cost per note</td>
+<td>~$0.0001</td>
+</tr>
+</tbody>
+</table>
+<h3 id="batch-processing">Batch Processing<a class="headerlink" href="#batch-processing" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Notes</th>
+<th>Estimated Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>100</td>
+<td>~$0.01</td>
+</tr>
+<tr>
+<td>1,000</td>
+<td>~$0.10</td>
+</tr>
+<tr>
+<td>10,000</td>
+<td>~$1.00</td>
+</tr>
+</tbody>
+</table>
+<h3 id="optimization-tips">Optimization Tips<a class="headerlink" href="#optimization-tips" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Use <code>--limit</code></strong> for testing before full vault enrichment</li>
+<li><strong>Skip already-enriched</strong> notes (default behavior)</li>
+<li><strong>Use <code>--folder</code></strong> to target specific areas</li>
+<li><strong>Batch during sync</strong> rather than running separately</li>
+</ol>
+<hr/>
+<h2 id="writeback-safety">Writeback Safety<a class="headerlink" href="#writeback-safety" title="Permanent link">¶</a></h2>
+<p>The <code>_inject_auto_fields</code> method includes several safety measures:</p>
+<ol>
+<li><strong>File modification check</strong>: Compares <code>mtime</code> before and after reading</li>
+<li><strong>YAML preservation</strong>: Parses and reconstructs YAML safely</li>
+<li><strong>Namespace isolation</strong>: Only touches <code>auto:</code> key</li>
+<li><strong>Error handling</strong>: Graceful failure without corruption</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="c1"># Writeback safety check</span>
+<a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="n">original_mtime</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span>
+<a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="c1"># ... read and process ...</span>
+<a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="n">current_mtime</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_mtime</span>
+<a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a><span class="k">if</span> <span class="n">current_mtime</span> <span class="o">!=</span> <span class="n">original_mtime</span><span class="p">:</span>
+<a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"auto_fields_injection_aborted_file_changed"</span><span class="p">)</span>
+<a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a>    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div>
+<hr/>
+<h2 id="integration-with-embedding-strategy">Integration with Embedding Strategy<a class="headerlink" href="#integration-with-embedding-strategy" title="Permanent link">¶</a></h2>
+<p>Auto-tagging is <strong>Phase 2</strong> of the hierarchical embedding strategy:</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Component</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Graph + Documents</td>
+<td>✅ Complete</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Auto-Tagging</td>
+<td>✅ Complete</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Summary Generation</td>
+<td>✅ Complete (with thresholds)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Hierarchical Embeddings</td>
+<td>✅ Complete</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Hybrid Search</td>
+<td>✅ Complete</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>auto.summary</code> field generated during enrichment is used for summary embeddings. With summarization thresholds (v1.0.5), notes that don't meet size/type criteria skip summary generation but can still get tags and classification.</p>
+<hr/>
+<h2 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">¶</a></h2>
+<h3 id="notes-not-getting-enriched">Notes Not Getting Enriched<a class="headerlink" href="#notes-not-getting-enriched" title="Permanent link">¶</a></h3>
+<ol>
+<li>Check <code>OPENAI_API_KEY</code> is set</li>
+<li>Check note doesn't already have <code>auto:</code> section (use <code>--force</code>)</li>
+<li>Check for errors in output logs</li>
+</ol>
+<h3 id="auto-tags-not-in-graph">Auto-Tags Not in Graph<a class="headerlink" href="#auto-tags-not-in-graph" title="Permanent link">¶</a></h3>
+<ol>
+<li>Run <code>vault-sync</code> after <code>enrich</code> command</li>
+<li>Or use <code>vault-sync --with-enrichment</code> for combined operation</li>
+</ol>
+<h3 id="wrong-classifications">Wrong Classifications<a class="headerlink" href="#wrong-classifications" title="Permanent link">¶</a></h3>
+<ol>
+<li>Customize <code>classifications</code> list in config</li>
+<li>Adjust <code>temperature</code> (lower = more consistent)</li>
+<li>Review and update prompt for your domain</li>
+</ol>
+<hr/>
+<hr/>
+<h2 id="universal-entity-enrichment-v105">Universal Entity Enrichment (v1.0.5)<a class="headerlink" href="#universal-entity-enrichment-v105" title="Permanent link">¶</a></h2>
+<p>The enrichment system has been generalized to work with any entity type, not just Obsidian notes. Each source (Obsidian, Slack, Outlook, etc.) can have its own configuration with customized prompts and thresholds.</p>
+<h3 id="source-configuration-structure">Source Configuration Structure<a class="headerlink" href="#source-configuration-structure" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SourceEnrichmentConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a><span class="w">    </span><span class="sd">"""Enrichment configuration for a specific source type."""</span>
+<a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>
+<a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a>    <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span>                    <span class="c1"># obsidian, slack, outlook, etc.</span>
+<a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a>    <span class="n">entity_types</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span>           <span class="c1"># note, message, email, etc.</span>
+<a href="#__codelineno-16-6" id="__codelineno-16-6" name="__codelineno-16-6"></a>
+<a href="#__codelineno-16-7" id="__codelineno-16-7" name="__codelineno-16-7"></a>    <span class="c1"># Prompts</span>
+<a href="#__codelineno-16-8" id="__codelineno-16-8" name="__codelineno-16-8"></a>    <span class="n">system_prompt</span><span class="p">:</span> <span class="nb">str</span>                <span class="c1"># LLM system prompt</span>
+<a href="#__codelineno-16-9" id="__codelineno-16-9" name="__codelineno-16-9"></a>    <span class="n">user_prompt_template</span><span class="p">:</span> <span class="nb">str</span>         <span class="c1"># User prompt with placeholders</span>
+<a href="#__codelineno-16-10" id="__codelineno-16-10" name="__codelineno-16-10"></a>
+<a href="#__codelineno-16-11" id="__codelineno-16-11" name="__codelineno-16-11"></a>    <span class="c1"># Output schema</span>
+<a href="#__codelineno-16-12" id="__codelineno-16-12" name="__codelineno-16-12"></a>    <span class="n">extract_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<a href="#__codelineno-16-13" id="__codelineno-16-13" name="__codelineno-16-13"></a>    <span class="n">extract_tags</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<a href="#__codelineno-16-14" id="__codelineno-16-14" name="__codelineno-16-14"></a>    <span class="n">extract_classification</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+<a href="#__codelineno-16-15" id="__codelineno-16-15" name="__codelineno-16-15"></a>    <span class="n">classifications</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a href="#__codelineno-16-16" id="__codelineno-16-16" name="__codelineno-16-16"></a>
+<a href="#__codelineno-16-17" id="__codelineno-16-17" name="__codelineno-16-17"></a>    <span class="c1"># LLM settings</span>
+<a href="#__codelineno-16-18" id="__codelineno-16-18" name="__codelineno-16-18"></a>    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+<a href="#__codelineno-16-19" id="__codelineno-16-19" name="__codelineno-16-19"></a>    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span>
+<a href="#__codelineno-16-20" id="__codelineno-16-20" name="__codelineno-16-20"></a>    <span class="n">max_content_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span>
+<a href="#__codelineno-16-21" id="__codelineno-16-21" name="__codelineno-16-21"></a>
+<a href="#__codelineno-16-22" id="__codelineno-16-22" name="__codelineno-16-22"></a>    <span class="c1"># Thresholds</span>
+<a href="#__codelineno-16-23" id="__codelineno-16-23" name="__codelineno-16-23"></a>    <span class="n">thresholds</span><span class="p">:</span> <span class="n">EnrichmentThresholds</span>
+</code></pre></div>
+<h3 id="yaml-configuration">YAML Configuration<a class="headerlink" href="#yaml-configuration" title="Permanent link">¶</a></h3>
+<p>Source configs are loaded from <code>configs/enrichment/*.yaml</code>:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="c1"># configs/enrichment/obsidian.yaml</span>
+<a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="nt">source_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">obsidian</span>
+<a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="nt">entity_types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">note</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">document</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+<a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a><span class="nt">system_prompt</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a><span class="w">  </span><span class="no">You are an expert at analyzing notes...</span>
+<a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a><span class="w">  </span><span class="no">Consider [[wiki-links]] as relationships...</span>
+<a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a>
+<a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a><span class="nt">classifications</span><span class="p">:</span>
+<a href="#__codelineno-17-10" id="__codelineno-17-10" name="__codelineno-17-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">meeting</span>
+<a href="#__codelineno-17-11" id="__codelineno-17-11" name="__codelineno-17-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">architecture</span>
+<a href="#__codelineno-17-12" id="__codelineno-17-12" name="__codelineno-17-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reference</span>
+<a href="#__codelineno-17-13" id="__codelineno-17-13" name="__codelineno-17-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">journal</span>
+<a href="#__codelineno-17-14" id="__codelineno-17-14" name="__codelineno-17-14"></a>
+<a href="#__codelineno-17-15" id="__codelineno-17-15" name="__codelineno-17-15"></a><span class="nt">thresholds</span><span class="p">:</span>
+<a href="#__codelineno-17-16" id="__codelineno-17-16" name="__codelineno-17-16"></a><span class="w">  </span><span class="nt">min_char_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<a href="#__codelineno-17-17" id="__codelineno-17-17" name="__codelineno-17-17"></a><span class="w">  </span><span class="nt">excluded_paths</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">"Daily</span><span class="nv"> </span><span class="s">Notes/"</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">"Journal/"</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-17-18" id="__codelineno-17-18" name="__codelineno-17-18"></a><span class="w">  </span><span class="nt">skip_behavior</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enrich_no_summary</span>
+</code></pre></div>
+<h3 id="adding-new-sources">Adding New Sources<a class="headerlink" href="#adding-new-sources" title="Permanent link">¶</a></h3>
+<p>To add enrichment for a new source (e.g., Slack):</p>
+<ol>
+<li>Create <code>configs/enrichment/slack.yaml</code>:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="nt">source_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slack</span>
+<a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="nt">entity_types</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">message</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">thread</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a>
+<a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="nt">system_prompt</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">  </span><span class="no">You are analyzing a Slack conversation thread.</span>
+<a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">  </span><span class="no">Focus on: decisions made, action items, key topics.</span>
+<a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">  </span><span class="no">...</span>
+<a href="#__codelineno-18-8" id="__codelineno-18-8" name="__codelineno-18-8"></a>
+<a href="#__codelineno-18-9" id="__codelineno-18-9" name="__codelineno-18-9"></a><span class="nt">classifications</span><span class="p">:</span>
+<a href="#__codelineno-18-10" id="__codelineno-18-10" name="__codelineno-18-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">discussion</span>
+<a href="#__codelineno-18-11" id="__codelineno-18-11" name="__codelineno-18-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">decision</span>
+<a href="#__codelineno-18-12" id="__codelineno-18-12" name="__codelineno-18-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">announcement</span>
+<a href="#__codelineno-18-13" id="__codelineno-18-13" name="__codelineno-18-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">question</span>
+<a href="#__codelineno-18-14" id="__codelineno-18-14" name="__codelineno-18-14"></a>
+<a href="#__codelineno-18-15" id="__codelineno-18-15" name="__codelineno-18-15"></a><span class="nt">thresholds</span><span class="p">:</span>
+<a href="#__codelineno-18-16" id="__codelineno-18-16" name="__codelineno-18-16"></a><span class="w">  </span><span class="nt">min_char_count</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">200</span><span class="w">  </span><span class="c1"># Slack messages are shorter</span>
+<a href="#__codelineno-18-17" id="__codelineno-18-17" name="__codelineno-18-17"></a><span class="w">  </span><span class="nt">skip_behavior</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enrich_no_summary</span>
+</code></pre></div>
+<ol>
+<li>
+<p>The registry will automatically load it on startup.</p>
+</li>
+<li>
+<p>Use <code>enrich_entity()</code> with an <code>EntityRef</code>:</p>
+</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="n">entity_ref</span> <span class="o">=</span> <span class="n">EntityRef</span><span class="p">(</span>
+<a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>    <span class="n">source_id</span><span class="o">=</span><span class="s2">"slack"</span><span class="p">,</span>
+<a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a>    <span class="n">entity_type</span><span class="o">=</span><span class="s2">"message"</span><span class="p">,</span>
+<a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a>    <span class="n">entity_id</span><span class="o">=</span><span class="s2">"C123-1234567890.123456"</span>
+<a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="p">)</span>
+<a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a>
+<a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">enrichment_service</span><span class="o">.</span><span class="n">enrich_entity</span><span class="p">(</span>
+<a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>    <span class="n">content</span><span class="o">=</span><span class="n">message_content</span><span class="p">,</span>
+<a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a>    <span class="n">entity_ref</span><span class="o">=</span><span class="n">entity_ref</span><span class="p">,</span>
+<a href="#__codelineno-19-10" id="__codelineno-19-10" name="__codelineno-19-10"></a>    <span class="n">config_registry</span><span class="o">=</span><span class="n">registry</span><span class="p">,</span>
+<a href="#__codelineno-19-11" id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="p">)</span>
+</code></pre></div>
+<h3 id="enrichmentconfigregistry">EnrichmentConfigRegistry<a class="headerlink" href="#enrichmentconfigregistry" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agent_kernel.services.enrichment_registry</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_enrichment_registry</span>
+<a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>
+<a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="c1"># Get global registry (loads from configs/enrichment/)</span>
+<a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="n">registry</span> <span class="o">=</span> <span class="n">get_enrichment_registry</span><span class="p">()</span>
+<a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>
+<a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a><span class="c1"># Get config for a source</span>
+<a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a><span class="n">config</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"obsidian"</span><span class="p">)</span>
+<a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a>
+<a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a><span class="c1"># Get with fallback</span>
+<a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a><span class="n">config</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">get_or_default</span><span class="p">(</span><span class="s2">"slack"</span><span class="p">)</span>
+<a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a>
+<a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a><span class="c1"># List all sources</span>
+<a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a><span class="n">sources</span> <span class="o">=</span> <span class="n">registry</span><span class="o">.</span><span class="n">list_sources</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="backwards-compatibility">Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permanent link">¶</a></h3>
+<ul>
+<li><code>SummarizationConfig</code> is now an alias for <code>EnrichmentThresholds</code></li>
+<li><code>EnrichmentService.enrich()</code> still works for note-only use cases</li>
+<li><code>EnrichmentService.enrich_entity()</code> is the new generalized method</li>
+</ul>
+<hr/>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../../src/agent_kernel/services/enrichment.py">Enrichment Service</a></li>
+<li><a href="../../src/agent_kernel/services/enrichment_registry.py">Enrichment Registry</a></li>
+<li><a href="../../src/agent_kernel/services/vault_indexer.py">Vault Indexer</a></li>
+<li><a href="../../src/agent_kernel/core/schemas/enrichment_config.py">SourceEnrichmentConfig Schema</a></li>
+<li><a href="../../configs/enrichment/obsidian.yaml">Obsidian Config</a></li>
+<li><a href="../12-integration-patterns/">Integration Patterns</a></li>
+<li><a href="../14-embedding-strategy/">Embedding Strategy</a></li>
+<li><a href="../17-universal-context-system/">Universal Context System</a></li>
+</ul>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
+</html>

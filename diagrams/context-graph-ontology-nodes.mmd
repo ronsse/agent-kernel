@@ -1,0 +1,63 @@
+---
+title: Context Graph — Node Type Catalog
+---
+flowchart TB
+    subgraph ORG["Organizational"]
+        NOTE["NOTE<br/><i>Documents, notes</i>"]
+        TAG["TAG<br/><i>Classification labels</i>"]
+        TASK["TASK<br/><i>Action items</i>"]
+        PROJECT["PROJECT<br/><i>Work streams</i>"]
+        PERSON["PERSON<br/><i>People, contacts</i>"]
+        LABEL["LABEL<br/><i>Task labels</i>"]
+        SECTION["SECTION<br/><i>Project sections</i>"]
+    end
+
+    subgraph BET["Betting & Marketing"]
+        B_BET["BET<br/><i>Wagers placed</i>"]
+        BET_LEG["BET_LEG<br/><i>Individual legs</i>"]
+        PROMOTION["PROMOTION<br/><i>Bonus offers</i>"]
+        VALUE_TIER["VALUE_TIER<br/><i>Customer segments</i>"]
+        KPI_METRIC["KPI_METRIC<br/><i>GGR, handle, eGGR</i>"]
+        ODDS_FEED["ODDS_FEED<br/><i>External odds data</i>"]
+        CAMPAIGN["CAMPAIGN<br/><i>Marketing campaigns</i>"]
+    end
+
+    subgraph SEM["Semantic Memory (Knowledge)"]
+        DOMAIN["DOMAIN<br/><i>Business domains</i>"]
+        SYSTEM["SYSTEM<br/><i>Software systems</i>"]
+        CONCEPT["CONCEPT<br/><i>Abstract ideas</i>"]
+        PRACTICE["PRACTICE<br/><i>Best practices</i>"]
+        INSIGHT["INSIGHT<br/><i>Distilled learning</i>"]
+        PATTERN["PATTERN<br/><i>Recurring patterns</i>"]
+        DATA_OBJ["DATA_OBJECT<br/><i>Tables, schemas</i>"]
+        RULE["RULE<br/><i>Constraints, policies</i>"]
+    end
+
+    subgraph EPIS["Episodic Memory (Event Clock)"]
+        TRAJ["TRAJECTORY<br/><i>Agent run paths</i>"]
+        DECISION["DECISION_EVENT<br/><i>Specific choices</i>"]
+        OBS["OBSERVATION<br/><i>Runtime observations</i>"]
+        SUMMARY["SUMMARY<br/><i>Compacted history</i>"]
+    end
+
+    subgraph EXT["External Entity Types"]
+        MESSAGE["MESSAGE<br/><i>Chat messages</i>"]
+        THREAD["THREAD<br/><i>Conversations</i>"]
+        EMAIL["EMAIL<br/><i>Email messages</i>"]
+        TICKET["TICKET<br/><i>Issue tracker items</i>"]
+        PR["PULL_REQUEST<br/><i>Code reviews</i>"]
+        CAPABILITY["CAPABILITY<br/><i>Tool definitions</i>"]
+        SKILL["SKILL<br/><i>Procedural guides</i>"]
+    end
+
+    class NOTE,TAG,TASK,PROJECT,PERSON,LABEL,SECTION source
+    class B_BET,BET_LEG,PROMOTION,VALUE_TIER,KPI_METRIC,ODDS_FEED,CAMPAIGN betting
+    class DOMAIN,SYSTEM,CONCEPT,PRACTICE,INSIGHT,PATTERN,DATA_OBJ,RULE graphLayer
+    class TRAJ,DECISION,OBS,SUMMARY context
+    class MESSAGE,THREAD,EMAIL,TICKET,PR,CAPABILITY,SKILL memory
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef betting fill:#fce7f3,stroke:#db2777,color:#4a044e
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a

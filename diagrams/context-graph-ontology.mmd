@@ -1,0 +1,116 @@
+---
+title: Context Graph — Full Node and Edge Type Ontology
+---
+flowchart TB
+    subgraph ORGANIZATIONAL["Organizational Entities"]
+        NOTE["NOTE"]
+        TAG["TAG"]
+        TASK["TASK"]
+        PROJECT["PROJECT"]
+        PERSON["PERSON"]
+        LABEL["LABEL"]
+        SECTION["SECTION"]
+    end
+
+    subgraph BETTING["Betting & Marketing Entities"]
+        BET["BET"]
+        BET_LEG["BET_LEG"]
+        PROMOTION["PROMOTION"]
+        VALUE_TIER["VALUE_TIER"]
+        KPI_METRIC["KPI_METRIC"]
+        ODDS_FEED["ODDS_FEED"]
+        CAMPAIGN["CAMPAIGN"]
+    end
+
+    subgraph KNOWLEDGE["Semantic Memory (Knowledge)"]
+        DOMAIN["DOMAIN"]
+        SYSTEM["SYSTEM"]
+        CONCEPT["CONCEPT"]
+        PRACTICE["PRACTICE"]
+        INSIGHT["INSIGHT"]
+        PATTERN["PATTERN"]
+        DATA_OBJ["DATA_OBJECT"]
+        RULE["RULE"]
+    end
+
+    subgraph EPISODIC["Episodic Memory (Event Clock)"]
+        TRAJ["TRAJECTORY"]
+        DECISION["DECISION_EVENT"]
+        OBS["OBSERVATION"]
+        SUMMARY["SUMMARY"]
+    end
+
+    subgraph EXTERNAL["External Entity Types"]
+        MESSAGE["MESSAGE"]
+        THREAD["THREAD"]
+        EMAIL["EMAIL"]
+        TICKET["TICKET"]
+        PR["PULL_REQUEST"]
+        CAPABILITY["CAPABILITY"]
+        SKILL["SKILL"]
+    end
+
+    %% Organizational edges
+    NOTE -->|"links_to"| NOTE
+    NOTE -->|"tagged_with"| TAG
+    NOTE -->|"has_task"| TASK
+    NOTE -->|"mentions"| PERSON
+    TASK -->|"belongs_to"| PROJECT
+    TASK -->|"has_label"| LABEL
+    TASK -->|"in_section"| SECTION
+    PROJECT -->|"has_section"| SECTION
+
+    %% Betting/marketing edges
+    BET -->|"has_leg"| BET_LEG
+    BET -->|"placed_by_tier"| VALUE_TIER
+    PROMOTION -->|"targets_tier"| VALUE_TIER
+    PROMOTION -->|"part_of"| CAMPAIGN
+    KPI_METRIC -->|"segmented_by"| VALUE_TIER
+    KPI_METRIC -->|"measured_for"| CAMPAIGN
+    ODDS_FEED -->|"feeds"| BET
+    BET_LEG -->|"settles_via"| SYSTEM
+
+    %% Knowledge edges
+    DOMAIN -->|"contains"| SYSTEM
+    DOMAIN -->|"contains"| CONCEPT
+    SYSTEM -->|"integrates_with"| SYSTEM
+    SYSTEM -->|"has_data_object"| DATA_OBJ
+    CONCEPT -->|"related_to"| CONCEPT
+    INSIGHT -->|"about"| CONCEPT
+    INSIGHT -->|"derived_from"| TRAJ
+    PATTERN -->|"observed_in"| TRAJ
+    PRACTICE -->|"uses"| SYSTEM
+    RULE -->|"constrains"| CONCEPT
+
+    %% Episodic edges
+    TRAJ -->|"touched"| NOTE
+    TRAJ -->|"touched"| TASK
+    TRAJ -->|"touched"| KPI_METRIC
+    TRAJ -->|"decided"| DECISION
+    TRAJ -->|"observed"| OBS
+    TRAJ -->|"produced"| NOTE
+    TRAJ -.->|"similar_to"| TRAJ
+    DECISION -->|"about"| CONCEPT
+    DECISION -->|"preceded_by"| DECISION
+
+    %% Growth management
+    SUMMARY -->|"summary_of"| TRAJ
+    SUMMARY -->|"supersedes"| INSIGHT
+
+    %% Co-occurrence
+    NOTE -.->|"co_occurs_with"| CONCEPT
+
+    %% SSOT connection
+    DATA_OBJ -.->|"sourced_from_ssot"| DOMAIN
+
+    class NOTE,TAG,TASK,PROJECT,PERSON,LABEL,SECTION source
+    class BET,BET_LEG,PROMOTION,VALUE_TIER,KPI_METRIC,ODDS_FEED,CAMPAIGN betting
+    class DOMAIN,SYSTEM,CONCEPT,PRACTICE,INSIGHT,PATTERN,DATA_OBJ,RULE graphLayer
+    class TRAJ,DECISION,OBS,SUMMARY context
+    class MESSAGE,THREAD,EMAIL,TICKET,PR,CAPABILITY,SKILL memory
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef betting fill:#fce7f3,stroke:#db2777,color:#4a044e
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a

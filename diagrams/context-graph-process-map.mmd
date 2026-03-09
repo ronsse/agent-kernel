@@ -1,0 +1,30 @@
+---
+title: Agent Context Graph — Process Map (P0-P6)
+---
+flowchart LR
+    P0["P0: Trigger<br/>Cron / Event / Manual"]
+    P1["P1: Context Assembly<br/>Query all memory layers"]
+    P2["P2: Plan Generation<br/>Engine proposes actions"]
+    P3["P3: Validation & Gating<br/>Schema + approval checks"]
+    P4["P4: Execution<br/>Tool Broker runs actions"]
+    P5["P5: Trace Emission<br/>DecisionTrace persisted"]
+    P6["P6: Graph Decomposition<br/>Trace → nodes + edges"]
+
+    P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> P6
+    P6 -.->|"Feeds next run"| P1
+
+    GRAPH[("Context Graph<br/>Store")]
+    P1 <-->|"Read"| GRAPH
+    P6 -->|"Write"| GRAPH
+
+    class P0 source
+    class P1,P6 graphLayer
+    class P2,P3,P4 exec
+    class P5 governance
+    class GRAPH memory
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef exec fill:#ef4444,stroke:#b91c1c,color:#fff
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a

@@ -1,0 +1,49 @@
+---
+title: Agent Context Graph — Capability Map (C1-C10)
+---
+flowchart TB
+    subgraph ACQ["Acquisition (C1-C3)"]
+        C1["C1: Source Connectors<br/>Databricks Tables, Jira / Confluence,<br/>Git Docs, Manual Knowledge"]
+        C2["C2: Trace Capture<br/>Every agent run recorded"]
+        C3["C3: Entity Resolution<br/>Stable IDs across sources"]
+    end
+
+    subgraph REP["Representation (C4-C5)"]
+        C4["C4: Context Graph Store<br/>Typed nodes + edges with provenance"]
+        C5["C5: Knowledge Distillation<br/>Traces → Insights → Patterns"]
+    end
+
+    subgraph RET["Retrieval (C6-C7)"]
+        C6["C6: Query & Scoring<br/>Keyword + freshness + confidence"]
+        C7["C7: Context Assembly<br/>9-layer deterministic packaging"]
+    end
+
+    subgraph OPS["Operations (C8-C10)"]
+        C8["C8: Governance & Access<br/>Unity Catalog row-level control"]
+        C9["C9: Retention & Compaction<br/>HOT → WARM → COLD lifecycle"]
+        C10["C10: Observability<br/>Graph health, query latency, growth"]
+    end
+
+    C1 --> C3
+    C2 --> C3
+    C3 --> C4
+    C4 --> C5
+    C4 --> C6
+    C5 --> C6
+    C6 --> C7
+    C4 --> C8
+    C4 --> C9
+    C4 --> C10
+    C7 -->|"ContextPacket"| AGENT["MarTek / Agent Engine"]
+
+    class C1,C2,C3 source
+    class C4,C5 graphLayer
+    class C6,C7 context
+    class C8,C9,C10 governance
+    class AGENT agent
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065

@@ -1,0 +1,84 @@
+---
+title: Agent Context Graph — System Context
+---
+flowchart LR
+    subgraph USERS["Consumers"]
+        USER["Data Engineer /<br/>Agent Operator"]
+        MARTEK["MarTek Agent<br/>(Generosity Intelligence)"]
+        PIPELINE["Pipeline Agent<br/>(Data Engineering)"]
+    end
+
+    subgraph KERNEL["Agent Kernel"]
+        ENGINE["Agent Engine"]
+        CG["Context Graph<br/>(9 components)"]
+        CA["Context Assembler"]
+        EXEC["Executor + Tool Broker"]
+        TRACE["Trace Store"]
+    end
+
+    subgraph STORES["Backing Stores"]
+        GRAPHDB["LakebaseGraphStore<br/>(Managed PostgreSQL)"]
+        DOCDB["Document Store"]
+        VECDB["Vector Store"]
+        EXPDB["Experience Store"]
+    end
+
+    subgraph SOURCES["Data Sources"]
+        SSOT["Databricks SSOT<br/>(Core Layer)"]
+        DOCSRC["Jira / Confluence /<br/>Git Docs"]
+    end
+
+    subgraph PEERS["Data Platform"]
+        C360["Customer 360"]
+        RECSYS["Recommender Systems"]
+        UC["Unity Catalog"]
+        BT["Braintrust<br/>(Prompts + Eval + Review)"]
+    end
+
+    subgraph QSVC["Queryable Services"]
+        ODDS["Odds Feeds"]
+        BETTING["Betting Platform"]
+        PROMO["Promotion Engine"]
+    end
+
+    USER --> ENGINE
+    MARTEK --> ENGINE
+    PIPELINE --> ENGINE
+
+    ENGINE --> CA
+    CA --> CG
+    CG --> GRAPHDB
+    CA --> DOCDB
+    CA --> VECDB
+    CA --> EXPDB
+
+    EXEC --> TRACE
+    TRACE --> CG
+
+    SOURCES -->|"Table metadata<br/>+ documents"| CG
+    C360 -.->|"Entity enrichment"| CG
+    RECSYS -.->|"Shared entities"| CG
+
+    BT -.->|"Prompts + versioning"| ENGINE
+    BT -.->|"Eval signals"| EXPDB
+    GRAPHDB -.->|"Sync Tables"| SSOT
+    GRAPHDB -.-> UC
+
+    ENGINE -.->|"via tools/skills"| QSVC
+
+    class USER,MARTEK,PIPELINE source
+    class ENGINE,EXEC agent
+    class CG,CA graphLayer
+    class TRACE governance
+    class GRAPHDB,DOCDB,VECDB,EXPDB memory
+    class SSOT,DOCSRC ssot
+    class C360,RECSYS,UC,BT peer
+    class ODDS,BETTING,PROMO source
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef ssot fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e
+    classDef peer fill:#f0fdf4,stroke:#15803d,color:#052e16

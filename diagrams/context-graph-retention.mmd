@@ -1,0 +1,66 @@
+---
+title: Retention and Compaction Pipeline
+---
+flowchart TB
+    POLICY["RetentionPolicy<br/>hot_days=90, warm_days=365"]
+
+    subgraph PHASE1["Phase 1: Tier Classification"]
+        SCAN["Scan all knowledge nodes"]
+        CLASSIFY["Classify by freshness:<br/>HOT (≤90d) / WARM (91-365d) / COLD (>365d)"]
+        UPDATE["Update node tier property"]
+    end
+
+    subgraph PHASE2["Phase 2: Freshness Decay"]
+        CALC["FreshnessCalculator<br/>score = base * (1-decay)^days"]
+        ACCESS["Track: last_accessed_at<br/>last_reinforced_at<br/>access_count"]
+        DECAY["Apply decay to all<br/>non-pinned nodes"]
+    end
+
+    subgraph PHASE3["Phase 3: Compaction"]
+        COLD_NODES["Identify COLD nodes<br/>(score < threshold)"]
+        DET_COMPACT["Deterministic Compaction<br/>Group by type + merge properties"]
+        TRAJ_COMPACT["Trajectory Compaction<br/>Summarize old trajectories"]
+        SUMMARY_NODE["Create SUMMARY node<br/>SUMMARY_OF edges to originals"]
+    end
+
+    subgraph PHASE4["Phase 4: Pruning"]
+        SUPERSEDED["Find superseded nodes<br/>(superseded_by != null)"]
+        LOW_CONF["Find low-confidence nodes<br/>(confidence < 0.3, cold)"]
+        DELETE["Delete nodes + cascade edges"]
+    end
+
+    subgraph PHASE5["Phase 5: Reporting"]
+        REPORT["RetentionReport<br/>nodes_tiered, compacted,<br/>pruned, edges_removed"]
+    end
+
+    POLICY --> PHASE1
+    SCAN --> CLASSIFY --> UPDATE
+
+    PHASE1 --> PHASE2
+    CALC --> ACCESS --> DECAY
+
+    PHASE2 --> PHASE3
+    COLD_NODES --> DET_COMPACT
+    COLD_NODES --> TRAJ_COMPACT
+    DET_COMPACT --> SUMMARY_NODE
+    TRAJ_COMPACT --> SUMMARY_NODE
+
+    PHASE3 --> PHASE4
+    SUPERSEDED --> DELETE
+    LOW_CONF --> DELETE
+
+    PHASE4 --> PHASE5
+
+    class POLICY governance
+    class SCAN,CLASSIFY,UPDATE context
+    class CALC,ACCESS,DECAY graphLayer
+    class COLD_NODES,DET_COMPACT,TRAJ_COMPACT,SUMMARY_NODE memory
+    class SUPERSEDED,LOW_CONF,DELETE exec
+    class REPORT agent
+
+    classDef governance fill:#ffedd5,stroke:#ea580c,color:#7c2d12
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef exec fill:#ef4444,stroke:#b91c1c,color:#fff
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065

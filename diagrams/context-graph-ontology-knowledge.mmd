@@ -1,0 +1,74 @@
+---
+title: Context Graph — Knowledge & Business Entity Relationships
+---
+flowchart LR
+    subgraph SEMANTIC["Semantic Memory"]
+        DOMAIN["DOMAIN"]
+        SYSTEM["SYSTEM"]
+        CONCEPT["CONCEPT"]
+        DATA_OBJ["DATA_OBJECT"]
+        RULE["RULE"]
+        PRACTICE["PRACTICE"]
+        INSIGHT["INSIGHT"]
+        PATTERN["PATTERN"]
+    end
+
+    subgraph BETTING["Betting & Marketing"]
+        BET["BET"]
+        BET_LEG["BET_LEG"]
+        PROMOTION["PROMOTION"]
+        VALUE_TIER["VALUE_TIER"]
+        KPI_METRIC["KPI_METRIC"]
+        ODDS_FEED["ODDS_FEED"]
+        CAMPAIGN["CAMPAIGN"]
+    end
+
+    subgraph ORG["Organizational"]
+        NOTE["NOTE"]
+        TASK["TASK"]
+        PROJECT["PROJECT"]
+        TAG["TAG"]
+        PERSON["PERSON"]
+    end
+
+    TRAJ["TRAJECTORY<br/><i>(Episodic)</i>"]
+
+    %% Semantic relationships
+    DOMAIN -->|"contains"| SYSTEM
+    DOMAIN -->|"contains"| CONCEPT
+    SYSTEM -->|"integrates_with"| SYSTEM
+    SYSTEM -->|"has_data_object"| DATA_OBJ
+    CONCEPT -->|"related_to"| CONCEPT
+    RULE -->|"constrains"| CONCEPT
+    PRACTICE -->|"uses"| SYSTEM
+    INSIGHT -->|"about"| CONCEPT
+    INSIGHT -->|"derived_from"| TRAJ
+    PATTERN -->|"observed_in"| TRAJ
+
+    %% Betting/marketing relationships
+    BET -->|"has_leg"| BET_LEG
+    BET -->|"placed_by_tier"| VALUE_TIER
+    PROMOTION -->|"targets_tier"| VALUE_TIER
+    PROMOTION -->|"part_of"| CAMPAIGN
+    KPI_METRIC -->|"segmented_by"| VALUE_TIER
+    KPI_METRIC -->|"measured_for"| CAMPAIGN
+    ODDS_FEED -->|"feeds"| BET
+    BET_LEG -->|"settles_via"| SYSTEM
+
+    %% Cross-layer connections
+    NOTE -->|"tagged_with"| TAG
+    NOTE -->|"has_task"| TASK
+    NOTE -->|"mentions"| PERSON
+    TASK -->|"belongs_to"| PROJECT
+    NOTE -.->|"co_occurs_with"| CONCEPT
+    DATA_OBJ -.->|"sourced_from_ssot"| DOMAIN
+
+    class NOTE,TASK,PROJECT,TAG,PERSON source
+    class BET,BET_LEG,PROMOTION,VALUE_TIER,KPI_METRIC,ODDS_FEED,CAMPAIGN betting
+    class DOMAIN,SYSTEM,CONCEPT,DATA_OBJ,RULE,PRACTICE,INSIGHT,PATTERN graphLayer
+    class TRAJ context
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef betting fill:#fce7f3,stroke:#db2777,color:#4a044e
+    classDef graphLayer fill:#fef9c3,stroke:#ca8a04,color:#3f2a00
+    classDef context fill:#dcfce7,stroke:#16a34a,color:#052e16

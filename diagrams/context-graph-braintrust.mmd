@@ -1,0 +1,64 @@
+---
+title: Context Graph vs Braintrust — Knowledge IN, Evaluation OUT
+---
+flowchart LR
+    subgraph IN["Knowledge IN (Context Graph)"]
+        direction TB
+        TABMETA_IN["Table Metadata"]
+        TRACES_IN["Agent Traces"]
+        DOCS_IN["Jira / Confluence /<br/>Git Docs"]
+        MANUAL_IN["Manual Knowledge"]
+
+        TABMETA_IN --> GRAPH_STORE
+        TRACES_IN --> GRAPH_STORE
+        DOCS_IN --> GRAPH_STORE
+        MANUAL_IN --> GRAPH_STORE
+
+        GRAPH_STORE["Lakebase Graph Store<br/>(Nodes + Edges)"]
+        GRAPH_STORE --> ASSEMBLY["Context Assembly"]
+        ASSEMBLY --> PKT["ContextPacket<br/>(bounded input to agent)"]
+    end
+
+    AGENT["Agent Engine<br/>(MarTek, Pipeline, etc.)"]
+
+    subgraph OUT["Evaluation OUT (Braintrust)"]
+        direction TB
+        subgraph PROMPTS["Prompt Management"]
+            PLAYGROUND["Prompt Playground<br/>+ Versioning"]
+        end
+
+        subgraph EVALS["Evaluations"]
+            OFFLINE["Offline Evals<br/>(Experiments vs Datasets)"]
+            ONLINE["Online Evals<br/>(Production Scoring)"]
+        end
+
+        subgraph REVIEW["Human Review"]
+            ANNOTATE["Annotation Queues<br/>+ Ground Truth Datasets"]
+        end
+
+        subgraph SCORING["Scoring"]
+            SCORERS["25+ Built-in Scorers<br/>LLM-as-Judge<br/>Custom Scorers"]
+        end
+
+        PLAYGROUND --> OFFLINE
+        OFFLINE --> SCORERS
+        ONLINE --> SCORERS
+        SCORERS --> ANNOTATE
+        ANNOTATE --> FEEDBACK["Evaluation Signals<br/>(success rates, failure categories,<br/>quality scores)"]
+    end
+
+    PKT --> AGENT
+    AGENT --> ONLINE
+    PLAYGROUND -.->|"loadPrompt()"| AGENT
+
+    FEEDBACK ==>|"ExperienceBridge<br/>(feedback loop)"| GRAPH_STORE
+
+    class TABMETA_IN,TRACES_IN,DOCS_IN,MANUAL_IN source
+    class GRAPH_STORE,ASSEMBLY memory
+    class PKT,AGENT agent
+    class PLAYGROUND,OFFLINE,ONLINE,ANNOTATE,SCORERS,FEEDBACK eval
+
+    classDef source fill:#f4f4f4,stroke:#999999,color:#111111
+    classDef memory fill:#dbeafe,stroke:#2563eb,color:#0f172a
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef eval fill:#fef9c3,stroke:#ca8a04,color:#3f2a00

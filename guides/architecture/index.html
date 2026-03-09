@@ -1,0 +1,3904 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Framework-agnostic foundation for AI agent systems" name="description"/>
+<link href="https://agent-kernel.github.io/agent-kernel/guides/architecture/" rel="canonical"/>
+<link href="../" rel="prev"/>
+<link href="../framework-agnosticism/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.7.4" name="generator"/>
+<title>Architecture - Agent Kernel</title>
+<link href="../../assets/stylesheets/main.484c7ddc.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.ab4e12ef.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#architecture-guide">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="Agent Kernel" class="md-header__button md-logo" data-md-component="logo" href="../.." title="Agent Kernel">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            Agent Kernel
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Architecture
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/agent-kernel/agent-kernel" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    agent-kernel/agent-kernel
+  </div>
+</a>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/">
+        
+  
+  
+    
+  
+  Getting Started
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../concepts/">
+        
+  
+  
+    
+  
+  Concepts
+
+      </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../">
+        
+  
+  
+    
+  
+  Guides
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../examples/">
+        
+  
+  
+    
+  
+  Examples
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../reference/agent_kernel/_import_utils/">
+          
+  
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../contributing/">
+        
+  
+  
+    
+  
+  Contributing
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../changelog/">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+</li>
+</ul>
+</div>
+</nav>
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="Agent Kernel" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="Agent Kernel">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    Agent Kernel
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/agent-kernel/agent-kernel" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"></path></svg>
+</div>
+<div class="md-source__repository">
+    agent-kernel/agent-kernel
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_2" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../getting-started/">
+<span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../concepts/">
+<span class="md-ellipsis">
+    
+  
+    Concepts
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Concepts
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/schemas/">
+<span class="md-ellipsis">
+    
+  
+    Schema Contracts
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/tool-broker/">
+<span class="md-ellipsis">
+    
+  
+    Tool Broker
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/executor/">
+<span class="md-ellipsis">
+    
+  
+    Executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/context-assembler/">
+<span class="md-ellipsis">
+    
+  
+    Context Assembler
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../concepts/tracing/">
+<span class="md-ellipsis">
+    
+  
+    Tracing
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../">
+<span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      
+        Design Principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-components">
+<span class="md-ellipsis">
+      
+        System Components
+      
+    </span>
+</a>
+<nav aria-label="System Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kernel-components">
+<span class="md-ellipsis">
+      
+        Kernel Components
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-engines">
+<span class="md-ellipsis">
+      
+        Agent Engines
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tool-adapters">
+<span class="md-ellipsis">
+      
+        Tool Adapters
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-flow">
+<span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+</a>
+<nav aria-label="Data Flow" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-by-step">
+<span class="md-ellipsis">
+      
+        Step by Step
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-agent-architecture">
+<span class="md-ellipsis">
+      
+        Multi-Agent Architecture
+      
+    </span>
+</a>
+<nav aria-label="Multi-Agent Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-agent-patterns">
+<span class="md-ellipsis">
+      
+        Multi-Agent Patterns
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workflow-specification">
+<span class="md-ellipsis">
+      
+        Workflow Specification
+      
+    </span>
+</a>
+<nav aria-label="Workflow Specification" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workflow-chaining">
+<span class="md-ellipsis">
+      
+        Workflow Chaining
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration">
+<span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+</a>
+<nav aria-label="Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-profiles">
+<span class="md-ellipsis">
+      
+        Agent Profiles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capability-definitions">
+<span class="md-ellipsis">
+      
+        Capability Definitions
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../framework-agnosticism/">
+<span class="md-ellipsis">
+    
+  
+    Framework Agnosticism
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../trust-boundaries/">
+<span class="md-ellipsis">
+    
+  
+    Trust Boundaries
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../thinking-escalation/">
+<span class="md-ellipsis">
+    
+  
+    Thinking Escalation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../skills/">
+<span class="md-ellipsis">
+    
+  
+    Skills System
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../public-private/">
+<span class="md-ellipsis">
+    
+  
+    Public/Private Separation
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../examples/">
+<span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    Examples
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/minimal-agent/">
+<span class="md-ellipsis">
+    
+  
+    Minimal Agent
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/personal-assistant/">
+<span class="md-ellipsis">
+    
+  
+    Personal Assistant
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/multi-agent-debate/">
+<span class="md-ellipsis">
+    
+  
+    Multi-Agent Debate
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../examples/tool-workflow/">
+<span class="md-ellipsis">
+    
+  
+    Tool Workflow
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/_import_utils/">
+<span class="md-ellipsis">
+    
+  
+    _import_utils
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/_version/">
+<span class="md-ellipsis">
+    
+  
+    _version
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_3" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/api/">
+<span class="md-ellipsis">
+    
+  
+    api
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_3_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_3">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    api
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/api/server/">
+<span class="md-ellipsis">
+    
+  
+    server
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/capabilities/">
+<span class="md-ellipsis">
+    
+  
+    capabilities
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_4_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    capabilities
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/capabilities/dev_agent_runner/">
+<span class="md-ellipsis">
+    
+  
+    dev_agent_runner
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/">
+<span class="md-ellipsis">
+    
+  
+    context
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_5_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    context
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/assembler/">
+<span class="md-ellipsis">
+    
+  
+    assembler
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/gates/">
+<span class="md-ellipsis">
+    
+  
+    gates
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/pack_resolver/">
+<span class="md-ellipsis">
+    
+  
+    pack_resolver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/planner/">
+<span class="md-ellipsis">
+    
+  
+    planner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/playbook_resolver/">
+<span class="md-ellipsis">
+    
+  
+    playbook_resolver
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context/source_registry/">
+<span class="md-ellipsis">
+    
+  
+    source_registry
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/">
+<span class="md-ellipsis">
+    
+  
+    context_graph
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_6_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    context_graph
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/compaction/">
+<span class="md-ellipsis">
+    
+  
+    compaction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/decomposer/">
+<span class="md-ellipsis">
+    
+  
+    decomposer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/experience_bridge/">
+<span class="md-ellipsis">
+    
+  
+    experience_bridge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_6_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/">
+<span class="md-ellipsis">
+    
+  
+    extractors
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_6_4" id="__nav_6_6_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_6_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_6_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    extractors
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/manual_extractor/">
+<span class="md-ellipsis">
+    
+  
+    manual_extractor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/extractors/trace_extractor/">
+<span class="md-ellipsis">
+    
+  
+    trace_extractor
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/freshness/">
+<span class="md-ellipsis">
+    
+  
+    freshness
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/hooks/">
+<span class="md-ellipsis">
+    
+  
+    hooks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/ingestion/">
+<span class="md-ellipsis">
+    
+  
+    ingestion
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/query/">
+<span class="md-ellipsis">
+    
+  
+    query
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/retention/">
+<span class="md-ellipsis">
+    
+  
+    retention
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/context_graph/types/">
+<span class="md-ellipsis">
+    
+  
+    types
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/">
+<span class="md-ellipsis">
+    
+  
+    core
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_7" id="__nav_6_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_7_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    core
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/config/">
+<span class="md-ellipsis">
+    
+  
+    config
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/errors/">
+<span class="md-ellipsis">
+    
+  
+    errors
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/ids/">
+<span class="md-ellipsis">
+    
+  
+    ids
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/migrations/">
+<span class="md-ellipsis">
+    
+  
+    migrations
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_7_5" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/">
+<span class="md-ellipsis">
+    
+  
+    schemas
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_7_5" id="__nav_6_7_5_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_7_5_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_7_5">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    schemas
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/agent/">
+<span class="md-ellipsis">
+    
+  
+    agent
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/base/">
+<span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/capability/">
+<span class="md-ellipsis">
+    
+  
+    capability
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/context/">
+<span class="md-ellipsis">
+    
+  
+    context
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/context_pack/">
+<span class="md-ellipsis">
+    
+  
+    context_pack
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/enrichment_config/">
+<span class="md-ellipsis">
+    
+  
+    enrichment_config
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/entity/">
+<span class="md-ellipsis">
+    
+  
+    entity
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/experience/">
+<span class="md-ellipsis">
+    
+  
+    experience
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/graph/">
+<span class="md-ellipsis">
+    
+  
+    graph
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/knowledge/">
+<span class="md-ellipsis">
+    
+  
+    knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/llm/">
+<span class="md-ellipsis">
+    
+  
+    llm
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/note/">
+<span class="md-ellipsis">
+    
+  
+    note
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/plan/">
+<span class="md-ellipsis">
+    
+  
+    plan
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/retention/">
+<span class="md-ellipsis">
+    
+  
+    retention
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/retrieval/">
+<span class="md-ellipsis">
+    
+  
+    retrieval
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/skill/">
+<span class="md-ellipsis">
+    
+  
+    skill
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/source_descriptor/">
+<span class="md-ellipsis">
+    
+  
+    source_descriptor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/task/">
+<span class="md-ellipsis">
+    
+  
+    task
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/thinking/">
+<span class="md-ellipsis">
+    
+  
+    thinking
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/trace/">
+<span class="md-ellipsis">
+    
+  
+    trace
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/core/schemas/workflow/">
+<span class="md-ellipsis">
+    
+  
+    workflow
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_8" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/">
+<span class="md-ellipsis">
+    
+  
+    engine
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_8" id="__nav_6_8_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_8_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_8">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    engine
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/adaptive_thinking/">
+<span class="md-ellipsis">
+    
+  
+    adaptive_thinking
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/agent_engine/">
+<span class="md-ellipsis">
+    
+  
+    agent_engine
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/cost_anomaly/">
+<span class="md-ellipsis">
+    
+  
+    cost_anomaly
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/critic/">
+<span class="md-ellipsis">
+    
+  
+    critic
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/custom_engine/">
+<span class="md-ellipsis">
+    
+  
+    custom_engine
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/escalation/">
+<span class="md-ellipsis">
+    
+  
+    escalation
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/integration_tier/">
+<span class="md-ellipsis">
+    
+  
+    integration_tier
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/success_rate_router/">
+<span class="md-ellipsis">
+    
+  
+    success_rate_router
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/thinking_metrics/">
+<span class="md-ellipsis">
+    
+  
+    thinking_metrics
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/engine/thinking_policy/">
+<span class="md-ellipsis">
+    
+  
+    thinking_policy
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_9" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_9" id="__nav_6_9_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_9_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_9">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    executor
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/approval/">
+<span class="md-ellipsis">
+    
+  
+    approval
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/approval_store/">
+<span class="md-ellipsis">
+    
+  
+    approval_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/executor/">
+<span class="md-ellipsis">
+    
+  
+    executor
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/interactive/">
+<span class="md-ellipsis">
+    
+  
+    interactive
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/notifiers/">
+<span class="md-ellipsis">
+    
+  
+    notifiers
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/policies/">
+<span class="md-ellipsis">
+    
+  
+    policies
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/executor/quality_gates/">
+<span class="md-ellipsis">
+    
+  
+    quality_gates
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_10" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/">
+<span class="md-ellipsis">
+    
+  
+    integrations
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_10" id="__nav_6_10_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_10_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_10">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    integrations
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/calendar_sync/">
+<span class="md-ellipsis">
+    
+  
+    calendar_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/calendar_sync_service/">
+<span class="md-ellipsis">
+    
+  
+    calendar_sync_service
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/google/">
+<span class="md-ellipsis">
+    
+  
+    google
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_backend/">
+<span class="md-ellipsis">
+    
+  
+    task_backend
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync/">
+<span class="md-ellipsis">
+    
+  
+    task_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync_orchestrator/">
+<span class="md-ellipsis">
+    
+  
+    task_sync_orchestrator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/integrations/task_sync_service/">
+<span class="md-ellipsis">
+    
+  
+    task_sync_service
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_11" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/">
+<span class="md-ellipsis">
+    
+  
+    memory
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_11" id="__nav_6_11_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_11_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_11">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    memory
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/derivation_store/">
+<span class="md-ellipsis">
+    
+  
+    derivation_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/document_store/">
+<span class="md-ellipsis">
+    
+  
+    document_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/entity_store/">
+<span class="md-ellipsis">
+    
+  
+    entity_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/event_log/">
+<span class="md-ellipsis">
+    
+  
+    event_log
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/experience_hooks/">
+<span class="md-ellipsis">
+    
+  
+    experience_hooks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/experience_store/">
+<span class="md-ellipsis">
+    
+  
+    experience_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/factory/">
+<span class="md-ellipsis">
+    
+  
+    factory
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/graph_store/">
+<span class="md-ellipsis">
+    
+  
+    graph_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_11_9" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/">
+<span class="md-ellipsis">
+    
+  
+    postgres
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_11_9" id="__nav_6_11_9_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_11_9_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_11_9">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    postgres
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/connection/">
+<span class="md-ellipsis">
+    
+  
+    connection
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/derivation_store/">
+<span class="md-ellipsis">
+    
+  
+    derivation_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/document_store/">
+<span class="md-ellipsis">
+    
+  
+    document_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/entity_store/">
+<span class="md-ellipsis">
+    
+  
+    entity_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/event_log/">
+<span class="md-ellipsis">
+    
+  
+    event_log
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/experience_store/">
+<span class="md-ellipsis">
+    
+  
+    experience_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/graph_store/">
+<span class="md-ellipsis">
+    
+  
+    graph_store
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/postgres/vector_store/">
+<span class="md-ellipsis">
+    
+  
+    vector_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/memory/vector_store/">
+<span class="md-ellipsis">
+    
+  
+    vector_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/notifications/">
+<span class="md-ellipsis">
+    
+  
+    notifications
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/plugins/">
+<span class="md-ellipsis">
+    
+  
+    plugins
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_14" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/">
+<span class="md-ellipsis">
+    
+  
+    prompting
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_14" id="__nav_6_14_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_14_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_14">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    prompting
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/serializers/">
+<span class="md-ellipsis">
+    
+  
+    serializers
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/prompting/system_prompts/">
+<span class="md-ellipsis">
+    
+  
+    system_prompts
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_15" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/">
+<span class="md-ellipsis">
+    
+  
+    scheduler
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_15" id="__nav_6_15_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_15_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_15">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    scheduler
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/file_watcher/">
+<span class="md-ellipsis">
+    
+  
+    file_watcher
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/scheduler/scheduler/">
+<span class="md-ellipsis">
+    
+  
+    scheduler
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_16" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/">
+<span class="md-ellipsis">
+    
+  
+    services
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_16" id="__nav_6_16_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_16_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_16">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    services
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/approval_optimizer/">
+<span class="md-ellipsis">
+    
+  
+    approval_optimizer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/embedding/">
+<span class="md-ellipsis">
+    
+  
+    embedding
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/enrichment/">
+<span class="md-ellipsis">
+    
+  
+    enrichment
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/enrichment_registry/">
+<span class="md-ellipsis">
+    
+  
+    enrichment_registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/experience_miner/">
+<span class="md-ellipsis">
+    
+  
+    experience_miner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/health/">
+<span class="md-ellipsis">
+    
+  
+    health
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/hybrid_search/">
+<span class="md-ellipsis">
+    
+  
+    hybrid_search
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/index_state/">
+<span class="md-ellipsis">
+    
+  
+    index_state
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/llm/">
+<span class="md-ellipsis">
+    
+  
+    llm
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/llm_cache/">
+<span class="md-ellipsis">
+    
+  
+    llm_cache
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/reserved_blocks/">
+<span class="md-ellipsis">
+    
+  
+    reserved_blocks
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/resource_extraction/">
+<span class="md-ellipsis">
+    
+  
+    resource_extraction
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/retention_jobs/">
+<span class="md-ellipsis">
+    
+  
+    retention_jobs
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/task_manager/">
+<span class="md-ellipsis">
+    
+  
+    task_manager
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/task_parser/">
+<span class="md-ellipsis">
+    
+  
+    task_parser
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_indexer/">
+<span class="md-ellipsis">
+    
+  
+    vault_indexer
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_sync/">
+<span class="md-ellipsis">
+    
+  
+    vault_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/vault_watcher/">
+<span class="md-ellipsis">
+    
+  
+    vault_watcher
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/services/workflow_debug/">
+<span class="md-ellipsis">
+    
+  
+    workflow_debug
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_17" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/">
+<span class="md-ellipsis">
+    
+  
+    skills
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_17" id="__nav_6_17_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_17_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_17">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    skills
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/graph_sync/">
+<span class="md-ellipsis">
+    
+  
+    graph_sync
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/policy/">
+<span class="md-ellipsis">
+    
+  
+    policy
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/script_registry/">
+<span class="md-ellipsis">
+    
+  
+    script_registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/skills/store/">
+<span class="md-ellipsis">
+    
+  
+    store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/">
+<span class="md-ellipsis">
+    
+  
+    tools
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18" id="__nav_6_18_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_18">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    tools
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/">
+<span class="md-ellipsis">
+    
+  
+    adapters
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_1" id="__nav_6_18_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    adapters
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/base/">
+<span class="md-ellipsis">
+    
+  
+    base
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/graph_adapter/">
+<span class="md-ellipsis">
+    
+  
+    graph_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/http/">
+<span class="md-ellipsis">
+    
+  
+    http
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/local_function/">
+<span class="md-ellipsis">
+    
+  
+    local_function
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/mcp/">
+<span class="md-ellipsis">
+    
+  
+    mcp
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/skill_script/">
+<span class="md-ellipsis">
+    
+  
+    skill_script
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/subprocess/">
+<span class="md-ellipsis">
+    
+  
+    subprocess
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/task_adapter/">
+<span class="md-ellipsis">
+    
+  
+    task_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/trace_adapter/">
+<span class="md-ellipsis">
+    
+  
+    trace_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adapters/vector_adapter/">
+<span class="md-ellipsis">
+    
+  
+    vector_adapter
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/adaptive_timeout/">
+<span class="md-ellipsis">
+    
+  
+    adaptive_timeout
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/broker/">
+<span class="md-ellipsis">
+    
+  
+    broker
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_4" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/">
+<span class="md-ellipsis">
+    
+  
+    builtin
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_4" id="__nav_6_18_4_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_4_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_4">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    builtin
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/knowledge/">
+<span class="md-ellipsis">
+    
+  
+    knowledge
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/notes/">
+<span class="md-ellipsis">
+    
+  
+    notes
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/obsidian/">
+<span class="md-ellipsis">
+    
+  
+    obsidian
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/register/">
+<span class="md-ellipsis">
+    
+  
+    register
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/builtin/tasks/">
+<span class="md-ellipsis">
+    
+  
+    tasks
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/idempotency/">
+<span class="md-ellipsis">
+    
+  
+    idempotency
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_6" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/">
+<span class="md-ellipsis">
+    
+  
+    library
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_6" id="__nav_6_18_6_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_6_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_6">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    library
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/code_quality/">
+<span class="md-ellipsis">
+    
+  
+    code_quality
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/context_curator/">
+<span class="md-ellipsis">
+    
+  
+    context_curator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/dep_audit/">
+<span class="md-ellipsis">
+    
+  
+    dep_audit
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/git_ops/">
+<span class="md-ellipsis">
+    
+  
+    git_ops
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/github_ops/">
+<span class="md-ellipsis">
+    
+  
+    github_ops
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/loader/">
+<span class="md-ellipsis">
+    
+  
+    loader
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/library/skills/">
+<span class="md-ellipsis">
+    
+  
+    skills
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_18_7" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/mcp/">
+<span class="md-ellipsis">
+    
+  
+    mcp
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_18_7" id="__nav_6_18_7_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_18_7_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_18_7">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    mcp
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/mcp/server_manager/">
+<span class="md-ellipsis">
+    
+  
+    server_manager
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/rate_limiter/">
+<span class="md-ellipsis">
+    
+  
+    rate_limiter
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/registry/">
+<span class="md-ellipsis">
+    
+  
+    registry
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tools/retry/">
+<span class="md-ellipsis">
+    
+  
+    retry
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_19" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/">
+<span class="md-ellipsis">
+    
+  
+    tracing
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_19" id="__nav_6_19_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_19_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_19">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    tracing
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_19_1" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/">
+<span class="md-ellipsis">
+    
+  
+    sinks
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_19_1" id="__nav_6_19_1_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_19_1_label" class="md-nav" data-md-level="3">
+<label class="md-nav__title" for="__nav_6_19_1">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    sinks
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/jsonl_sink/">
+<span class="md-ellipsis">
+    
+  
+    jsonl_sink
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/postgres_sink/">
+<span class="md-ellipsis">
+    
+  
+    postgres_sink
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/sinks/sqlite_sink/">
+<span class="md-ellipsis">
+    
+  
+    sqlite_sink
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/tracing/trace_store/">
+<span class="md-ellipsis">
+    
+  
+    trace_store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_20" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/">
+<span class="md-ellipsis">
+    
+  
+    validators
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_20" id="__nav_6_20_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_20_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_20">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    validators
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/config_validator/">
+<span class="md-ellipsis">
+    
+  
+    config_validator
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/results/">
+<span class="md-ellipsis">
+    
+  
+    results
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/validators/skill_validator/">
+<span class="md-ellipsis">
+    
+  
+    skill_validator
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle" id="__nav_6_21" type="checkbox"/>
+<div class="md-nav__link md-nav__container">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/">
+<span class="md-ellipsis">
+    
+  
+    workflows
+  
+
+    
+  </span>
+</a>
+<label class="md-nav__link" for="__nav_6_21" id="__nav_6_21_label" tabindex="0">
+<span class="md-nav__icon md-icon"></span>
+</label>
+</div>
+<nav aria-expanded="false" aria-labelledby="__nav_6_21_label" class="md-nav" data-md-level="2">
+<label class="md-nav__title" for="__nav_6_21">
+<span class="md-nav__icon md-icon"></span>
+            
+  
+    workflows
+  
+
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/config_cache/">
+<span class="md-ellipsis">
+    
+  
+    config_cache
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/runner/">
+<span class="md-ellipsis">
+    
+  
+    runner
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/spec/">
+<span class="md-ellipsis">
+    
+  
+    spec
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../reference/agent_kernel/workflows/store/">
+<span class="md-ellipsis">
+    
+  
+    store
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../contributing/">
+<span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../changelog/">
+<span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#design-principles">
+<span class="md-ellipsis">
+      
+        Design Principles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#system-components">
+<span class="md-ellipsis">
+      
+        System Components
+      
+    </span>
+</a>
+<nav aria-label="System Components" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#kernel-components">
+<span class="md-ellipsis">
+      
+        Kernel Components
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-engines">
+<span class="md-ellipsis">
+      
+        Agent Engines
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#tool-adapters">
+<span class="md-ellipsis">
+      
+        Tool Adapters
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-flow">
+<span class="md-ellipsis">
+      
+        Data Flow
+      
+    </span>
+</a>
+<nav aria-label="Data Flow" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#step-by-step">
+<span class="md-ellipsis">
+      
+        Step by Step
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-agent-architecture">
+<span class="md-ellipsis">
+      
+        Multi-Agent Architecture
+      
+    </span>
+</a>
+<nav aria-label="Multi-Agent Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#multi-agent-patterns">
+<span class="md-ellipsis">
+      
+        Multi-Agent Patterns
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workflow-specification">
+<span class="md-ellipsis">
+      
+        Workflow Specification
+      
+    </span>
+</a>
+<nav aria-label="Workflow Specification" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#workflow-chaining">
+<span class="md-ellipsis">
+      
+        Workflow Chaining
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#configuration">
+<span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+</a>
+<nav aria-label="Configuration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#agent-profiles">
+<span class="md-ellipsis">
+      
+        Agent Profiles
+      
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#capability-definitions">
+<span class="md-ellipsis">
+      
+        Capability Definitions
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      
+        Next Steps
+      
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="architecture-guide">Architecture Guide<a class="headerlink" href="#architecture-guide" title="Permanent link">¶</a></h1>
+<p>Agent Kernel is a framework-agnostic foundation for AI agent systems. This guide covers the system architecture, data flow, component responsibilities, and multi-agent patterns.</p>
+<h2 id="design-principles">Design Principles<a class="headerlink" href="#design-principles" title="Permanent link">¶</a></h2>
+<p>Four principles govern every component:</p>
+<ol>
+<li><strong>Schemas are the contract</strong> -- all data flows through typed Pydantic models</li>
+<li><strong>Separation of reasoning vs. execution</strong> -- LLMs produce Plans; a deterministic executor runs tools</li>
+<li><strong>Kernel owns memory and traces</strong> -- agent frameworks never own data or control the audit trail</li>
+<li><strong>Adapters everywhere</strong> -- swap any external dependency behind an interface</li>
+</ol>
+<h2 id="system-components">System Components<a class="headerlink" href="#system-components" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>graph TB
+    subgraph Kernel["Agent Kernel"]
+        Schemas["Schemas<br/>(Pydantic models)"]
+        Memory["Memory Subsystem<br/>(docs, vectors, graph, events)"]
+        Broker["Tool Broker<br/>(capability registry)"]
+        Assembler["Context Assembler"]
+        Executor["Deterministic Executor"]
+        Traces["Trace Store<br/>(SQLite, JSONL)"]
+        Workflows["Workflow Runner"]
+    end
+
+    subgraph Engines["Agent Engines (Pluggable)"]
+        Custom["Custom Engine"]
+        LangGraph["LangGraph Adapter"]
+        SK["Semantic Kernel Adapter"]
+    end
+
+    subgraph Adapters["Tool Adapters"]
+        Local["Local Function"]
+        HTTP["HTTP / REST"]
+        Sub["Subprocess CLI"]
+    end
+
+    Assembler --&gt; Memory
+    Assembler --&gt;|ContextPacket| Engines
+    Engines --&gt;|Plan| Executor
+    Executor --&gt; Broker
+    Broker --&gt; Adapters
+    Executor --&gt; Traces
+
+    classDef kernel fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    classDef engine fill:#9b59b6,stroke:#7d3c98,color:#fff
+    classDef adapter fill:#95a5a6,stroke:#7f8c8d,color:#fff
+
+    class Schemas,Memory,Broker,Assembler,Executor,Traces,Workflows kernel
+    class Custom,LangGraph,SK engine
+    class Local,HTTP,Sub adapter
+</code></pre>
+<h3 id="kernel-components">Kernel Components<a class="headerlink" href="#kernel-components" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Schemas</strong></td>
+<td>Typed Pydantic models for all data contracts</td>
+</tr>
+<tr>
+<td><strong>Memory Subsystem</strong></td>
+<td>Document store, vector index, graph store, event log</td>
+</tr>
+<tr>
+<td><strong>Tool Broker</strong></td>
+<td>Capability registry, input validation, execution gateway</td>
+</tr>
+<tr>
+<td><strong>Context Assembler</strong></td>
+<td>Deterministic context retrieval into <code>ContextPacket</code></td>
+</tr>
+<tr>
+<td><strong>Deterministic Executor</strong></td>
+<td>Plan validation, approval gating, tool execution</td>
+</tr>
+<tr>
+<td><strong>Trace Store</strong></td>
+<td>Immutable audit trail with pluggable sinks</td>
+</tr>
+<tr>
+<td><strong>Workflow Runner</strong></td>
+<td>State machine for multi-step execution flows</td>
+</tr>
+</tbody>
+</table>
+<h3 id="agent-engines">Agent Engines<a class="headerlink" href="#agent-engines" title="Permanent link">¶</a></h3>
+<p>An engine is anything that turns a <code>ContextPacket</code> + <code>AgentProfile</code> into a <code>Plan</code>:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AgentEngine</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
+<a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>    <span class="n">engine_id</span><span class="p">:</span> <span class="nb">str</span>
+<a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>
+<a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">propose</span><span class="p">(</span>
+<a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>        <span class="bp">self</span><span class="p">,</span>
+<a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>        <span class="n">context_packet</span><span class="p">:</span> <span class="n">ContextPacket</span><span class="p">,</span>
+<a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>        <span class="n">agent_profile</span><span class="p">:</span> <span class="n">AgentProfile</span><span class="p">,</span>
+<a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Plan</span><span class="p">:</span> <span class="o">...</span>
+</code></pre></div>
+<p>The kernel does not care which engine produced the plan, as long as it validates against the schema.</p>
+<h3 id="tool-adapters">Tool Adapters<a class="headerlink" href="#tool-adapters" title="Permanent link">¶</a></h3>
+<p>Tools execute behind the broker through adapters:</p>
+<table>
+<thead>
+<tr>
+<th>Adapter</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Local Function</strong></td>
+<td>Direct Python function call</td>
+</tr>
+<tr>
+<td><strong>HTTP</strong></td>
+<td>REST API calls to external services</td>
+</tr>
+<tr>
+<td><strong>Subprocess</strong></td>
+<td>Shell command execution</td>
+</tr>
+</tbody>
+</table>
+<h2 id="data-flow">Data Flow<a class="headerlink" href="#data-flow" title="Permanent link">¶</a></h2>
+<p>A single workflow execution follows this pipeline:</p>
+<pre class="mermaid"><code>graph LR
+    T["Trigger"] --&gt; A["Assemble<br/>Context"]
+    A --&gt; P["Propose<br/>Plan"]
+    P --&gt; V["Validate"]
+    V --&gt; G["Gate<br/>Approvals"]
+    G --&gt; E["Execute<br/>Actions"]
+    E --&gt; W["Write<br/>Back"]
+    W --&gt; Tr["Emit<br/>Trace"]
+
+    classDef step fill:#4a90d9,stroke:#2c5f8a,color:#fff
+    class T,A,P,V,G,E,W,Tr step
+</code></pre>
+<h3 id="step-by-step">Step by Step<a class="headerlink" href="#step-by-step" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Trigger</strong> -- a cron schedule, file change, event, or manual invocation starts the workflow</li>
+<li><strong>Assemble Context</strong> -- the Context Assembler queries memory stores (documents, vectors, graph) and builds a <code>ContextPacket</code> within budget limits</li>
+<li><strong>Propose Plan</strong> -- the selected Agent Engine receives the context packet and produces a structured <code>Plan</code> with actions, citations, and risk assessment</li>
+<li><strong>Validate</strong> -- the executor checks schema validity, citation requirements, capability allowlists, and idempotency keys</li>
+<li><strong>Gate Approvals</strong> -- actions requiring approval are blocked until a human approves via CLI or API</li>
+<li><strong>Execute Actions</strong> -- the Tool Broker executes each action through the appropriate adapter, logging <code>ToolCallRecord</code> entries</li>
+<li><strong>Write Back</strong> -- results are written back to memory (summary notes, graph updates)</li>
+<li><strong>Emit Trace</strong> -- a complete <code>DecisionTrace</code> is persisted to all configured sinks</li>
+</ol>
+<h2 id="multi-agent-architecture">Multi-Agent Architecture<a class="headerlink" href="#multi-agent-architecture" title="Permanent link">¶</a></h2>
+<p>Even with multiple agents, there is <strong>one executor</strong> running tools:</p>
+<pre class="mermaid"><code>graph TB
+    Intent["Intent"] --&gt; Router["Router Agent"]
+    Router --&gt; Agent1["Planning Agent"]
+    Router --&gt; Agent2["Analysis Agent"]
+    Agent1 --&gt; Critic["Critic Agent<br/>(optional)"]
+    Agent2 --&gt; Critic
+    Critic --&gt; Executor["Deterministic Executor"]
+    Executor --&gt; Broker["Tool Broker"]
+
+    classDef agent fill:#9b59b6,stroke:#7d3c98,color:#fff
+    classDef exec fill:#e74c3c,stroke:#c0392b,color:#fff
+
+    class Router,Agent1,Agent2,Critic agent
+    class Executor,Broker exec
+</code></pre>
+<h3 id="multi-agent-patterns">Multi-Agent Patterns<a class="headerlink" href="#multi-agent-patterns" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Router</strong></td>
+<td>Choose which agent profile handles an intent</td>
+</tr>
+<tr>
+<td><strong>Delegation</strong></td>
+<td>One plan includes a <code>delegate_to_agent</code> action</td>
+</tr>
+<tr>
+<td><strong>Critique</strong></td>
+<td>A second agent validates the plan before execution</td>
+</tr>
+</tbody>
+</table>
+<p>In all patterns, agents produce Plans. The executor validates and runs them. No agent calls tools directly.</p>
+<h2 id="workflow-specification">Workflow Specification<a class="headerlink" href="#workflow-specification" title="Permanent link">¶</a></h2>
+<p>Workflows are defined declaratively in YAML:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nt">workflow_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">daily_review</span>
+<a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Daily Review</span>
+<a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="nt">trigger</span><span class="p">:</span>
+<a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cron</span>
+<a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="w">  </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">"0</span><span class="nv"> </span><span class="s">9</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">1-5"</span>
+<a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nt">agent_profile_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">review_agent</span>
+<a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="nt">steps</span><span class="p">:</span>
+<a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">assemble_context</span>
+<a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">propose_plan</span>
+<a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validate</span>
+<a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gate_approvals</span>
+<a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">execute</span>
+<a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">write_back</span>
+<a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">emit_trace</span>
+<a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="nt">on_error</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">halt</span>
+<a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="nt">write_back</span><span class="p">:</span>
+<a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a><span class="w">  </span><span class="nt">create_summary_note</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a><span class="w">  </span><span class="nt">update_graph</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+<h3 id="workflow-chaining">Workflow Chaining<a class="headerlink" href="#workflow-chaining" title="Permanent link">¶</a></h3>
+<p>Workflows can trigger other workflows on completion:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># First workflow triggers the second</span>
+<a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nt">workflow_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">data_processing</span>
+<a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="nt">on_complete</span><span class="p">:</span>
+<a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cleanup_workflow</span>
+<a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">notification_workflow</span>
+</code></pre></div>
+<p>Chaining supports arbitrarily deep pipelines where each workflow runs independently and triggers the next.</p>
+<h2 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">¶</a></h2>
+<h3 id="agent-profiles">Agent Profiles<a class="headerlink" href="#agent-profiles" title="Permanent link">¶</a></h3>
+<p>Agent behavior is configured through <code>AgentProfile</code>, not hard-coded:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="nt">agent_profile_id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">review_agent</span>
+<a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Daily Review Agent</span>
+<a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="nt">engine</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span>
+<a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="nt">llm_config</span><span class="p">:</span>
+<a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">openai</span>
+<a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpt-4o</span>
+<a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">  </span><span class="nt">temperature</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+<a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="nt">allowed_capabilities</span><span class="p">:</span>
+<a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">documents.create@v1</span>
+<a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks.list@v1</span>
+<a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="nt">context_policy</span><span class="p">:</span>
+<a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">  </span><span class="nt">max_tokens</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">4000</span>
+<a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">  </span><span class="nt">must_cite</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="nt">approval_policy</span><span class="p">:</span>
+<a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">  </span><span class="nt">auto_approve_side_effects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">none</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">local</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<h3 id="capability-definitions">Capability Definitions<a class="headerlink" href="#capability-definitions" title="Permanent link">¶</a></h3>
+<p>Tool capabilities are defined with JSON Schema validation:</p>
+<div class="highlight"><pre><span></span><code><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="nt">capability_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">tasks.create@v1</span>
+<a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Create a new task</span>
+<a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="nt">input_schema</span><span class="p">:</span>
+<a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">object</span>
+<a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="w">  </span><span class="nt">required</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">title</span><span class="p p-Indicator">]</span>
+<a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="w">  </span><span class="nt">properties</span><span class="p">:</span>
+<a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">string</span><span class="p p-Indicator">,</span><span class="nt"> maxLength</span><span class="p">:</span><span class="w"> </span><span class="nv">200</span><span class="p p-Indicator">}</span>
+<a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a><span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">string</span><span class="p p-Indicator">,</span><span class="nt"> enum</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">low</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">medium</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">high</span><span class="p p-Indicator">]}</span>
+<a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a><span class="nt">side_effect_level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">local</span>
+<a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a><span class="nt">requires_approval_default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a><span class="nt">timeout_ms</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5000</span>
+</code></pre></div>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="../framework-agnosticism/">Framework Agnosticism</a> -- how to keep the kernel independent of orchestration frameworks</li>
+<li><a href="../trust-boundaries/">Trust Boundaries</a> -- the trust model between agents and the kernel</li>
+<li><a href="../../concepts/">Core Concepts</a> -- detailed documentation for each component</li>
+</ul>
+</article>
+</div>
+<script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+<script type="module">import mermaid from "https://unpkg.com/mermaid@10.4.0/dist/mermaid.esm.min.mjs";
+window.mermaidConfig = {default: {
+    startOnLoad: false
+}};</script></body>
+</html>

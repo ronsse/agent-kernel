@@ -765,6 +765,7 @@ class VaultIndexer:
                     "content_hash": content_hash,
                     "frontmatter": note.frontmatter,
                     "extracted_by": "vault_indexer",  # v1.0.1: Provenance
+                    "auto_importance": float(note.frontmatter.get("auto", {}).get("importance", 0.0)) if note.frontmatter else 0.0,
                 })
 
                 # Use legacy store() when present, otherwise put()

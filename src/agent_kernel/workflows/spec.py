@@ -167,6 +167,13 @@ class WorkflowSpec(KernelModel):
         description="Integration depth: 1=rule-based, 2=kernel-lite, 3=full-kernel",
     )
 
+    # Maximum actions allowed in a single plan (overrides QualityGateRunner default)
+    max_actions: int = Field(
+        default=10,
+        ge=1,
+        description="Maximum actions allowed in a single plan",
+    )
+
     # Skip LLM planning for deterministic workflows (v1.0.8)
     # When True, uses deterministic sync instead of LLM plan generation
     skip_llm_planning: bool = Field(

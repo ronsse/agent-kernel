@@ -580,16 +580,19 @@ class ContextAssembler:
 
         items = []
         for doc in results:
+            doc_metadata = doc.get("metadata", {})
             ref = ContextRef(
                 ref_type=RefType.DOCUMENT,
                 ref_id=doc["doc_id"],
                 hash=self._content_hash(doc.get("content", "")),
-                metadata=doc.get("metadata", {}),
+                metadata=doc_metadata,
             )
+            base_score = abs(doc.get("rank", 0))
+            importance = float(doc_metadata.get("auto_importance", 0.0))
             item = ContextItem(
                 ref=ref,
                 excerpt=doc.get("content", "")[:500],
-                relevance_score=abs(doc.get("rank", 0)),
+                relevance_score=base_score * (1.0 + importance),
                 included_reason="keyword_search",
             )
             items.append(item)
@@ -631,10 +634,12 @@ class ContextAssembler:
                 ref_id=result["item_id"],
                 metadata=metadata,
             )
+            base_score = result.get("score", 0)
+            importance = float(metadata.get("auto_importance", 0.0))
             item = ContextItem(
                 ref=ref,
                 excerpt=metadata.get("excerpt", ""),
-                relevance_score=result.get("score", 0),
+                relevance_score=base_score * (1.0 + importance),
                 included_reason="semantic_search",
             )
             items.append(item)

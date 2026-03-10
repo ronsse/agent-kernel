@@ -68,6 +68,9 @@ class EnrichmentResult:
     # Optional brief summary
     auto_summary: str | None = None
 
+    # Importance score (0.0-1.0) — how foundational/critical the content is
+    auto_importance: float = 0.0
+
     # Confidence scores (0.0-1.0)
     tag_confidence: float = 0.0
     class_confidence: float = 0.0
@@ -96,6 +99,9 @@ class EnrichmentResult:
         if self.auto_summary:
             result["summary"] = self.auto_summary
 
+        if self.auto_importance > 0.0:
+            result["importance"] = round(self.auto_importance, 2)
+
         return result
 
     def to_dict(self) -> dict[str, Any]:
@@ -104,6 +110,7 @@ class EnrichmentResult:
             "auto_tags": self.auto_tags,
             "auto_class": self.auto_class,
             "auto_summary": self.auto_summary,
+            "auto_importance": self.auto_importance,
             "tag_confidence": self.tag_confidence,
             "class_confidence": self.class_confidence,
             "success": self.success,
@@ -120,6 +127,7 @@ Your task is to analyze the content and suggest:
 1. **Tags**: 2-5 relevant topic tags (lowercase, hyphenated)
 2. **Classification**: A single category that best describes the note type
 3. **Summary**: A concise 1-2 sentence summary that captures the main topic and purpose
+4. **Importance**: A score from 0.0 to 1.0 indicating how foundational or critical this content is
 
 Available classifications: {classifications}
 
@@ -130,12 +138,18 @@ IMPORTANT RULES:
 - Summary MUST always be provided - it will be used for semantic search
 - Summary should be semantic-rich: include key concepts, entities, and relationships
 - Be conservative - only suggest high-confidence tags
+- Importance reflects how foundational the content is (not recency):
+  - 0.9-1.0: Core architecture decisions, key project specs, critical reference docs
+  - 0.6-0.8: Active project notes, important meeting notes, design discussions
+  - 0.3-0.5: General notes, routine updates, standard communications
+  - 0.0-0.2: Ephemeral content, scratch notes, temporary items
 
 Respond in JSON format:
 {{
   "tags": ["tag1", "tag2"],
   "class": "classification",
   "summary": "Concise summary capturing the main topic, key concepts, and purpose of the note.",
+  "importance": 0.5,
   "tag_confidence": 0.85,
   "class_confidence": 0.90
 }}
@@ -147,6 +161,7 @@ You are an expert at analyzing notes and documents to suggest metadata.
 Your task is to analyze the content and suggest:
 1. **Tags**: 2-5 relevant topic tags (lowercase, hyphenated)
 2. **Classification**: A single category that best describes the note type
+3. **Importance**: A score from 0.0 to 1.0 indicating how foundational or critical this content is
 
 Available classifications: {classifications}
 
@@ -155,11 +170,17 @@ IMPORTANT RULES:
 - Use existing tag patterns if the note has human tags
 - Classification must be from the provided list
 - Be conservative - only suggest high-confidence tags
+- Importance reflects how foundational the content is (not recency):
+  - 0.9-1.0: Core architecture decisions, key project specs, critical reference docs
+  - 0.6-0.8: Active project notes, important meeting notes, design discussions
+  - 0.3-0.5: General notes, routine updates, standard communications
+  - 0.0-0.2: Ephemeral content, scratch notes, temporary items
 
 Respond in JSON format:
 {{
   "tags": ["tag1", "tag2"],
   "class": "classification",
+  "importance": 0.5,
   "tag_confidence": 0.85,
   "class_confidence": 0.90
 }}
@@ -380,11 +401,13 @@ class EnrichmentService:
 
         tag_confidence = float(data.get("tag_confidence", 0.8))
         class_confidence = float(data.get("class_confidence", 0.8))
+        importance = float(data.get("importance", 0.0))
 
         return EnrichmentResult(
             auto_tags=auto_tags,
             auto_class=auto_class,
             auto_summary=auto_summary,
+            auto_importance=min(max(importance, 0.0), 1.0),
             tag_confidence=min(max(tag_confidence, 0.0), 1.0),
             class_confidence=min(max(class_confidence, 0.0), 1.0),
             success=True,
@@ -657,11 +680,13 @@ Respond with JSON only, no markdown formatting.{summary_instruction}
 
         tag_confidence = float(data.get("tag_confidence", 0.8))
         class_confidence = float(data.get("class_confidence", 0.8))
+        importance = float(data.get("importance", 0.0))
 
         return EnrichmentResult(
             auto_tags=auto_tags,
             auto_class=auto_class,
             auto_summary=auto_summary,
+            auto_importance=min(max(importance, 0.0), 1.0),
             tag_confidence=min(max(tag_confidence, 0.0), 1.0),
             class_confidence=min(max(class_confidence, 0.0), 1.0),
             success=True,

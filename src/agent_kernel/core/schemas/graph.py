@@ -67,6 +67,9 @@ class NodeType(str, Enum):
     LABEL = "label"        # Semantic label for tasks
     SECTION = "section"    # Section within a project
 
+    # v1.0.7: File ingestion
+    FILE = "file"              # Non-text file (pointer-only storage)
+
     # v1.0.6: Business knowledge (semantic memory)
     DOMAIN = "domain"              # Business domain
     SYSTEM = "system"              # Technical/business system

@@ -1,0 +1,24 @@
+agent_profile_id: default
+name: Default Agent
+description: General purpose agent for routine tasks
+engine: custom
+llm_config:
+  provider: openai
+  model: gpt-4o
+  temperature: 0.3
+  max_tokens: 4096
+prompt_config:
+  format: markdown
+  enable_toon: true
+allowed_capabilities:
+  - obsidian.*
+  - tasks.*
+  - notes.*
+context_policy:
+  must_cite: false
+approval_policy:
+  require_approval_for: []
+  auto_approve_side_effects:
+    - none
+    - read
+  max_auto_approve_risk: medium

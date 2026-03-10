@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -5069,6 +5069,34 @@
     
   
     experience_miner
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../services/file_indexer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    file_indexer
   
 
     
@@ -16764,17 +16792,17 @@ Provides strongly-typed nodes and edges.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/core/schemas/graph.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-289">289</a></span>
-<span class="normal"><a href="#__codelineno-0-290">290</a></span>
-<span class="normal"><a href="#__codelineno-0-291">291</a></span>
-<span class="normal"><a href="#__codelineno-0-292">292</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-292">292</a></span>
 <span class="normal"><a href="#__codelineno-0-293">293</a></span>
-<span class="normal"><a href="#__codelineno-0-294">294</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-289" name="__codelineno-0-289"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphNode</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-290" name="__codelineno-0-290"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a node by ID.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-291" name="__codelineno-0-291"></a>    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
-<a id="__codelineno-0-292" name="__codelineno-0-292"></a>        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">node_id</span> <span class="o">==</span> <span class="n">node_id</span><span class="p">:</span>
-<a id="__codelineno-0-293" name="__codelineno-0-293"></a>            <span class="k">return</span> <span class="n">node</span>
-<a id="__codelineno-0-294" name="__codelineno-0-294"></a>    <span class="k">return</span> <span class="kc">None</span>
+<span class="normal"><a href="#__codelineno-0-294">294</a></span>
+<span class="normal"><a href="#__codelineno-0-295">295</a></span>
+<span class="normal"><a href="#__codelineno-0-296">296</a></span>
+<span class="normal"><a href="#__codelineno-0-297">297</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-292" name="__codelineno-0-292"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GraphNode</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-293" name="__codelineno-0-293"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get a node by ID.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-294" name="__codelineno-0-294"></a>    <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
+<a id="__codelineno-0-295" name="__codelineno-0-295"></a>        <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">node_id</span> <span class="o">==</span> <span class="n">node_id</span><span class="p">:</span>
+<a id="__codelineno-0-296" name="__codelineno-0-296"></a>            <span class="k">return</span> <span class="n">node</span>
+<a id="__codelineno-0-297" name="__codelineno-0-297"></a>    <span class="k">return</span> <span class="kc">None</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -16797,11 +16825,11 @@ Provides strongly-typed nodes and edges.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/core/schemas/graph.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-296">296</a></span>
-<span class="normal"><a href="#__codelineno-0-297">297</a></span>
-<span class="normal"><a href="#__codelineno-0-298">298</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-296" name="__codelineno-0-296"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GraphEdge</span><span class="p">]:</span>
-<a id="__codelineno-0-297" name="__codelineno-0-297"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all edges from a source node.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-298" name="__codelineno-0-298"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">source_id</span> <span class="o">==</span> <span class="n">source_id</span><span class="p">]</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-299">299</a></span>
+<span class="normal"><a href="#__codelineno-0-300">300</a></span>
+<span class="normal"><a href="#__codelineno-0-301">301</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-299" name="__codelineno-0-299"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_edges_from</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GraphEdge</span><span class="p">]:</span>
+<a id="__codelineno-0-300" name="__codelineno-0-300"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all edges from a source node.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">source_id</span> <span class="o">==</span> <span class="n">source_id</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -16824,11 +16852,11 @@ Provides strongly-typed nodes and edges.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/core/schemas/graph.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-300">300</a></span>
-<span class="normal"><a href="#__codelineno-0-301">301</a></span>
-<span class="normal"><a href="#__codelineno-0-302">302</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-300" name="__codelineno-0-300"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_edges_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GraphEdge</span><span class="p">]:</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all edges to a target node.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-302" name="__codelineno-0-302"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target_id</span> <span class="o">==</span> <span class="n">target_id</span><span class="p">]</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-303">303</a></span>
+<span class="normal"><a href="#__codelineno-0-304">304</a></span>
+<span class="normal"><a href="#__codelineno-0-305">305</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-303" name="__codelineno-0-303"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_edges_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">GraphEdge</span><span class="p">]:</span>
+<a id="__codelineno-0-304" name="__codelineno-0-304"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Get all edges to a target node.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-305" name="__codelineno-0-305"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">edges</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">target_id</span> <span class="o">==</span> <span class="n">target_id</span><span class="p">]</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

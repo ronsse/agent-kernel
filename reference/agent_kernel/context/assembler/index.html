@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -5230,6 +5230,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../services/file_indexer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    file_indexer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../services/health/" class="md-nav__link">
         
   
@@ -9450,12 +9478,7 @@ enabling features like graph expansion based on thinking tier.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/context/assembler.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-701">701</a></span>
-<span class="normal"><a href="#__codelineno-0-702">702</a></span>
-<span class="normal"><a href="#__codelineno-0-703">703</a></span>
-<span class="normal"><a href="#__codelineno-0-704">704</a></span>
-<span class="normal"><a href="#__codelineno-0-705">705</a></span>
-<span class="normal"><a href="#__codelineno-0-706">706</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-706">706</a></span>
 <span class="normal"><a href="#__codelineno-0-707">707</a></span>
 <span class="normal"><a href="#__codelineno-0-708">708</a></span>
 <span class="normal"><a href="#__codelineno-0-709">709</a></span>
@@ -9669,226 +9692,231 @@ enabling features like graph expansion based on thinking tier.</p>
 <span class="normal"><a href="#__codelineno-0-917">917</a></span>
 <span class="normal"><a href="#__codelineno-0-918">918</a></span>
 <span class="normal"><a href="#__codelineno-0-919">919</a></span>
-<span class="normal"><a href="#__codelineno-0-920">920</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-701" name="__codelineno-0-701"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">assemble_with_thinking</span><span class="p">(</span>
-<a id="__codelineno-0-702" name="__codelineno-0-702"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-703" name="__codelineno-0-703"></a>    <span class="n">intent</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-704" name="__codelineno-0-704"></a>    <span class="n">agent_profile</span><span class="p">:</span> <span class="n">AgentProfile</span><span class="p">,</span>
-<a id="__codelineno-0-705" name="__codelineno-0-705"></a>    <span class="n">retrieval_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">RetrievalConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-706" name="__codelineno-0-706"></a>    <span class="n">max_context_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-707" name="__codelineno-0-707"></a>    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-708" name="__codelineno-0-708"></a>    <span class="n">seed_node_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-709" name="__codelineno-0-709"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-710" name="__codelineno-0-710"></a>    <span class="n">vault_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-711" name="__codelineno-0-711"></a>    <span class="n">workflow_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-712" name="__codelineno-0-712"></a>    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-713" name="__codelineno-0-713"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContextPacket</span><span class="p">:</span>
-<a id="__codelineno-0-714" name="__codelineno-0-714"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Assemble context using thinking-config-aware retrieval.</span>
-<a id="__codelineno-0-715" name="__codelineno-0-715"></a>
-<a id="__codelineno-0-716" name="__codelineno-0-716"></a><span class="sd">    This method respects the retrieval configuration from ThinkingConfig,</span>
-<a id="__codelineno-0-717" name="__codelineno-0-717"></a><span class="sd">    enabling features like graph expansion based on thinking tier.</span>
-<a id="__codelineno-0-718" name="__codelineno-0-718"></a>
-<a id="__codelineno-0-719" name="__codelineno-0-719"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-720" name="__codelineno-0-720"></a><span class="sd">        intent: The user&#39;s intent or query.</span>
-<a id="__codelineno-0-721" name="__codelineno-0-721"></a><span class="sd">        agent_profile: Agent profile (may contain thinking_config).</span>
-<a id="__codelineno-0-722" name="__codelineno-0-722"></a><span class="sd">        retrieval_config: Optional override for retrieval settings.</span>
-<a id="__codelineno-0-723" name="__codelineno-0-723"></a><span class="sd">        max_context_tokens: Optional token limit override.</span>
-<a id="__codelineno-0-724" name="__codelineno-0-724"></a><span class="sd">        project_id: Optional project scope.</span>
-<a id="__codelineno-0-725" name="__codelineno-0-725"></a><span class="sd">        seed_node_ids: Optional graph seed nodes.</span>
-<a id="__codelineno-0-726" name="__codelineno-0-726"></a><span class="sd">        embedding: Optional pre-computed query embedding.</span>
-<a id="__codelineno-0-727" name="__codelineno-0-727"></a><span class="sd">        vault_id: Optional vault ID for pack resolution.</span>
-<a id="__codelineno-0-728" name="__codelineno-0-728"></a><span class="sd">        workflow_id: Optional workflow ID for pack resolution.</span>
-<a id="__codelineno-0-729" name="__codelineno-0-729"></a><span class="sd">        path: Optional path for pack resolution.</span>
-<a id="__codelineno-0-730" name="__codelineno-0-730"></a>
-<a id="__codelineno-0-731" name="__codelineno-0-731"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-732" name="__codelineno-0-732"></a><span class="sd">        Assembled ContextPacket.</span>
-<a id="__codelineno-0-733" name="__codelineno-0-733"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-734" name="__codelineno-0-734"></a>    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<a id="__codelineno-0-735" name="__codelineno-0-735"></a>    <span class="n">queries_run</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">QueryRecord</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-736" name="__codelineno-0-736"></a>    <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ContextItem</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-737" name="__codelineno-0-737"></a>
-<a id="__codelineno-0-738" name="__codelineno-0-738"></a>    <span class="c1"># Extract retrieval config from thinking config or use override</span>
-<a id="__codelineno-0-739" name="__codelineno-0-739"></a>    <span class="k">if</span> <span class="n">retrieval_config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">thinking_config</span><span class="p">:</span>
-<a id="__codelineno-0-740" name="__codelineno-0-740"></a>        <span class="n">retrieval_config</span> <span class="o">=</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">thinking_config</span><span class="o">.</span><span class="n">retrieval</span>
-<a id="__codelineno-0-741" name="__codelineno-0-741"></a>
-<a id="__codelineno-0-742" name="__codelineno-0-742"></a>    <span class="c1"># Normalize to dict for easy access</span>
-<a id="__codelineno-0-743" name="__codelineno-0-743"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">retrieval_config</span><span class="p">,</span> <span class="n">RetrievalConfig</span><span class="p">):</span>
-<a id="__codelineno-0-744" name="__codelineno-0-744"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-745" name="__codelineno-0-745"></a>            <span class="s2">&quot;semantic_search&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">semantic_search</span><span class="p">,</span>
-<a id="__codelineno-0-746" name="__codelineno-0-746"></a>            <span class="s2">&quot;keyword_search&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">keyword_search</span><span class="p">,</span>
-<a id="__codelineno-0-747" name="__codelineno-0-747"></a>            <span class="s2">&quot;graph_expansion&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">graph_expansion</span><span class="p">,</span>
-<a id="__codelineno-0-748" name="__codelineno-0-748"></a>            <span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">graph_expansion_hops</span><span class="p">,</span>
-<a id="__codelineno-0-749" name="__codelineno-0-749"></a>            <span class="s2">&quot;recency_boost&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">recency_boost</span><span class="p">,</span>
-<a id="__codelineno-0-750" name="__codelineno-0-750"></a>            <span class="s2">&quot;recency_days&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">recency_days</span><span class="p">,</span>
-<a id="__codelineno-0-751" name="__codelineno-0-751"></a>        <span class="p">}</span>
-<a id="__codelineno-0-752" name="__codelineno-0-752"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">retrieval_config</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-<a id="__codelineno-0-753" name="__codelineno-0-753"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="n">retrieval_config</span>
-<a id="__codelineno-0-754" name="__codelineno-0-754"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-755" name="__codelineno-0-755"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-756" name="__codelineno-0-756"></a>            <span class="s2">&quot;semantic_search&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-757" name="__codelineno-0-757"></a>            <span class="s2">&quot;keyword_search&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-758" name="__codelineno-0-758"></a>            <span class="s2">&quot;graph_expansion&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-759" name="__codelineno-0-759"></a>            <span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-0-760" name="__codelineno-0-760"></a>            <span class="s2">&quot;recency_boost&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-761" name="__codelineno-0-761"></a>            <span class="s2">&quot;recency_days&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
-<a id="__codelineno-0-762" name="__codelineno-0-762"></a>        <span class="p">}</span>
-<a id="__codelineno-0-763" name="__codelineno-0-763"></a>
-<a id="__codelineno-0-764" name="__codelineno-0-764"></a>    <span class="c1"># Use context policy from agent profile</span>
-<a id="__codelineno-0-765" name="__codelineno-0-765"></a>    <span class="n">policy</span> <span class="o">=</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">context_policy</span>
-<a id="__codelineno-0-766" name="__codelineno-0-766"></a>
-<a id="__codelineno-0-767" name="__codelineno-0-767"></a>    <span class="c1"># Override token limit if specified</span>
-<a id="__codelineno-0-768" name="__codelineno-0-768"></a>    <span class="k">if</span> <span class="n">max_context_tokens</span><span class="p">:</span>
-<a id="__codelineno-0-769" name="__codelineno-0-769"></a>        <span class="n">policy</span> <span class="o">=</span> <span class="n">ContextPolicy</span><span class="p">(</span>
-<a id="__codelineno-0-770" name="__codelineno-0-770"></a>            <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_context_tokens</span><span class="p">,</span>
-<a id="__codelineno-0-771" name="__codelineno-0-771"></a>            <span class="n">max_notes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
-<a id="__codelineno-0-772" name="__codelineno-0-772"></a>            <span class="n">max_tasks</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span><span class="p">,</span>
-<a id="__codelineno-0-773" name="__codelineno-0-773"></a>            <span class="n">max_events</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
-<a id="__codelineno-0-774" name="__codelineno-0-774"></a>            <span class="n">allowed_scopes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">allowed_scopes</span><span class="p">,</span>
-<a id="__codelineno-0-775" name="__codelineno-0-775"></a>        <span class="p">)</span>
-<a id="__codelineno-0-776" name="__codelineno-0-776"></a>
-<a id="__codelineno-0-777" name="__codelineno-0-777"></a>    <span class="c1"># Step 1: Resolve context packs</span>
-<a id="__codelineno-0-778" name="__codelineno-0-778"></a>    <span class="n">pack_scope</span> <span class="o">=</span> <span class="n">ContextPackScope</span><span class="p">(</span>
-<a id="__codelineno-0-779" name="__codelineno-0-779"></a>        <span class="n">vault_id</span><span class="o">=</span><span class="n">vault_id</span><span class="p">,</span>
-<a id="__codelineno-0-780" name="__codelineno-0-780"></a>        <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
-<a id="__codelineno-0-781" name="__codelineno-0-781"></a>        <span class="n">workflow_id</span><span class="o">=</span><span class="n">workflow_id</span><span class="p">,</span>
-<a id="__codelineno-0-782" name="__codelineno-0-782"></a>        <span class="n">agent_profile_id</span><span class="o">=</span><span class="n">agent_profile</span><span class="o">.</span><span class="n">agent_profile_id</span><span class="p">,</span>
-<a id="__codelineno-0-783" name="__codelineno-0-783"></a>        <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
-<a id="__codelineno-0-784" name="__codelineno-0-784"></a>    <span class="p">)</span>
-<a id="__codelineno-0-785" name="__codelineno-0-785"></a>    <span class="n">packs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pack_resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">pack_scope</span><span class="p">)</span>
-<a id="__codelineno-0-786" name="__codelineno-0-786"></a>    <span class="n">pack_refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pack_resolver</span><span class="o">.</span><span class="n">get_all_refs</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span>
-<a id="__codelineno-0-787" name="__codelineno-0-787"></a>    <span class="n">pack_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_pack_items</span><span class="p">(</span><span class="n">pack_refs</span><span class="p">)</span>
-<a id="__codelineno-0-788" name="__codelineno-0-788"></a>    <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pack_items</span><span class="p">)</span>
-<a id="__codelineno-0-789" name="__codelineno-0-789"></a>
-<a id="__codelineno-0-790" name="__codelineno-0-790"></a>    <span class="n">skill_items</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_skill_items_async</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
-<a id="__codelineno-0-791" name="__codelineno-0-791"></a>    <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">skill_items</span><span class="p">)</span>
-<a id="__codelineno-0-792" name="__codelineno-0-792"></a>
-<a id="__codelineno-0-793" name="__codelineno-0-793"></a>    <span class="c1"># Step 2: Keyword search (if enabled)</span>
-<a id="__codelineno-0-794" name="__codelineno-0-794"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keyword_search&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_store</span><span class="p">:</span>
-<a id="__codelineno-0-795" name="__codelineno-0-795"></a>        <span class="n">doc_items</span><span class="p">,</span> <span class="n">doc_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_documents</span><span class="p">(</span>
-<a id="__codelineno-0-796" name="__codelineno-0-796"></a>            <span class="n">intent</span><span class="p">,</span>
-<a id="__codelineno-0-797" name="__codelineno-0-797"></a>            <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
-<a id="__codelineno-0-798" name="__codelineno-0-798"></a>            <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
-<a id="__codelineno-0-799" name="__codelineno-0-799"></a>        <span class="p">)</span>
-<a id="__codelineno-0-800" name="__codelineno-0-800"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">doc_items</span><span class="p">)</span>
-<a id="__codelineno-0-801" name="__codelineno-0-801"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doc_query</span><span class="p">)</span>
-<a id="__codelineno-0-802" name="__codelineno-0-802"></a>
-<a id="__codelineno-0-803" name="__codelineno-0-803"></a>    <span class="c1"># Step 3: Semantic search (if enabled and embedding available)</span>
-<a id="__codelineno-0-804" name="__codelineno-0-804"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;semantic_search&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_store</span><span class="p">:</span>
-<a id="__codelineno-0-805" name="__codelineno-0-805"></a>        <span class="c1"># Generate embedding if not provided</span>
-<a id="__codelineno-0-806" name="__codelineno-0-806"></a>        <span class="n">query_embedding</span> <span class="o">=</span> <span class="n">embedding</span>
-<a id="__codelineno-0-807" name="__codelineno-0-807"></a>        <span class="k">if</span> <span class="n">query_embedding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embedding_service</span><span class="p">:</span>
-<a id="__codelineno-0-808" name="__codelineno-0-808"></a>            <span class="n">query_embedding</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embedding_service</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
-<a id="__codelineno-0-809" name="__codelineno-0-809"></a>
-<a id="__codelineno-0-810" name="__codelineno-0-810"></a>        <span class="k">if</span> <span class="n">query_embedding</span><span class="p">:</span>
-<a id="__codelineno-0-811" name="__codelineno-0-811"></a>            <span class="n">vector_items</span><span class="p">,</span> <span class="n">vector_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_vectors</span><span class="p">(</span>
-<a id="__codelineno-0-812" name="__codelineno-0-812"></a>                <span class="n">query_embedding</span><span class="p">,</span>
-<a id="__codelineno-0-813" name="__codelineno-0-813"></a>                <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
-<a id="__codelineno-0-814" name="__codelineno-0-814"></a>                <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
-<a id="__codelineno-0-815" name="__codelineno-0-815"></a>            <span class="p">)</span>
-<a id="__codelineno-0-816" name="__codelineno-0-816"></a>            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">vector_items</span><span class="p">)</span>
-<a id="__codelineno-0-817" name="__codelineno-0-817"></a>            <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector_query</span><span class="p">)</span>
-<a id="__codelineno-0-818" name="__codelineno-0-818"></a>
-<a id="__codelineno-0-819" name="__codelineno-0-819"></a>    <span class="c1"># Step 4: Graph expansion (if enabled)</span>
-<a id="__codelineno-0-820" name="__codelineno-0-820"></a>    <span class="n">graph_slice</span> <span class="o">=</span> <span class="kc">None</span>
-<a id="__codelineno-0-821" name="__codelineno-0-821"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_store</span><span class="p">:</span>
-<a id="__codelineno-0-822" name="__codelineno-0-822"></a>        <span class="c1"># Use seed nodes or extract from retrieved items</span>
-<a id="__codelineno-0-823" name="__codelineno-0-823"></a>        <span class="n">expand_seeds</span> <span class="o">=</span> <span class="n">seed_node_ids</span> <span class="ow">or</span> <span class="p">[]</span>
-<a id="__codelineno-0-824" name="__codelineno-0-824"></a>
-<a id="__codelineno-0-825" name="__codelineno-0-825"></a>        <span class="c1"># Extract node IDs from retrieved items</span>
-<a id="__codelineno-0-826" name="__codelineno-0-826"></a>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-<a id="__codelineno-0-827" name="__codelineno-0-827"></a>            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">ref</span><span class="o">.</span><span class="n">ref_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">RefType</span><span class="o">.</span><span class="n">NOTE</span><span class="p">,</span> <span class="n">RefType</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">):</span>
-<a id="__codelineno-0-828" name="__codelineno-0-828"></a>                <span class="n">expand_seeds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">ref</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+<span class="normal"><a href="#__codelineno-0-920">920</a></span>
+<span class="normal"><a href="#__codelineno-0-921">921</a></span>
+<span class="normal"><a href="#__codelineno-0-922">922</a></span>
+<span class="normal"><a href="#__codelineno-0-923">923</a></span>
+<span class="normal"><a href="#__codelineno-0-924">924</a></span>
+<span class="normal"><a href="#__codelineno-0-925">925</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-706" name="__codelineno-0-706"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">assemble_with_thinking</span><span class="p">(</span>
+<a id="__codelineno-0-707" name="__codelineno-0-707"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-708" name="__codelineno-0-708"></a>    <span class="n">intent</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-709" name="__codelineno-0-709"></a>    <span class="n">agent_profile</span><span class="p">:</span> <span class="n">AgentProfile</span><span class="p">,</span>
+<a id="__codelineno-0-710" name="__codelineno-0-710"></a>    <span class="n">retrieval_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="n">RetrievalConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-711" name="__codelineno-0-711"></a>    <span class="n">max_context_tokens</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-712" name="__codelineno-0-712"></a>    <span class="n">project_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-713" name="__codelineno-0-713"></a>    <span class="n">seed_node_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-714" name="__codelineno-0-714"></a>    <span class="n">embedding</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-715" name="__codelineno-0-715"></a>    <span class="n">vault_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-716" name="__codelineno-0-716"></a>    <span class="n">workflow_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-717" name="__codelineno-0-717"></a>    <span class="n">path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-718" name="__codelineno-0-718"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ContextPacket</span><span class="p">:</span>
+<a id="__codelineno-0-719" name="__codelineno-0-719"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Assemble context using thinking-config-aware retrieval.</span>
+<a id="__codelineno-0-720" name="__codelineno-0-720"></a>
+<a id="__codelineno-0-721" name="__codelineno-0-721"></a><span class="sd">    This method respects the retrieval configuration from ThinkingConfig,</span>
+<a id="__codelineno-0-722" name="__codelineno-0-722"></a><span class="sd">    enabling features like graph expansion based on thinking tier.</span>
+<a id="__codelineno-0-723" name="__codelineno-0-723"></a>
+<a id="__codelineno-0-724" name="__codelineno-0-724"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-725" name="__codelineno-0-725"></a><span class="sd">        intent: The user&#39;s intent or query.</span>
+<a id="__codelineno-0-726" name="__codelineno-0-726"></a><span class="sd">        agent_profile: Agent profile (may contain thinking_config).</span>
+<a id="__codelineno-0-727" name="__codelineno-0-727"></a><span class="sd">        retrieval_config: Optional override for retrieval settings.</span>
+<a id="__codelineno-0-728" name="__codelineno-0-728"></a><span class="sd">        max_context_tokens: Optional token limit override.</span>
+<a id="__codelineno-0-729" name="__codelineno-0-729"></a><span class="sd">        project_id: Optional project scope.</span>
+<a id="__codelineno-0-730" name="__codelineno-0-730"></a><span class="sd">        seed_node_ids: Optional graph seed nodes.</span>
+<a id="__codelineno-0-731" name="__codelineno-0-731"></a><span class="sd">        embedding: Optional pre-computed query embedding.</span>
+<a id="__codelineno-0-732" name="__codelineno-0-732"></a><span class="sd">        vault_id: Optional vault ID for pack resolution.</span>
+<a id="__codelineno-0-733" name="__codelineno-0-733"></a><span class="sd">        workflow_id: Optional workflow ID for pack resolution.</span>
+<a id="__codelineno-0-734" name="__codelineno-0-734"></a><span class="sd">        path: Optional path for pack resolution.</span>
+<a id="__codelineno-0-735" name="__codelineno-0-735"></a>
+<a id="__codelineno-0-736" name="__codelineno-0-736"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-737" name="__codelineno-0-737"></a><span class="sd">        Assembled ContextPacket.</span>
+<a id="__codelineno-0-738" name="__codelineno-0-738"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-739" name="__codelineno-0-739"></a>    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-0-740" name="__codelineno-0-740"></a>    <span class="n">queries_run</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">QueryRecord</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-741" name="__codelineno-0-741"></a>    <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">ContextItem</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-742" name="__codelineno-0-742"></a>
+<a id="__codelineno-0-743" name="__codelineno-0-743"></a>    <span class="c1"># Extract retrieval config from thinking config or use override</span>
+<a id="__codelineno-0-744" name="__codelineno-0-744"></a>    <span class="k">if</span> <span class="n">retrieval_config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">thinking_config</span><span class="p">:</span>
+<a id="__codelineno-0-745" name="__codelineno-0-745"></a>        <span class="n">retrieval_config</span> <span class="o">=</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">thinking_config</span><span class="o">.</span><span class="n">retrieval</span>
+<a id="__codelineno-0-746" name="__codelineno-0-746"></a>
+<a id="__codelineno-0-747" name="__codelineno-0-747"></a>    <span class="c1"># Normalize to dict for easy access</span>
+<a id="__codelineno-0-748" name="__codelineno-0-748"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">retrieval_config</span><span class="p">,</span> <span class="n">RetrievalConfig</span><span class="p">):</span>
+<a id="__codelineno-0-749" name="__codelineno-0-749"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-0-750" name="__codelineno-0-750"></a>            <span class="s2">&quot;semantic_search&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">semantic_search</span><span class="p">,</span>
+<a id="__codelineno-0-751" name="__codelineno-0-751"></a>            <span class="s2">&quot;keyword_search&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">keyword_search</span><span class="p">,</span>
+<a id="__codelineno-0-752" name="__codelineno-0-752"></a>            <span class="s2">&quot;graph_expansion&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">graph_expansion</span><span class="p">,</span>
+<a id="__codelineno-0-753" name="__codelineno-0-753"></a>            <span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">graph_expansion_hops</span><span class="p">,</span>
+<a id="__codelineno-0-754" name="__codelineno-0-754"></a>            <span class="s2">&quot;recency_boost&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">recency_boost</span><span class="p">,</span>
+<a id="__codelineno-0-755" name="__codelineno-0-755"></a>            <span class="s2">&quot;recency_days&quot;</span><span class="p">:</span> <span class="n">retrieval_config</span><span class="o">.</span><span class="n">recency_days</span><span class="p">,</span>
+<a id="__codelineno-0-756" name="__codelineno-0-756"></a>        <span class="p">}</span>
+<a id="__codelineno-0-757" name="__codelineno-0-757"></a>    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">retrieval_config</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-0-758" name="__codelineno-0-758"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="n">retrieval_config</span>
+<a id="__codelineno-0-759" name="__codelineno-0-759"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-760" name="__codelineno-0-760"></a>        <span class="n">retrieval_opts</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-0-761" name="__codelineno-0-761"></a>            <span class="s2">&quot;semantic_search&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-762" name="__codelineno-0-762"></a>            <span class="s2">&quot;keyword_search&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-763" name="__codelineno-0-763"></a>            <span class="s2">&quot;graph_expansion&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-764" name="__codelineno-0-764"></a>            <span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-0-765" name="__codelineno-0-765"></a>            <span class="s2">&quot;recency_boost&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-766" name="__codelineno-0-766"></a>            <span class="s2">&quot;recency_days&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+<a id="__codelineno-0-767" name="__codelineno-0-767"></a>        <span class="p">}</span>
+<a id="__codelineno-0-768" name="__codelineno-0-768"></a>
+<a id="__codelineno-0-769" name="__codelineno-0-769"></a>    <span class="c1"># Use context policy from agent profile</span>
+<a id="__codelineno-0-770" name="__codelineno-0-770"></a>    <span class="n">policy</span> <span class="o">=</span> <span class="n">agent_profile</span><span class="o">.</span><span class="n">context_policy</span>
+<a id="__codelineno-0-771" name="__codelineno-0-771"></a>
+<a id="__codelineno-0-772" name="__codelineno-0-772"></a>    <span class="c1"># Override token limit if specified</span>
+<a id="__codelineno-0-773" name="__codelineno-0-773"></a>    <span class="k">if</span> <span class="n">max_context_tokens</span><span class="p">:</span>
+<a id="__codelineno-0-774" name="__codelineno-0-774"></a>        <span class="n">policy</span> <span class="o">=</span> <span class="n">ContextPolicy</span><span class="p">(</span>
+<a id="__codelineno-0-775" name="__codelineno-0-775"></a>            <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_context_tokens</span><span class="p">,</span>
+<a id="__codelineno-0-776" name="__codelineno-0-776"></a>            <span class="n">max_notes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
+<a id="__codelineno-0-777" name="__codelineno-0-777"></a>            <span class="n">max_tasks</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span><span class="p">,</span>
+<a id="__codelineno-0-778" name="__codelineno-0-778"></a>            <span class="n">max_events</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
+<a id="__codelineno-0-779" name="__codelineno-0-779"></a>            <span class="n">allowed_scopes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">allowed_scopes</span><span class="p">,</span>
+<a id="__codelineno-0-780" name="__codelineno-0-780"></a>        <span class="p">)</span>
+<a id="__codelineno-0-781" name="__codelineno-0-781"></a>
+<a id="__codelineno-0-782" name="__codelineno-0-782"></a>    <span class="c1"># Step 1: Resolve context packs</span>
+<a id="__codelineno-0-783" name="__codelineno-0-783"></a>    <span class="n">pack_scope</span> <span class="o">=</span> <span class="n">ContextPackScope</span><span class="p">(</span>
+<a id="__codelineno-0-784" name="__codelineno-0-784"></a>        <span class="n">vault_id</span><span class="o">=</span><span class="n">vault_id</span><span class="p">,</span>
+<a id="__codelineno-0-785" name="__codelineno-0-785"></a>        <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+<a id="__codelineno-0-786" name="__codelineno-0-786"></a>        <span class="n">workflow_id</span><span class="o">=</span><span class="n">workflow_id</span><span class="p">,</span>
+<a id="__codelineno-0-787" name="__codelineno-0-787"></a>        <span class="n">agent_profile_id</span><span class="o">=</span><span class="n">agent_profile</span><span class="o">.</span><span class="n">agent_profile_id</span><span class="p">,</span>
+<a id="__codelineno-0-788" name="__codelineno-0-788"></a>        <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+<a id="__codelineno-0-789" name="__codelineno-0-789"></a>    <span class="p">)</span>
+<a id="__codelineno-0-790" name="__codelineno-0-790"></a>    <span class="n">packs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pack_resolver</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">pack_scope</span><span class="p">)</span>
+<a id="__codelineno-0-791" name="__codelineno-0-791"></a>    <span class="n">pack_refs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pack_resolver</span><span class="o">.</span><span class="n">get_all_refs</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span>
+<a id="__codelineno-0-792" name="__codelineno-0-792"></a>    <span class="n">pack_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_pack_items</span><span class="p">(</span><span class="n">pack_refs</span><span class="p">)</span>
+<a id="__codelineno-0-793" name="__codelineno-0-793"></a>    <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">pack_items</span><span class="p">)</span>
+<a id="__codelineno-0-794" name="__codelineno-0-794"></a>
+<a id="__codelineno-0-795" name="__codelineno-0-795"></a>    <span class="n">skill_items</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_skill_items_async</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
+<a id="__codelineno-0-796" name="__codelineno-0-796"></a>    <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">skill_items</span><span class="p">)</span>
+<a id="__codelineno-0-797" name="__codelineno-0-797"></a>
+<a id="__codelineno-0-798" name="__codelineno-0-798"></a>    <span class="c1"># Step 2: Keyword search (if enabled)</span>
+<a id="__codelineno-0-799" name="__codelineno-0-799"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keyword_search&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_document_store</span><span class="p">:</span>
+<a id="__codelineno-0-800" name="__codelineno-0-800"></a>        <span class="n">doc_items</span><span class="p">,</span> <span class="n">doc_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_documents</span><span class="p">(</span>
+<a id="__codelineno-0-801" name="__codelineno-0-801"></a>            <span class="n">intent</span><span class="p">,</span>
+<a id="__codelineno-0-802" name="__codelineno-0-802"></a>            <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
+<a id="__codelineno-0-803" name="__codelineno-0-803"></a>            <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+<a id="__codelineno-0-804" name="__codelineno-0-804"></a>        <span class="p">)</span>
+<a id="__codelineno-0-805" name="__codelineno-0-805"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">doc_items</span><span class="p">)</span>
+<a id="__codelineno-0-806" name="__codelineno-0-806"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">doc_query</span><span class="p">)</span>
+<a id="__codelineno-0-807" name="__codelineno-0-807"></a>
+<a id="__codelineno-0-808" name="__codelineno-0-808"></a>    <span class="c1"># Step 3: Semantic search (if enabled and embedding available)</span>
+<a id="__codelineno-0-809" name="__codelineno-0-809"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;semantic_search&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vector_store</span><span class="p">:</span>
+<a id="__codelineno-0-810" name="__codelineno-0-810"></a>        <span class="c1"># Generate embedding if not provided</span>
+<a id="__codelineno-0-811" name="__codelineno-0-811"></a>        <span class="n">query_embedding</span> <span class="o">=</span> <span class="n">embedding</span>
+<a id="__codelineno-0-812" name="__codelineno-0-812"></a>        <span class="k">if</span> <span class="n">query_embedding</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embedding_service</span><span class="p">:</span>
+<a id="__codelineno-0-813" name="__codelineno-0-813"></a>            <span class="n">query_embedding</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_embedding_service</span><span class="o">.</span><span class="n">embed</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span>
+<a id="__codelineno-0-814" name="__codelineno-0-814"></a>
+<a id="__codelineno-0-815" name="__codelineno-0-815"></a>        <span class="k">if</span> <span class="n">query_embedding</span><span class="p">:</span>
+<a id="__codelineno-0-816" name="__codelineno-0-816"></a>            <span class="n">vector_items</span><span class="p">,</span> <span class="n">vector_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_vectors</span><span class="p">(</span>
+<a id="__codelineno-0-817" name="__codelineno-0-817"></a>                <span class="n">query_embedding</span><span class="p">,</span>
+<a id="__codelineno-0-818" name="__codelineno-0-818"></a>                <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
+<a id="__codelineno-0-819" name="__codelineno-0-819"></a>                <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+<a id="__codelineno-0-820" name="__codelineno-0-820"></a>            <span class="p">)</span>
+<a id="__codelineno-0-821" name="__codelineno-0-821"></a>            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">vector_items</span><span class="p">)</span>
+<a id="__codelineno-0-822" name="__codelineno-0-822"></a>            <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">vector_query</span><span class="p">)</span>
+<a id="__codelineno-0-823" name="__codelineno-0-823"></a>
+<a id="__codelineno-0-824" name="__codelineno-0-824"></a>    <span class="c1"># Step 4: Graph expansion (if enabled)</span>
+<a id="__codelineno-0-825" name="__codelineno-0-825"></a>    <span class="n">graph_slice</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-0-826" name="__codelineno-0-826"></a>    <span class="k">if</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_store</span><span class="p">:</span>
+<a id="__codelineno-0-827" name="__codelineno-0-827"></a>        <span class="c1"># Use seed nodes or extract from retrieved items</span>
+<a id="__codelineno-0-828" name="__codelineno-0-828"></a>        <span class="n">expand_seeds</span> <span class="o">=</span> <span class="n">seed_node_ids</span> <span class="ow">or</span> <span class="p">[]</span>
 <a id="__codelineno-0-829" name="__codelineno-0-829"></a>
-<a id="__codelineno-0-830" name="__codelineno-0-830"></a>        <span class="k">if</span> <span class="n">expand_seeds</span><span class="p">:</span>
-<a id="__codelineno-0-831" name="__codelineno-0-831"></a>            <span class="n">hops</span> <span class="o">=</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<a id="__codelineno-0-832" name="__codelineno-0-832"></a>            <span class="n">graph_slice</span><span class="p">,</span> <span class="n">graph_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_graph_context</span><span class="p">(</span>
-<a id="__codelineno-0-833" name="__codelineno-0-833"></a>                <span class="n">expand_seeds</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span>  <span class="c1"># Limit seeds</span>
-<a id="__codelineno-0-834" name="__codelineno-0-834"></a>                <span class="n">depth</span><span class="o">=</span><span class="n">hops</span><span class="p">,</span>
-<a id="__codelineno-0-835" name="__codelineno-0-835"></a>            <span class="p">)</span>
-<a id="__codelineno-0-836" name="__codelineno-0-836"></a>            <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph_query</span><span class="p">)</span>
-<a id="__codelineno-0-837" name="__codelineno-0-837"></a>
-<a id="__codelineno-0-838" name="__codelineno-0-838"></a>            <span class="c1"># Add related nodes as items</span>
-<a id="__codelineno-0-839" name="__codelineno-0-839"></a>            <span class="n">graph_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_slice_to_items</span><span class="p">(</span><span class="n">graph_slice</span><span class="p">)</span>
-<a id="__codelineno-0-840" name="__codelineno-0-840"></a>            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">graph_items</span><span class="p">)</span>
-<a id="__codelineno-0-841" name="__codelineno-0-841"></a>
-<a id="__codelineno-0-842" name="__codelineno-0-842"></a>    <span class="c1"># Step 4.5: Context graph search (v1.0.6)</span>
-<a id="__codelineno-0-843" name="__codelineno-0-843"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_graph_query</span><span class="p">:</span>
-<a id="__codelineno-0-844" name="__codelineno-0-844"></a>        <span class="n">cg_items</span><span class="p">,</span> <span class="n">cg_query</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_context_graph</span><span class="p">(</span>
-<a id="__codelineno-0-845" name="__codelineno-0-845"></a>            <span class="n">intent</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
-<a id="__codelineno-0-846" name="__codelineno-0-846"></a>        <span class="p">)</span>
-<a id="__codelineno-0-847" name="__codelineno-0-847"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cg_items</span><span class="p">)</span>
-<a id="__codelineno-0-848" name="__codelineno-0-848"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cg_query</span><span class="p">)</span>
-<a id="__codelineno-0-849" name="__codelineno-0-849"></a>
-<a id="__codelineno-0-850" name="__codelineno-0-850"></a>    <span class="c1"># Step 4.6: Experience retrieval (v1.2)</span>
-<a id="__codelineno-0-851" name="__codelineno-0-851"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experience_store</span><span class="p">:</span>
-<a id="__codelineno-0-852" name="__codelineno-0-852"></a>        <span class="n">exp_items</span><span class="p">,</span> <span class="n">exp_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_experience</span><span class="p">(</span>
-<a id="__codelineno-0-853" name="__codelineno-0-853"></a>            <span class="n">intent</span><span class="o">=</span><span class="n">intent</span><span class="p">,</span>
-<a id="__codelineno-0-854" name="__codelineno-0-854"></a>            <span class="n">workflow_id</span><span class="o">=</span><span class="n">workflow_id</span><span class="p">,</span>
-<a id="__codelineno-0-855" name="__codelineno-0-855"></a>            <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-<a id="__codelineno-0-856" name="__codelineno-0-856"></a>        <span class="p">)</span>
-<a id="__codelineno-0-857" name="__codelineno-0-857"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">exp_items</span><span class="p">)</span>
-<a id="__codelineno-0-858" name="__codelineno-0-858"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exp_query</span><span class="p">)</span>
-<a id="__codelineno-0-859" name="__codelineno-0-859"></a>
-<a id="__codelineno-0-860" name="__codelineno-0-860"></a>    <span class="c1"># Step 5: Deduplicate and rank</span>
-<a id="__codelineno-0-861" name="__codelineno-0-861"></a>    <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deduplicate_items</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-<a id="__codelineno-0-862" name="__codelineno-0-862"></a>    <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rank_items</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">packs</span><span class="p">)</span>
-<a id="__codelineno-0-863" name="__codelineno-0-863"></a>
-<a id="__codelineno-0-864" name="__codelineno-0-864"></a>    <span class="c1"># Step 6: Apply budget limits (evidence items only)</span>
-<a id="__codelineno-0-865" name="__codelineno-0-865"></a>    <span class="n">prompt_items</span><span class="p">,</span> <span class="n">evidence_items</span> <span class="o">=</span> <span class="n">split_context_items</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
-<a id="__codelineno-0-866" name="__codelineno-0-866"></a>    <span class="n">budget</span> <span class="o">=</span> <span class="n">ContextBudget</span><span class="p">(</span>
-<a id="__codelineno-0-867" name="__codelineno-0-867"></a>        <span class="n">max_tokens</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
-<a id="__codelineno-0-868" name="__codelineno-0-868"></a>        <span class="n">max_items</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span> <span class="o">+</span> <span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span> <span class="o">+</span> <span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
-<a id="__codelineno-0-869" name="__codelineno-0-869"></a>        <span class="n">retrieval_limits</span><span class="o">=</span><span class="n">RetrievalLimits</span><span class="p">(</span>
-<a id="__codelineno-0-870" name="__codelineno-0-870"></a>            <span class="n">max_notes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
-<a id="__codelineno-0-871" name="__codelineno-0-871"></a>            <span class="n">max_tasks</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span><span class="p">,</span>
-<a id="__codelineno-0-872" name="__codelineno-0-872"></a>            <span class="n">max_events</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
-<a id="__codelineno-0-873" name="__codelineno-0-873"></a>        <span class="p">),</span>
-<a id="__codelineno-0-874" name="__codelineno-0-874"></a>    <span class="p">)</span>
-<a id="__codelineno-0-875" name="__codelineno-0-875"></a>    <span class="n">evidence_items</span> <span class="o">=</span> <span class="n">evidence_items</span><span class="p">[:</span><span class="n">budget</span><span class="o">.</span><span class="n">max_items</span><span class="p">]</span>
-<a id="__codelineno-0-876" name="__codelineno-0-876"></a>
-<a id="__codelineno-0-877" name="__codelineno-0-877"></a>    <span class="c1"># Trim by token budget</span>
-<a id="__codelineno-0-878" name="__codelineno-0-878"></a>    <span class="n">total_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_tokens</span><span class="p">(</span><span class="n">evidence_items</span><span class="p">)</span>
-<a id="__codelineno-0-879" name="__codelineno-0-879"></a>    <span class="k">while</span> <span class="n">total_tokens</span> <span class="o">&gt;</span> <span class="n">budget</span><span class="o">.</span><span class="n">max_tokens</span> <span class="ow">and</span> <span class="n">evidence_items</span><span class="p">:</span>
-<a id="__codelineno-0-880" name="__codelineno-0-880"></a>        <span class="n">evidence_items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-<a id="__codelineno-0-881" name="__codelineno-0-881"></a>        <span class="n">total_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_tokens</span><span class="p">(</span><span class="n">evidence_items</span><span class="p">)</span>
-<a id="__codelineno-0-882" name="__codelineno-0-882"></a>
-<a id="__codelineno-0-883" name="__codelineno-0-883"></a>    <span class="n">items</span> <span class="o">=</span> <span class="n">prompt_items</span> <span class="o">+</span> <span class="n">evidence_items</span>
-<a id="__codelineno-0-884" name="__codelineno-0-884"></a>
-<a id="__codelineno-0-885" name="__codelineno-0-885"></a>    <span class="c1"># Build retrieval report</span>
-<a id="__codelineno-0-886" name="__codelineno-0-886"></a>    <span class="n">retrieval_time_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
-<a id="__codelineno-0-887" name="__codelineno-0-887"></a>    <span class="n">retrieval_report</span> <span class="o">=</span> <span class="n">RetrievalReport</span><span class="p">(</span>
-<a id="__codelineno-0-888" name="__codelineno-0-888"></a>        <span class="n">queries_run</span><span class="o">=</span><span class="n">queries_run</span><span class="p">,</span>
-<a id="__codelineno-0-889" name="__codelineno-0-889"></a>        <span class="n">filters_applied</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;retrieval_opts=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span>
-<a id="__codelineno-0-890" name="__codelineno-0-890"></a>        <span class="n">items_considered</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
-<a id="__codelineno-0-891" name="__codelineno-0-891"></a>        <span class="n">items_selected</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
-<a id="__codelineno-0-892" name="__codelineno-0-892"></a>        <span class="n">selection_strategy</span><span class="o">=</span><span class="s2">&quot;thinking_config_aware&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-893" name="__codelineno-0-893"></a>    <span class="p">)</span>
-<a id="__codelineno-0-894" name="__codelineno-0-894"></a>
-<a id="__codelineno-0-895" name="__codelineno-0-895"></a>    <span class="c1"># Build packet</span>
-<a id="__codelineno-0-896" name="__codelineno-0-896"></a>    <span class="n">packet</span> <span class="o">=</span> <span class="n">ContextPacket</span><span class="p">(</span>
-<a id="__codelineno-0-897" name="__codelineno-0-897"></a>        <span class="n">packet_id</span><span class="o">=</span><span class="n">generate_ulid</span><span class="p">(),</span>
-<a id="__codelineno-0-898" name="__codelineno-0-898"></a>        <span class="n">intent</span><span class="o">=</span><span class="n">intent</span><span class="p">,</span>
-<a id="__codelineno-0-899" name="__codelineno-0-899"></a>        <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
-<a id="__codelineno-0-900" name="__codelineno-0-900"></a>        <span class="n">generated_at</span><span class="o">=</span><span class="n">utc_now</span><span class="p">(),</span>
-<a id="__codelineno-0-901" name="__codelineno-0-901"></a>        <span class="n">budget</span><span class="o">=</span><span class="n">budget</span><span class="p">,</span>
-<a id="__codelineno-0-902" name="__codelineno-0-902"></a>        <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">,</span>
-<a id="__codelineno-0-903" name="__codelineno-0-903"></a>        <span class="n">graph_slice</span><span class="o">=</span><span class="n">graph_slice</span><span class="p">,</span>
-<a id="__codelineno-0-904" name="__codelineno-0-904"></a>        <span class="n">retrieval_report</span><span class="o">=</span><span class="n">retrieval_report</span><span class="p">,</span>
-<a id="__codelineno-0-905" name="__codelineno-0-905"></a>        <span class="n">retrieval_mode</span><span class="o">=</span><span class="s2">&quot;thinking_config&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-906" name="__codelineno-0-906"></a>        <span class="n">context_packs</span><span class="o">=</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">pack_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">packs</span><span class="p">],</span>
-<a id="__codelineno-0-907" name="__codelineno-0-907"></a>    <span class="p">)</span>
-<a id="__codelineno-0-908" name="__codelineno-0-908"></a>
-<a id="__codelineno-0-909" name="__codelineno-0-909"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-<a id="__codelineno-0-910" name="__codelineno-0-910"></a>        <span class="s2">&quot;context_assembled_with_thinking&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-911" name="__codelineno-0-911"></a>        <span class="n">packet_id</span><span class="o">=</span><span class="n">packet</span><span class="o">.</span><span class="n">packet_id</span><span class="p">,</span>
-<a id="__codelineno-0-912" name="__codelineno-0-912"></a>        <span class="n">items_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
-<a id="__codelineno-0-913" name="__codelineno-0-913"></a>        <span class="n">total_tokens</span><span class="o">=</span><span class="n">total_tokens</span><span class="p">,</span>
-<a id="__codelineno-0-914" name="__codelineno-0-914"></a>        <span class="n">retrieval_time_ms</span><span class="o">=</span><span class="n">retrieval_time_ms</span><span class="p">,</span>
-<a id="__codelineno-0-915" name="__codelineno-0-915"></a>        <span class="n">semantic_search</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;semantic_search&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-916" name="__codelineno-0-916"></a>        <span class="n">keyword_search</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keyword_search&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-917" name="__codelineno-0-917"></a>        <span class="n">graph_expansion</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-918" name="__codelineno-0-918"></a>    <span class="p">)</span>
-<a id="__codelineno-0-919" name="__codelineno-0-919"></a>
-<a id="__codelineno-0-920" name="__codelineno-0-920"></a>    <span class="k">return</span> <span class="n">packet</span>
+<a id="__codelineno-0-830" name="__codelineno-0-830"></a>        <span class="c1"># Extract node IDs from retrieved items</span>
+<a id="__codelineno-0-831" name="__codelineno-0-831"></a>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
+<a id="__codelineno-0-832" name="__codelineno-0-832"></a>            <span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">ref</span><span class="o">.</span><span class="n">ref_type</span> <span class="ow">in</span> <span class="p">(</span><span class="n">RefType</span><span class="o">.</span><span class="n">NOTE</span><span class="p">,</span> <span class="n">RefType</span><span class="o">.</span><span class="n">DOCUMENT</span><span class="p">):</span>
+<a id="__codelineno-0-833" name="__codelineno-0-833"></a>                <span class="n">expand_seeds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">ref</span><span class="o">.</span><span class="n">ref_id</span><span class="p">)</span>
+<a id="__codelineno-0-834" name="__codelineno-0-834"></a>
+<a id="__codelineno-0-835" name="__codelineno-0-835"></a>        <span class="k">if</span> <span class="n">expand_seeds</span><span class="p">:</span>
+<a id="__codelineno-0-836" name="__codelineno-0-836"></a>            <span class="n">hops</span> <span class="o">=</span> <span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion_hops&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-0-837" name="__codelineno-0-837"></a>            <span class="n">graph_slice</span><span class="p">,</span> <span class="n">graph_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_graph_context</span><span class="p">(</span>
+<a id="__codelineno-0-838" name="__codelineno-0-838"></a>                <span class="n">expand_seeds</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span>  <span class="c1"># Limit seeds</span>
+<a id="__codelineno-0-839" name="__codelineno-0-839"></a>                <span class="n">depth</span><span class="o">=</span><span class="n">hops</span><span class="p">,</span>
+<a id="__codelineno-0-840" name="__codelineno-0-840"></a>            <span class="p">)</span>
+<a id="__codelineno-0-841" name="__codelineno-0-841"></a>            <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">graph_query</span><span class="p">)</span>
+<a id="__codelineno-0-842" name="__codelineno-0-842"></a>
+<a id="__codelineno-0-843" name="__codelineno-0-843"></a>            <span class="c1"># Add related nodes as items</span>
+<a id="__codelineno-0-844" name="__codelineno-0-844"></a>            <span class="n">graph_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_graph_slice_to_items</span><span class="p">(</span><span class="n">graph_slice</span><span class="p">)</span>
+<a id="__codelineno-0-845" name="__codelineno-0-845"></a>            <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">graph_items</span><span class="p">)</span>
+<a id="__codelineno-0-846" name="__codelineno-0-846"></a>
+<a id="__codelineno-0-847" name="__codelineno-0-847"></a>    <span class="c1"># Step 4.5: Context graph search (v1.0.6)</span>
+<a id="__codelineno-0-848" name="__codelineno-0-848"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_context_graph_query</span><span class="p">:</span>
+<a id="__codelineno-0-849" name="__codelineno-0-849"></a>        <span class="n">cg_items</span><span class="p">,</span> <span class="n">cg_query</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_context_graph</span><span class="p">(</span>
+<a id="__codelineno-0-850" name="__codelineno-0-850"></a>            <span class="n">intent</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
+<a id="__codelineno-0-851" name="__codelineno-0-851"></a>        <span class="p">)</span>
+<a id="__codelineno-0-852" name="__codelineno-0-852"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cg_items</span><span class="p">)</span>
+<a id="__codelineno-0-853" name="__codelineno-0-853"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cg_query</span><span class="p">)</span>
+<a id="__codelineno-0-854" name="__codelineno-0-854"></a>
+<a id="__codelineno-0-855" name="__codelineno-0-855"></a>    <span class="c1"># Step 4.6: Experience retrieval (v1.2)</span>
+<a id="__codelineno-0-856" name="__codelineno-0-856"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_experience_store</span><span class="p">:</span>
+<a id="__codelineno-0-857" name="__codelineno-0-857"></a>        <span class="n">exp_items</span><span class="p">,</span> <span class="n">exp_query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_search_experience</span><span class="p">(</span>
+<a id="__codelineno-0-858" name="__codelineno-0-858"></a>            <span class="n">intent</span><span class="o">=</span><span class="n">intent</span><span class="p">,</span>
+<a id="__codelineno-0-859" name="__codelineno-0-859"></a>            <span class="n">workflow_id</span><span class="o">=</span><span class="n">workflow_id</span><span class="p">,</span>
+<a id="__codelineno-0-860" name="__codelineno-0-860"></a>            <span class="n">limit</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-0-861" name="__codelineno-0-861"></a>        <span class="p">)</span>
+<a id="__codelineno-0-862" name="__codelineno-0-862"></a>        <span class="n">items</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">exp_items</span><span class="p">)</span>
+<a id="__codelineno-0-863" name="__codelineno-0-863"></a>        <span class="n">queries_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">exp_query</span><span class="p">)</span>
+<a id="__codelineno-0-864" name="__codelineno-0-864"></a>
+<a id="__codelineno-0-865" name="__codelineno-0-865"></a>    <span class="c1"># Step 5: Deduplicate and rank</span>
+<a id="__codelineno-0-866" name="__codelineno-0-866"></a>    <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deduplicate_items</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+<a id="__codelineno-0-867" name="__codelineno-0-867"></a>    <span class="n">items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rank_items</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">packs</span><span class="p">)</span>
+<a id="__codelineno-0-868" name="__codelineno-0-868"></a>
+<a id="__codelineno-0-869" name="__codelineno-0-869"></a>    <span class="c1"># Step 6: Apply budget limits (evidence items only)</span>
+<a id="__codelineno-0-870" name="__codelineno-0-870"></a>    <span class="n">prompt_items</span><span class="p">,</span> <span class="n">evidence_items</span> <span class="o">=</span> <span class="n">split_context_items</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+<a id="__codelineno-0-871" name="__codelineno-0-871"></a>    <span class="n">budget</span> <span class="o">=</span> <span class="n">ContextBudget</span><span class="p">(</span>
+<a id="__codelineno-0-872" name="__codelineno-0-872"></a>        <span class="n">max_tokens</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tokens</span><span class="p">,</span>
+<a id="__codelineno-0-873" name="__codelineno-0-873"></a>        <span class="n">max_items</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span> <span class="o">+</span> <span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span> <span class="o">+</span> <span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
+<a id="__codelineno-0-874" name="__codelineno-0-874"></a>        <span class="n">retrieval_limits</span><span class="o">=</span><span class="n">RetrievalLimits</span><span class="p">(</span>
+<a id="__codelineno-0-875" name="__codelineno-0-875"></a>            <span class="n">max_notes</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_notes</span><span class="p">,</span>
+<a id="__codelineno-0-876" name="__codelineno-0-876"></a>            <span class="n">max_tasks</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_tasks</span><span class="p">,</span>
+<a id="__codelineno-0-877" name="__codelineno-0-877"></a>            <span class="n">max_events</span><span class="o">=</span><span class="n">policy</span><span class="o">.</span><span class="n">max_events</span><span class="p">,</span>
+<a id="__codelineno-0-878" name="__codelineno-0-878"></a>        <span class="p">),</span>
+<a id="__codelineno-0-879" name="__codelineno-0-879"></a>    <span class="p">)</span>
+<a id="__codelineno-0-880" name="__codelineno-0-880"></a>    <span class="n">evidence_items</span> <span class="o">=</span> <span class="n">evidence_items</span><span class="p">[:</span><span class="n">budget</span><span class="o">.</span><span class="n">max_items</span><span class="p">]</span>
+<a id="__codelineno-0-881" name="__codelineno-0-881"></a>
+<a id="__codelineno-0-882" name="__codelineno-0-882"></a>    <span class="c1"># Trim by token budget</span>
+<a id="__codelineno-0-883" name="__codelineno-0-883"></a>    <span class="n">total_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_tokens</span><span class="p">(</span><span class="n">evidence_items</span><span class="p">)</span>
+<a id="__codelineno-0-884" name="__codelineno-0-884"></a>    <span class="k">while</span> <span class="n">total_tokens</span> <span class="o">&gt;</span> <span class="n">budget</span><span class="o">.</span><span class="n">max_tokens</span> <span class="ow">and</span> <span class="n">evidence_items</span><span class="p">:</span>
+<a id="__codelineno-0-885" name="__codelineno-0-885"></a>        <span class="n">evidence_items</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+<a id="__codelineno-0-886" name="__codelineno-0-886"></a>        <span class="n">total_tokens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_estimate_tokens</span><span class="p">(</span><span class="n">evidence_items</span><span class="p">)</span>
+<a id="__codelineno-0-887" name="__codelineno-0-887"></a>
+<a id="__codelineno-0-888" name="__codelineno-0-888"></a>    <span class="n">items</span> <span class="o">=</span> <span class="n">prompt_items</span> <span class="o">+</span> <span class="n">evidence_items</span>
+<a id="__codelineno-0-889" name="__codelineno-0-889"></a>
+<a id="__codelineno-0-890" name="__codelineno-0-890"></a>    <span class="c1"># Build retrieval report</span>
+<a id="__codelineno-0-891" name="__codelineno-0-891"></a>    <span class="n">retrieval_time_ms</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-0-892" name="__codelineno-0-892"></a>    <span class="n">retrieval_report</span> <span class="o">=</span> <span class="n">RetrievalReport</span><span class="p">(</span>
+<a id="__codelineno-0-893" name="__codelineno-0-893"></a>        <span class="n">queries_run</span><span class="o">=</span><span class="n">queries_run</span><span class="p">,</span>
+<a id="__codelineno-0-894" name="__codelineno-0-894"></a>        <span class="n">filters_applied</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;retrieval_opts=</span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">],</span>
+<a id="__codelineno-0-895" name="__codelineno-0-895"></a>        <span class="n">items_considered</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
+<a id="__codelineno-0-896" name="__codelineno-0-896"></a>        <span class="n">items_selected</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
+<a id="__codelineno-0-897" name="__codelineno-0-897"></a>        <span class="n">selection_strategy</span><span class="o">=</span><span class="s2">&quot;thinking_config_aware&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-898" name="__codelineno-0-898"></a>    <span class="p">)</span>
+<a id="__codelineno-0-899" name="__codelineno-0-899"></a>
+<a id="__codelineno-0-900" name="__codelineno-0-900"></a>    <span class="c1"># Build packet</span>
+<a id="__codelineno-0-901" name="__codelineno-0-901"></a>    <span class="n">packet</span> <span class="o">=</span> <span class="n">ContextPacket</span><span class="p">(</span>
+<a id="__codelineno-0-902" name="__codelineno-0-902"></a>        <span class="n">packet_id</span><span class="o">=</span><span class="n">generate_ulid</span><span class="p">(),</span>
+<a id="__codelineno-0-903" name="__codelineno-0-903"></a>        <span class="n">intent</span><span class="o">=</span><span class="n">intent</span><span class="p">,</span>
+<a id="__codelineno-0-904" name="__codelineno-0-904"></a>        <span class="n">project_id</span><span class="o">=</span><span class="n">project_id</span><span class="p">,</span>
+<a id="__codelineno-0-905" name="__codelineno-0-905"></a>        <span class="n">generated_at</span><span class="o">=</span><span class="n">utc_now</span><span class="p">(),</span>
+<a id="__codelineno-0-906" name="__codelineno-0-906"></a>        <span class="n">budget</span><span class="o">=</span><span class="n">budget</span><span class="p">,</span>
+<a id="__codelineno-0-907" name="__codelineno-0-907"></a>        <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">,</span>
+<a id="__codelineno-0-908" name="__codelineno-0-908"></a>        <span class="n">graph_slice</span><span class="o">=</span><span class="n">graph_slice</span><span class="p">,</span>
+<a id="__codelineno-0-909" name="__codelineno-0-909"></a>        <span class="n">retrieval_report</span><span class="o">=</span><span class="n">retrieval_report</span><span class="p">,</span>
+<a id="__codelineno-0-910" name="__codelineno-0-910"></a>        <span class="n">retrieval_mode</span><span class="o">=</span><span class="s2">&quot;thinking_config&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-911" name="__codelineno-0-911"></a>        <span class="n">context_packs</span><span class="o">=</span><span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">pack_id</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">packs</span><span class="p">],</span>
+<a id="__codelineno-0-912" name="__codelineno-0-912"></a>    <span class="p">)</span>
+<a id="__codelineno-0-913" name="__codelineno-0-913"></a>
+<a id="__codelineno-0-914" name="__codelineno-0-914"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-0-915" name="__codelineno-0-915"></a>        <span class="s2">&quot;context_assembled_with_thinking&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-916" name="__codelineno-0-916"></a>        <span class="n">packet_id</span><span class="o">=</span><span class="n">packet</span><span class="o">.</span><span class="n">packet_id</span><span class="p">,</span>
+<a id="__codelineno-0-917" name="__codelineno-0-917"></a>        <span class="n">items_count</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">items</span><span class="p">),</span>
+<a id="__codelineno-0-918" name="__codelineno-0-918"></a>        <span class="n">total_tokens</span><span class="o">=</span><span class="n">total_tokens</span><span class="p">,</span>
+<a id="__codelineno-0-919" name="__codelineno-0-919"></a>        <span class="n">retrieval_time_ms</span><span class="o">=</span><span class="n">retrieval_time_ms</span><span class="p">,</span>
+<a id="__codelineno-0-920" name="__codelineno-0-920"></a>        <span class="n">semantic_search</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;semantic_search&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-921" name="__codelineno-0-921"></a>        <span class="n">keyword_search</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;keyword_search&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-922" name="__codelineno-0-922"></a>        <span class="n">graph_expansion</span><span class="o">=</span><span class="n">retrieval_opts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;graph_expansion&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-923" name="__codelineno-0-923"></a>    <span class="p">)</span>
+<a id="__codelineno-0-924" name="__codelineno-0-924"></a>
+<a id="__codelineno-0-925" name="__codelineno-0-925"></a>    <span class="k">return</span> <span class="n">packet</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

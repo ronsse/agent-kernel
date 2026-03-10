@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -5236,6 +5236,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../file_indexer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    file_indexer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../health/" class="md-nav__link">
         
   
@@ -7806,7 +7834,7 @@
 
 
 <h3 id="agent_kernel.services.enrichment.EnrichmentResult" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">EnrichmentResult</span><span class="p">(</span><span class="n">auto_tags</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">auto_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tag_confidence</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">class_confidence</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">raw_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
+<code class="doc-symbol doc-symbol-heading doc-symbol-class"></code>              <code class="highlight language-python"><span class="n">EnrichmentResult</span><span class="p">(</span><span class="n">auto_tags</span><span class="o">=</span><span class="nb">list</span><span class="p">(),</span> <span class="n">auto_class</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_summary</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auto_importance</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">tag_confidence</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">class_confidence</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">raw_response</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">success</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
 
   <span class="doc doc-labels">
       <small class="doc doc-label doc-label-dataclass"><code>dataclass</code></small>
@@ -7883,41 +7911,47 @@ to the <code>auto:</code> frontmatter namespace.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-82">82</a></span>
-<span class="normal"><a href="#__codelineno-0-83">83</a></span>
-<span class="normal"><a href="#__codelineno-0-84">84</a></span>
-<span class="normal"><a href="#__codelineno-0-85">85</a></span>
-<span class="normal"><a href="#__codelineno-0-86">86</a></span>
-<span class="normal"><a href="#__codelineno-0-87">87</a></span>
-<span class="normal"><a href="#__codelineno-0-88">88</a></span>
-<span class="normal"><a href="#__codelineno-0-89">89</a></span>
-<span class="normal"><a href="#__codelineno-0-90">90</a></span>
-<span class="normal"><a href="#__codelineno-0-91">91</a></span>
-<span class="normal"><a href="#__codelineno-0-92">92</a></span>
-<span class="normal"><a href="#__codelineno-0-93">93</a></span>
-<span class="normal"><a href="#__codelineno-0-94">94</a></span>
-<span class="normal"><a href="#__codelineno-0-95">95</a></span>
-<span class="normal"><a href="#__codelineno-0-96">96</a></span>
-<span class="normal"><a href="#__codelineno-0-97">97</a></span>
-<span class="normal"><a href="#__codelineno-0-98">98</a></span>
-<span class="normal"><a href="#__codelineno-0-99">99</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-82" name="__codelineno-0-82"></a><span class="k">def</span><span class="w"> </span><span class="nf">to_frontmatter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert to frontmatter `auto:` structure.</span>
-<a id="__codelineno-0-84" name="__codelineno-0-84"></a>
-<a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">        Dictionary suitable for YAML frontmatter.</span>
-<a id="__codelineno-0-87" name="__codelineno-0-87"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-88" name="__codelineno-0-88"></a>    <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-<a id="__codelineno-0-89" name="__codelineno-0-89"></a>
-<a id="__codelineno-0-90" name="__codelineno-0-90"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">:</span>
-<a id="__codelineno-0-91" name="__codelineno-0-91"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-85"> 85</a></span>
+<span class="normal"><a href="#__codelineno-0-86"> 86</a></span>
+<span class="normal"><a href="#__codelineno-0-87"> 87</a></span>
+<span class="normal"><a href="#__codelineno-0-88"> 88</a></span>
+<span class="normal"><a href="#__codelineno-0-89"> 89</a></span>
+<span class="normal"><a href="#__codelineno-0-90"> 90</a></span>
+<span class="normal"><a href="#__codelineno-0-91"> 91</a></span>
+<span class="normal"><a href="#__codelineno-0-92"> 92</a></span>
+<span class="normal"><a href="#__codelineno-0-93"> 93</a></span>
+<span class="normal"><a href="#__codelineno-0-94"> 94</a></span>
+<span class="normal"><a href="#__codelineno-0-95"> 95</a></span>
+<span class="normal"><a href="#__codelineno-0-96"> 96</a></span>
+<span class="normal"><a href="#__codelineno-0-97"> 97</a></span>
+<span class="normal"><a href="#__codelineno-0-98"> 98</a></span>
+<span class="normal"><a href="#__codelineno-0-99"> 99</a></span>
+<span class="normal"><a href="#__codelineno-0-100">100</a></span>
+<span class="normal"><a href="#__codelineno-0-101">101</a></span>
+<span class="normal"><a href="#__codelineno-0-102">102</a></span>
+<span class="normal"><a href="#__codelineno-0-103">103</a></span>
+<span class="normal"><a href="#__codelineno-0-104">104</a></span>
+<span class="normal"><a href="#__codelineno-0-105">105</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="k">def</span><span class="w"> </span><span class="nf">to_frontmatter</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert to frontmatter `auto:` structure.</span>
+<a id="__codelineno-0-87" name="__codelineno-0-87"></a>
+<a id="__codelineno-0-88" name="__codelineno-0-88"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-89" name="__codelineno-0-89"></a><span class="sd">        Dictionary suitable for YAML frontmatter.</span>
+<a id="__codelineno-0-90" name="__codelineno-0-90"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-91" name="__codelineno-0-91"></a>    <span class="n">result</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 <a id="__codelineno-0-92" name="__codelineno-0-92"></a>
-<a id="__codelineno-0-93" name="__codelineno-0-93"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span><span class="p">:</span>
-<a id="__codelineno-0-94" name="__codelineno-0-94"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span>
+<a id="__codelineno-0-93" name="__codelineno-0-93"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">:</span>
+<a id="__codelineno-0-94" name="__codelineno-0-94"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span>
 <a id="__codelineno-0-95" name="__codelineno-0-95"></a>
-<a id="__codelineno-0-96" name="__codelineno-0-96"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span><span class="p">:</span>
-<a id="__codelineno-0-97" name="__codelineno-0-97"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span>
+<a id="__codelineno-0-96" name="__codelineno-0-96"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span><span class="p">:</span>
+<a id="__codelineno-0-97" name="__codelineno-0-97"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span>
 <a id="__codelineno-0-98" name="__codelineno-0-98"></a>
-<a id="__codelineno-0-99" name="__codelineno-0-99"></a>    <span class="k">return</span> <span class="n">result</span>
+<a id="__codelineno-0-99" name="__codelineno-0-99"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span><span class="p">:</span>
+<a id="__codelineno-0-100" name="__codelineno-0-100"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;summary&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span>
+<a id="__codelineno-0-101" name="__codelineno-0-101"></a>
+<a id="__codelineno-0-102" name="__codelineno-0-102"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_importance</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+<a id="__codelineno-0-103" name="__codelineno-0-103"></a>        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;importance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">auto_importance</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-0-104" name="__codelineno-0-104"></a>
+<a id="__codelineno-0-105" name="__codelineno-0-105"></a>    <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -7940,27 +7974,29 @@ to the <code>auto:</code> frontmatter namespace.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-101">101</a></span>
-<span class="normal"><a href="#__codelineno-0-102">102</a></span>
-<span class="normal"><a href="#__codelineno-0-103">103</a></span>
-<span class="normal"><a href="#__codelineno-0-104">104</a></span>
-<span class="normal"><a href="#__codelineno-0-105">105</a></span>
-<span class="normal"><a href="#__codelineno-0-106">106</a></span>
-<span class="normal"><a href="#__codelineno-0-107">107</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-107">107</a></span>
 <span class="normal"><a href="#__codelineno-0-108">108</a></span>
 <span class="normal"><a href="#__codelineno-0-109">109</a></span>
 <span class="normal"><a href="#__codelineno-0-110">110</a></span>
-<span class="normal"><a href="#__codelineno-0-111">111</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-101" name="__codelineno-0-101"></a><span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<a id="__codelineno-0-102" name="__codelineno-0-102"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert to dictionary for logging/storage.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-103" name="__codelineno-0-103"></a>    <span class="k">return</span> <span class="p">{</span>
-<a id="__codelineno-0-104" name="__codelineno-0-104"></a>        <span class="s2">&quot;auto_tags&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
-<a id="__codelineno-0-105" name="__codelineno-0-105"></a>        <span class="s2">&quot;auto_class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
-<a id="__codelineno-0-106" name="__codelineno-0-106"></a>        <span class="s2">&quot;auto_summary&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span><span class="p">,</span>
-<a id="__codelineno-0-107" name="__codelineno-0-107"></a>        <span class="s2">&quot;tag_confidence&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_confidence</span><span class="p">,</span>
-<a id="__codelineno-0-108" name="__codelineno-0-108"></a>        <span class="s2">&quot;class_confidence&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_confidence</span><span class="p">,</span>
-<a id="__codelineno-0-109" name="__codelineno-0-109"></a>        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
-<a id="__codelineno-0-110" name="__codelineno-0-110"></a>        <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
-<a id="__codelineno-0-111" name="__codelineno-0-111"></a>    <span class="p">}</span>
+<span class="normal"><a href="#__codelineno-0-111">111</a></span>
+<span class="normal"><a href="#__codelineno-0-112">112</a></span>
+<span class="normal"><a href="#__codelineno-0-113">113</a></span>
+<span class="normal"><a href="#__codelineno-0-114">114</a></span>
+<span class="normal"><a href="#__codelineno-0-115">115</a></span>
+<span class="normal"><a href="#__codelineno-0-116">116</a></span>
+<span class="normal"><a href="#__codelineno-0-117">117</a></span>
+<span class="normal"><a href="#__codelineno-0-118">118</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-107" name="__codelineno-0-107"></a><span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<a id="__codelineno-0-108" name="__codelineno-0-108"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert to dictionary for logging/storage.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-109" name="__codelineno-0-109"></a>    <span class="k">return</span> <span class="p">{</span>
+<a id="__codelineno-0-110" name="__codelineno-0-110"></a>        <span class="s2">&quot;auto_tags&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
+<a id="__codelineno-0-111" name="__codelineno-0-111"></a>        <span class="s2">&quot;auto_class&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
+<a id="__codelineno-0-112" name="__codelineno-0-112"></a>        <span class="s2">&quot;auto_summary&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_summary</span><span class="p">,</span>
+<a id="__codelineno-0-113" name="__codelineno-0-113"></a>        <span class="s2">&quot;auto_importance&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_importance</span><span class="p">,</span>
+<a id="__codelineno-0-114" name="__codelineno-0-114"></a>        <span class="s2">&quot;tag_confidence&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">tag_confidence</span><span class="p">,</span>
+<a id="__codelineno-0-115" name="__codelineno-0-115"></a>        <span class="s2">&quot;class_confidence&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_confidence</span><span class="p">,</span>
+<a id="__codelineno-0-116" name="__codelineno-0-116"></a>        <span class="s2">&quot;success&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">success</span><span class="p">,</span>
+<a id="__codelineno-0-117" name="__codelineno-0-117"></a>        <span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">,</span>
+<a id="__codelineno-0-118" name="__codelineno-0-118"></a>    <span class="p">}</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -8103,61 +8139,61 @@ keeping human-authored metadata separate and intact.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-215">215</a></span>
-<span class="normal"><a href="#__codelineno-0-216">216</a></span>
-<span class="normal"><a href="#__codelineno-0-217">217</a></span>
-<span class="normal"><a href="#__codelineno-0-218">218</a></span>
-<span class="normal"><a href="#__codelineno-0-219">219</a></span>
-<span class="normal"><a href="#__codelineno-0-220">220</a></span>
-<span class="normal"><a href="#__codelineno-0-221">221</a></span>
-<span class="normal"><a href="#__codelineno-0-222">222</a></span>
-<span class="normal"><a href="#__codelineno-0-223">223</a></span>
-<span class="normal"><a href="#__codelineno-0-224">224</a></span>
-<span class="normal"><a href="#__codelineno-0-225">225</a></span>
-<span class="normal"><a href="#__codelineno-0-226">226</a></span>
-<span class="normal"><a href="#__codelineno-0-227">227</a></span>
-<span class="normal"><a href="#__codelineno-0-228">228</a></span>
-<span class="normal"><a href="#__codelineno-0-229">229</a></span>
-<span class="normal"><a href="#__codelineno-0-230">230</a></span>
-<span class="normal"><a href="#__codelineno-0-231">231</a></span>
-<span class="normal"><a href="#__codelineno-0-232">232</a></span>
-<span class="normal"><a href="#__codelineno-0-233">233</a></span>
-<span class="normal"><a href="#__codelineno-0-234">234</a></span>
-<span class="normal"><a href="#__codelineno-0-235">235</a></span>
-<span class="normal"><a href="#__codelineno-0-236">236</a></span>
+                    <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-236">236</a></span>
 <span class="normal"><a href="#__codelineno-0-237">237</a></span>
 <span class="normal"><a href="#__codelineno-0-238">238</a></span>
 <span class="normal"><a href="#__codelineno-0-239">239</a></span>
 <span class="normal"><a href="#__codelineno-0-240">240</a></span>
 <span class="normal"><a href="#__codelineno-0-241">241</a></span>
-<span class="normal"><a href="#__codelineno-0-242">242</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-215" name="__codelineno-0-215"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-<a id="__codelineno-0-216" name="__codelineno-0-216"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-217" name="__codelineno-0-217"></a>    <span class="n">llm_service</span><span class="p">:</span> <span class="n">LLMService</span><span class="p">,</span>
-<a id="__codelineno-0-218" name="__codelineno-0-218"></a>    <span class="n">classifications</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-219" name="__codelineno-0-219"></a>    <span class="n">max_content_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">,</span>
-<a id="__codelineno-0-220" name="__codelineno-0-220"></a>    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
-<a id="__codelineno-0-221" name="__codelineno-0-221"></a>    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-222" name="__codelineno-0-222"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-223" name="__codelineno-0-223"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the enrichment service.</span>
-<a id="__codelineno-0-224" name="__codelineno-0-224"></a>
-<a id="__codelineno-0-225" name="__codelineno-0-225"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-226" name="__codelineno-0-226"></a><span class="sd">        llm_service: LLM service for generating enrichments.</span>
-<a id="__codelineno-0-227" name="__codelineno-0-227"></a><span class="sd">        classifications: Allowed classification categories.</span>
-<a id="__codelineno-0-228" name="__codelineno-0-228"></a><span class="sd">        max_content_length: Max content chars to send to LLM.</span>
-<a id="__codelineno-0-229" name="__codelineno-0-229"></a><span class="sd">        temperature: LLM temperature (lower = more consistent).</span>
-<a id="__codelineno-0-230" name="__codelineno-0-230"></a><span class="sd">        model: Specific model to use (None = service default).</span>
-<a id="__codelineno-0-231" name="__codelineno-0-231"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-232" name="__codelineno-0-232"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span> <span class="o">=</span> <span class="n">llm_service</span>
-<a id="__codelineno-0-233" name="__codelineno-0-233"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">classifications</span> <span class="o">=</span> <span class="n">classifications</span> <span class="ow">or</span> <span class="n">DEFAULT_CLASSIFICATIONS</span>
-<a id="__codelineno-0-234" name="__codelineno-0-234"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span> <span class="o">=</span> <span class="n">max_content_length</span>
-<a id="__codelineno-0-235" name="__codelineno-0-235"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
-<a id="__codelineno-0-236" name="__codelineno-0-236"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-<a id="__codelineno-0-237" name="__codelineno-0-237"></a>
-<a id="__codelineno-0-238" name="__codelineno-0-238"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-<a id="__codelineno-0-239" name="__codelineno-0-239"></a>        <span class="s2">&quot;enrichment_service_initialized&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-240" name="__codelineno-0-240"></a>        <span class="n">classifications</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">,</span>
-<a id="__codelineno-0-241" name="__codelineno-0-241"></a>        <span class="n">max_content_length</span><span class="o">=</span><span class="n">max_content_length</span><span class="p">,</span>
-<a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="p">)</span>
+<span class="normal"><a href="#__codelineno-0-242">242</a></span>
+<span class="normal"><a href="#__codelineno-0-243">243</a></span>
+<span class="normal"><a href="#__codelineno-0-244">244</a></span>
+<span class="normal"><a href="#__codelineno-0-245">245</a></span>
+<span class="normal"><a href="#__codelineno-0-246">246</a></span>
+<span class="normal"><a href="#__codelineno-0-247">247</a></span>
+<span class="normal"><a href="#__codelineno-0-248">248</a></span>
+<span class="normal"><a href="#__codelineno-0-249">249</a></span>
+<span class="normal"><a href="#__codelineno-0-250">250</a></span>
+<span class="normal"><a href="#__codelineno-0-251">251</a></span>
+<span class="normal"><a href="#__codelineno-0-252">252</a></span>
+<span class="normal"><a href="#__codelineno-0-253">253</a></span>
+<span class="normal"><a href="#__codelineno-0-254">254</a></span>
+<span class="normal"><a href="#__codelineno-0-255">255</a></span>
+<span class="normal"><a href="#__codelineno-0-256">256</a></span>
+<span class="normal"><a href="#__codelineno-0-257">257</a></span>
+<span class="normal"><a href="#__codelineno-0-258">258</a></span>
+<span class="normal"><a href="#__codelineno-0-259">259</a></span>
+<span class="normal"><a href="#__codelineno-0-260">260</a></span>
+<span class="normal"><a href="#__codelineno-0-261">261</a></span>
+<span class="normal"><a href="#__codelineno-0-262">262</a></span>
+<span class="normal"><a href="#__codelineno-0-263">263</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-236" name="__codelineno-0-236"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+<a id="__codelineno-0-237" name="__codelineno-0-237"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-238" name="__codelineno-0-238"></a>    <span class="n">llm_service</span><span class="p">:</span> <span class="n">LLMService</span><span class="p">,</span>
+<a id="__codelineno-0-239" name="__codelineno-0-239"></a>    <span class="n">classifications</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-240" name="__codelineno-0-240"></a>    <span class="n">max_content_length</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">4000</span><span class="p">,</span>
+<a id="__codelineno-0-241" name="__codelineno-0-241"></a>    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.3</span><span class="p">,</span>
+<a id="__codelineno-0-242" name="__codelineno-0-242"></a>    <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-243" name="__codelineno-0-243"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-244" name="__codelineno-0-244"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Initialize the enrichment service.</span>
+<a id="__codelineno-0-245" name="__codelineno-0-245"></a>
+<a id="__codelineno-0-246" name="__codelineno-0-246"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-247" name="__codelineno-0-247"></a><span class="sd">        llm_service: LLM service for generating enrichments.</span>
+<a id="__codelineno-0-248" name="__codelineno-0-248"></a><span class="sd">        classifications: Allowed classification categories.</span>
+<a id="__codelineno-0-249" name="__codelineno-0-249"></a><span class="sd">        max_content_length: Max content chars to send to LLM.</span>
+<a id="__codelineno-0-250" name="__codelineno-0-250"></a><span class="sd">        temperature: LLM temperature (lower = more consistent).</span>
+<a id="__codelineno-0-251" name="__codelineno-0-251"></a><span class="sd">        model: Specific model to use (None = service default).</span>
+<a id="__codelineno-0-252" name="__codelineno-0-252"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-253" name="__codelineno-0-253"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span> <span class="o">=</span> <span class="n">llm_service</span>
+<a id="__codelineno-0-254" name="__codelineno-0-254"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">classifications</span> <span class="o">=</span> <span class="n">classifications</span> <span class="ow">or</span> <span class="n">DEFAULT_CLASSIFICATIONS</span>
+<a id="__codelineno-0-255" name="__codelineno-0-255"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span> <span class="o">=</span> <span class="n">max_content_length</span>
+<a id="__codelineno-0-256" name="__codelineno-0-256"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+<a id="__codelineno-0-257" name="__codelineno-0-257"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+<a id="__codelineno-0-258" name="__codelineno-0-258"></a>
+<a id="__codelineno-0-259" name="__codelineno-0-259"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+<a id="__codelineno-0-260" name="__codelineno-0-260"></a>        <span class="s2">&quot;enrichment_service_initialized&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-261" name="__codelineno-0-261"></a>        <span class="n">classifications</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">,</span>
+<a id="__codelineno-0-262" name="__codelineno-0-262"></a>        <span class="n">max_content_length</span><span class="o">=</span><span class="n">max_content_length</span><span class="p">,</span>
+<a id="__codelineno-0-263" name="__codelineno-0-263"></a>    <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
                   </details>
 
@@ -8282,7 +8318,7 @@ keeping human-authored metadata separate and intact.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
+                  <code><a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, auto_importance=0.0, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
 
   
       dataclass
@@ -8300,28 +8336,7 @@ keeping human-authored metadata separate and intact.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-244">244</a></span>
-<span class="normal"><a href="#__codelineno-0-245">245</a></span>
-<span class="normal"><a href="#__codelineno-0-246">246</a></span>
-<span class="normal"><a href="#__codelineno-0-247">247</a></span>
-<span class="normal"><a href="#__codelineno-0-248">248</a></span>
-<span class="normal"><a href="#__codelineno-0-249">249</a></span>
-<span class="normal"><a href="#__codelineno-0-250">250</a></span>
-<span class="normal"><a href="#__codelineno-0-251">251</a></span>
-<span class="normal"><a href="#__codelineno-0-252">252</a></span>
-<span class="normal"><a href="#__codelineno-0-253">253</a></span>
-<span class="normal"><a href="#__codelineno-0-254">254</a></span>
-<span class="normal"><a href="#__codelineno-0-255">255</a></span>
-<span class="normal"><a href="#__codelineno-0-256">256</a></span>
-<span class="normal"><a href="#__codelineno-0-257">257</a></span>
-<span class="normal"><a href="#__codelineno-0-258">258</a></span>
-<span class="normal"><a href="#__codelineno-0-259">259</a></span>
-<span class="normal"><a href="#__codelineno-0-260">260</a></span>
-<span class="normal"><a href="#__codelineno-0-261">261</a></span>
-<span class="normal"><a href="#__codelineno-0-262">262</a></span>
-<span class="normal"><a href="#__codelineno-0-263">263</a></span>
-<span class="normal"><a href="#__codelineno-0-264">264</a></span>
-<span class="normal"><a href="#__codelineno-0-265">265</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-265">265</a></span>
 <span class="normal"><a href="#__codelineno-0-266">266</a></span>
 <span class="normal"><a href="#__codelineno-0-267">267</a></span>
 <span class="normal"><a href="#__codelineno-0-268">268</a></span>
@@ -8375,82 +8390,103 @@ keeping human-authored metadata separate and intact.</p>
 <span class="normal"><a href="#__codelineno-0-316">316</a></span>
 <span class="normal"><a href="#__codelineno-0-317">317</a></span>
 <span class="normal"><a href="#__codelineno-0-318">318</a></span>
-<span class="normal"><a href="#__codelineno-0-319">319</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-244" name="__codelineno-0-244"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich</span><span class="p">(</span>
-<a id="__codelineno-0-245" name="__codelineno-0-245"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-246" name="__codelineno-0-246"></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-247" name="__codelineno-0-247"></a>    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-248" name="__codelineno-0-248"></a>    <span class="n">existing_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-249" name="__codelineno-0-249"></a>    <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-250" name="__codelineno-0-250"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
-<a id="__codelineno-0-251" name="__codelineno-0-251"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Enrich a note with LLM-generated metadata.</span>
-<a id="__codelineno-0-252" name="__codelineno-0-252"></a>
-<a id="__codelineno-0-253" name="__codelineno-0-253"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-254" name="__codelineno-0-254"></a><span class="sd">        content: Note content (markdown).</span>
-<a id="__codelineno-0-255" name="__codelineno-0-255"></a><span class="sd">        title: Note title.</span>
-<a id="__codelineno-0-256" name="__codelineno-0-256"></a><span class="sd">        existing_tags: Existing human-authored tags.</span>
-<a id="__codelineno-0-257" name="__codelineno-0-257"></a><span class="sd">        include_summary: Whether to generate a summary (default True).</span>
-<a id="__codelineno-0-258" name="__codelineno-0-258"></a>
-<a id="__codelineno-0-259" name="__codelineno-0-259"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-260" name="__codelineno-0-260"></a><span class="sd">        EnrichmentResult with suggested metadata.</span>
-<a id="__codelineno-0-261" name="__codelineno-0-261"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-262" name="__codelineno-0-262"></a>    <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-0-263" name="__codelineno-0-263"></a>        <span class="c1"># Truncate content if too long</span>
-<a id="__codelineno-0-264" name="__codelineno-0-264"></a>        <span class="n">truncated_content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span><span class="p">]</span>
-<a id="__codelineno-0-265" name="__codelineno-0-265"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span><span class="p">:</span>
-<a id="__codelineno-0-266" name="__codelineno-0-266"></a>            <span class="n">truncated_content</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[Content truncated...]&quot;</span>
-<a id="__codelineno-0-267" name="__codelineno-0-267"></a>
-<a id="__codelineno-0-268" name="__codelineno-0-268"></a>        <span class="c1"># Build prompts based on whether summary is requested</span>
-<a id="__codelineno-0-269" name="__codelineno-0-269"></a>        <span class="k">if</span> <span class="n">include_summary</span><span class="p">:</span>
-<a id="__codelineno-0-270" name="__codelineno-0-270"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">ENRICHMENT_SYSTEM_PROMPT_WITH_SUMMARY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<a id="__codelineno-0-271" name="__codelineno-0-271"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">)</span>
-<a id="__codelineno-0-272" name="__codelineno-0-272"></a>            <span class="p">)</span>
-<a id="__codelineno-0-273" name="__codelineno-0-273"></a>            <span class="n">user_template</span> <span class="o">=</span> <span class="n">ENRICHMENT_USER_PROMPT_WITH_SUMMARY</span>
-<a id="__codelineno-0-274" name="__codelineno-0-274"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-275" name="__codelineno-0-275"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">ENRICHMENT_SYSTEM_PROMPT_NO_SUMMARY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<a id="__codelineno-0-276" name="__codelineno-0-276"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">)</span>
-<a id="__codelineno-0-277" name="__codelineno-0-277"></a>            <span class="p">)</span>
-<a id="__codelineno-0-278" name="__codelineno-0-278"></a>            <span class="n">user_template</span> <span class="o">=</span> <span class="n">ENRICHMENT_USER_PROMPT_NO_SUMMARY</span>
+<span class="normal"><a href="#__codelineno-0-319">319</a></span>
+<span class="normal"><a href="#__codelineno-0-320">320</a></span>
+<span class="normal"><a href="#__codelineno-0-321">321</a></span>
+<span class="normal"><a href="#__codelineno-0-322">322</a></span>
+<span class="normal"><a href="#__codelineno-0-323">323</a></span>
+<span class="normal"><a href="#__codelineno-0-324">324</a></span>
+<span class="normal"><a href="#__codelineno-0-325">325</a></span>
+<span class="normal"><a href="#__codelineno-0-326">326</a></span>
+<span class="normal"><a href="#__codelineno-0-327">327</a></span>
+<span class="normal"><a href="#__codelineno-0-328">328</a></span>
+<span class="normal"><a href="#__codelineno-0-329">329</a></span>
+<span class="normal"><a href="#__codelineno-0-330">330</a></span>
+<span class="normal"><a href="#__codelineno-0-331">331</a></span>
+<span class="normal"><a href="#__codelineno-0-332">332</a></span>
+<span class="normal"><a href="#__codelineno-0-333">333</a></span>
+<span class="normal"><a href="#__codelineno-0-334">334</a></span>
+<span class="normal"><a href="#__codelineno-0-335">335</a></span>
+<span class="normal"><a href="#__codelineno-0-336">336</a></span>
+<span class="normal"><a href="#__codelineno-0-337">337</a></span>
+<span class="normal"><a href="#__codelineno-0-338">338</a></span>
+<span class="normal"><a href="#__codelineno-0-339">339</a></span>
+<span class="normal"><a href="#__codelineno-0-340">340</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-265" name="__codelineno-0-265"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich</span><span class="p">(</span>
+<a id="__codelineno-0-266" name="__codelineno-0-266"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-267" name="__codelineno-0-267"></a>    <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-268" name="__codelineno-0-268"></a>    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-269" name="__codelineno-0-269"></a>    <span class="n">existing_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-270" name="__codelineno-0-270"></a>    <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-271" name="__codelineno-0-271"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
+<a id="__codelineno-0-272" name="__codelineno-0-272"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Enrich a note with LLM-generated metadata.</span>
+<a id="__codelineno-0-273" name="__codelineno-0-273"></a>
+<a id="__codelineno-0-274" name="__codelineno-0-274"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-275" name="__codelineno-0-275"></a><span class="sd">        content: Note content (markdown).</span>
+<a id="__codelineno-0-276" name="__codelineno-0-276"></a><span class="sd">        title: Note title.</span>
+<a id="__codelineno-0-277" name="__codelineno-0-277"></a><span class="sd">        existing_tags: Existing human-authored tags.</span>
+<a id="__codelineno-0-278" name="__codelineno-0-278"></a><span class="sd">        include_summary: Whether to generate a summary (default True).</span>
 <a id="__codelineno-0-279" name="__codelineno-0-279"></a>
-<a id="__codelineno-0-280" name="__codelineno-0-280"></a>        <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-281" name="__codelineno-0-281"></a>        <span class="k">if</span> <span class="n">existing_tags</span><span class="p">:</span>
-<a id="__codelineno-0-282" name="__codelineno-0-282"></a>            <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Existing tags: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">existing_tags</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-283" name="__codelineno-0-283"></a>
-<a id="__codelineno-0-284" name="__codelineno-0-284"></a>        <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">user_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<a id="__codelineno-0-285" name="__codelineno-0-285"></a>            <span class="n">title</span><span class="o">=</span><span class="n">title</span> <span class="ow">or</span> <span class="s2">&quot;Untitled&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-286" name="__codelineno-0-286"></a>            <span class="n">existing_tags_section</span><span class="o">=</span><span class="n">existing_tags_section</span><span class="p">,</span>
-<a id="__codelineno-0-287" name="__codelineno-0-287"></a>            <span class="n">content</span><span class="o">=</span><span class="n">truncated_content</span><span class="p">,</span>
-<a id="__codelineno-0-288" name="__codelineno-0-288"></a>        <span class="p">)</span>
-<a id="__codelineno-0-289" name="__codelineno-0-289"></a>
-<a id="__codelineno-0-290" name="__codelineno-0-290"></a>        <span class="c1"># Call LLM</span>
-<a id="__codelineno-0-291" name="__codelineno-0-291"></a>        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-<a id="__codelineno-0-292" name="__codelineno-0-292"></a>            <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">,</span>
-<a id="__codelineno-0-293" name="__codelineno-0-293"></a>            <span class="n">user_prompt</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
-<a id="__codelineno-0-294" name="__codelineno-0-294"></a>            <span class="n">temperature</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
-<a id="__codelineno-0-295" name="__codelineno-0-295"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-<a id="__codelineno-0-296" name="__codelineno-0-296"></a>            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>  <span class="c1"># JSON response should be small</span>
-<a id="__codelineno-0-297" name="__codelineno-0-297"></a>        <span class="p">)</span>
-<a id="__codelineno-0-298" name="__codelineno-0-298"></a>
-<a id="__codelineno-0-299" name="__codelineno-0-299"></a>        <span class="c1"># Parse JSON response</span>
-<a id="__codelineno-0-300" name="__codelineno-0-300"></a>        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-<a id="__codelineno-0-301" name="__codelineno-0-301"></a>        <span class="n">result</span><span class="o">.</span><span class="n">raw_response</span> <span class="o">=</span> <span class="n">response</span>
-<a id="__codelineno-0-302" name="__codelineno-0-302"></a>
-<a id="__codelineno-0-303" name="__codelineno-0-303"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-<a id="__codelineno-0-304" name="__codelineno-0-304"></a>            <span class="s2">&quot;note_enriched&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-305" name="__codelineno-0-305"></a>            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-<a id="__codelineno-0-306" name="__codelineno-0-306"></a>            <span class="n">auto_tags</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
-<a id="__codelineno-0-307" name="__codelineno-0-307"></a>            <span class="n">auto_class</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
-<a id="__codelineno-0-308" name="__codelineno-0-308"></a>            <span class="n">include_summary</span><span class="o">=</span><span class="n">include_summary</span><span class="p">,</span>
-<a id="__codelineno-0-309" name="__codelineno-0-309"></a>            <span class="n">has_summary</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_summary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-310" name="__codelineno-0-310"></a>        <span class="p">)</span>
-<a id="__codelineno-0-311" name="__codelineno-0-311"></a>
-<a id="__codelineno-0-312" name="__codelineno-0-312"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-313" name="__codelineno-0-313"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;enrichment_failed&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
-<a id="__codelineno-0-314" name="__codelineno-0-314"></a>        <span class="k">return</span> <span class="n">EnrichmentResult</span><span class="p">(</span>
-<a id="__codelineno-0-315" name="__codelineno-0-315"></a>            <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-316" name="__codelineno-0-316"></a>            <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
-<a id="__codelineno-0-317" name="__codelineno-0-317"></a>        <span class="p">)</span>
-<a id="__codelineno-0-318" name="__codelineno-0-318"></a>    <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-319" name="__codelineno-0-319"></a>        <span class="k">return</span> <span class="n">result</span>
+<a id="__codelineno-0-280" name="__codelineno-0-280"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-281" name="__codelineno-0-281"></a><span class="sd">        EnrichmentResult with suggested metadata.</span>
+<a id="__codelineno-0-282" name="__codelineno-0-282"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-283" name="__codelineno-0-283"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-284" name="__codelineno-0-284"></a>        <span class="c1"># Truncate content if too long</span>
+<a id="__codelineno-0-285" name="__codelineno-0-285"></a>        <span class="n">truncated_content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span><span class="p">]</span>
+<a id="__codelineno-0-286" name="__codelineno-0-286"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_content_length</span><span class="p">:</span>
+<a id="__codelineno-0-287" name="__codelineno-0-287"></a>            <span class="n">truncated_content</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[Content truncated...]&quot;</span>
+<a id="__codelineno-0-288" name="__codelineno-0-288"></a>
+<a id="__codelineno-0-289" name="__codelineno-0-289"></a>        <span class="c1"># Build prompts based on whether summary is requested</span>
+<a id="__codelineno-0-290" name="__codelineno-0-290"></a>        <span class="k">if</span> <span class="n">include_summary</span><span class="p">:</span>
+<a id="__codelineno-0-291" name="__codelineno-0-291"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">ENRICHMENT_SYSTEM_PROMPT_WITH_SUMMARY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<a id="__codelineno-0-292" name="__codelineno-0-292"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">)</span>
+<a id="__codelineno-0-293" name="__codelineno-0-293"></a>            <span class="p">)</span>
+<a id="__codelineno-0-294" name="__codelineno-0-294"></a>            <span class="n">user_template</span> <span class="o">=</span> <span class="n">ENRICHMENT_USER_PROMPT_WITH_SUMMARY</span>
+<a id="__codelineno-0-295" name="__codelineno-0-295"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-296" name="__codelineno-0-296"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">ENRICHMENT_SYSTEM_PROMPT_NO_SUMMARY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<a id="__codelineno-0-297" name="__codelineno-0-297"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classifications</span><span class="p">)</span>
+<a id="__codelineno-0-298" name="__codelineno-0-298"></a>            <span class="p">)</span>
+<a id="__codelineno-0-299" name="__codelineno-0-299"></a>            <span class="n">user_template</span> <span class="o">=</span> <span class="n">ENRICHMENT_USER_PROMPT_NO_SUMMARY</span>
+<a id="__codelineno-0-300" name="__codelineno-0-300"></a>
+<a id="__codelineno-0-301" name="__codelineno-0-301"></a>        <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-302" name="__codelineno-0-302"></a>        <span class="k">if</span> <span class="n">existing_tags</span><span class="p">:</span>
+<a id="__codelineno-0-303" name="__codelineno-0-303"></a>            <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Existing tags: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">existing_tags</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-304" name="__codelineno-0-304"></a>
+<a id="__codelineno-0-305" name="__codelineno-0-305"></a>        <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">user_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<a id="__codelineno-0-306" name="__codelineno-0-306"></a>            <span class="n">title</span><span class="o">=</span><span class="n">title</span> <span class="ow">or</span> <span class="s2">&quot;Untitled&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-307" name="__codelineno-0-307"></a>            <span class="n">existing_tags_section</span><span class="o">=</span><span class="n">existing_tags_section</span><span class="p">,</span>
+<a id="__codelineno-0-308" name="__codelineno-0-308"></a>            <span class="n">content</span><span class="o">=</span><span class="n">truncated_content</span><span class="p">,</span>
+<a id="__codelineno-0-309" name="__codelineno-0-309"></a>        <span class="p">)</span>
+<a id="__codelineno-0-310" name="__codelineno-0-310"></a>
+<a id="__codelineno-0-311" name="__codelineno-0-311"></a>        <span class="c1"># Call LLM</span>
+<a id="__codelineno-0-312" name="__codelineno-0-312"></a>        <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+<a id="__codelineno-0-313" name="__codelineno-0-313"></a>            <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">,</span>
+<a id="__codelineno-0-314" name="__codelineno-0-314"></a>            <span class="n">user_prompt</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
+<a id="__codelineno-0-315" name="__codelineno-0-315"></a>            <span class="n">temperature</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">temperature</span><span class="p">,</span>
+<a id="__codelineno-0-316" name="__codelineno-0-316"></a>            <span class="n">model</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
+<a id="__codelineno-0-317" name="__codelineno-0-317"></a>            <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>  <span class="c1"># JSON response should be small</span>
+<a id="__codelineno-0-318" name="__codelineno-0-318"></a>        <span class="p">)</span>
+<a id="__codelineno-0-319" name="__codelineno-0-319"></a>
+<a id="__codelineno-0-320" name="__codelineno-0-320"></a>        <span class="c1"># Parse JSON response</span>
+<a id="__codelineno-0-321" name="__codelineno-0-321"></a>        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<a id="__codelineno-0-322" name="__codelineno-0-322"></a>        <span class="n">result</span><span class="o">.</span><span class="n">raw_response</span> <span class="o">=</span> <span class="n">response</span>
+<a id="__codelineno-0-323" name="__codelineno-0-323"></a>
+<a id="__codelineno-0-324" name="__codelineno-0-324"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<a id="__codelineno-0-325" name="__codelineno-0-325"></a>            <span class="s2">&quot;note_enriched&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-326" name="__codelineno-0-326"></a>            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+<a id="__codelineno-0-327" name="__codelineno-0-327"></a>            <span class="n">auto_tags</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
+<a id="__codelineno-0-328" name="__codelineno-0-328"></a>            <span class="n">auto_class</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
+<a id="__codelineno-0-329" name="__codelineno-0-329"></a>            <span class="n">include_summary</span><span class="o">=</span><span class="n">include_summary</span><span class="p">,</span>
+<a id="__codelineno-0-330" name="__codelineno-0-330"></a>            <span class="n">has_summary</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_summary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-331" name="__codelineno-0-331"></a>        <span class="p">)</span>
+<a id="__codelineno-0-332" name="__codelineno-0-332"></a>
+<a id="__codelineno-0-333" name="__codelineno-0-333"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-334" name="__codelineno-0-334"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;enrichment_failed&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+<a id="__codelineno-0-335" name="__codelineno-0-335"></a>        <span class="k">return</span> <span class="n">EnrichmentResult</span><span class="p">(</span>
+<a id="__codelineno-0-336" name="__codelineno-0-336"></a>            <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-337" name="__codelineno-0-337"></a>            <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+<a id="__codelineno-0-338" name="__codelineno-0-338"></a>        <span class="p">)</span>
+<a id="__codelineno-0-339" name="__codelineno-0-339"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-340" name="__codelineno-0-340"></a>        <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -8549,7 +8585,7 @@ keeping human-authored metadata separate and intact.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, auto_importance=0.0, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
 
   
       dataclass
@@ -8567,30 +8603,7 @@ keeping human-authored metadata separate and intact.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-413">413</a></span>
-<span class="normal"><a href="#__codelineno-0-414">414</a></span>
-<span class="normal"><a href="#__codelineno-0-415">415</a></span>
-<span class="normal"><a href="#__codelineno-0-416">416</a></span>
-<span class="normal"><a href="#__codelineno-0-417">417</a></span>
-<span class="normal"><a href="#__codelineno-0-418">418</a></span>
-<span class="normal"><a href="#__codelineno-0-419">419</a></span>
-<span class="normal"><a href="#__codelineno-0-420">420</a></span>
-<span class="normal"><a href="#__codelineno-0-421">421</a></span>
-<span class="normal"><a href="#__codelineno-0-422">422</a></span>
-<span class="normal"><a href="#__codelineno-0-423">423</a></span>
-<span class="normal"><a href="#__codelineno-0-424">424</a></span>
-<span class="normal"><a href="#__codelineno-0-425">425</a></span>
-<span class="normal"><a href="#__codelineno-0-426">426</a></span>
-<span class="normal"><a href="#__codelineno-0-427">427</a></span>
-<span class="normal"><a href="#__codelineno-0-428">428</a></span>
-<span class="normal"><a href="#__codelineno-0-429">429</a></span>
-<span class="normal"><a href="#__codelineno-0-430">430</a></span>
-<span class="normal"><a href="#__codelineno-0-431">431</a></span>
-<span class="normal"><a href="#__codelineno-0-432">432</a></span>
-<span class="normal"><a href="#__codelineno-0-433">433</a></span>
-<span class="normal"><a href="#__codelineno-0-434">434</a></span>
-<span class="normal"><a href="#__codelineno-0-435">435</a></span>
-<span class="normal"><a href="#__codelineno-0-436">436</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-436">436</a></span>
 <span class="normal"><a href="#__codelineno-0-437">437</a></span>
 <span class="normal"><a href="#__codelineno-0-438">438</a></span>
 <span class="normal"><a href="#__codelineno-0-439">439</a></span>
@@ -8609,49 +8622,72 @@ keeping human-authored metadata separate and intact.</p>
 <span class="normal"><a href="#__codelineno-0-452">452</a></span>
 <span class="normal"><a href="#__codelineno-0-453">453</a></span>
 <span class="normal"><a href="#__codelineno-0-454">454</a></span>
-<span class="normal"><a href="#__codelineno-0-455">455</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-413" name="__codelineno-0-413"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">batch_enrich</span><span class="p">(</span>
-<a id="__codelineno-0-414" name="__codelineno-0-414"></a>    <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-415" name="__codelineno-0-415"></a>    <span class="n">notes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
-<a id="__codelineno-0-416" name="__codelineno-0-416"></a>    <span class="n">concurrency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
-<a id="__codelineno-0-417" name="__codelineno-0-417"></a>    <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-418" name="__codelineno-0-418"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnrichmentResult</span><span class="p">]:</span>
-<a id="__codelineno-0-419" name="__codelineno-0-419"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Enrich multiple notes in parallel.</span>
-<a id="__codelineno-0-420" name="__codelineno-0-420"></a>
-<a id="__codelineno-0-421" name="__codelineno-0-421"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-422" name="__codelineno-0-422"></a><span class="sd">        notes: List of note dicts with &#39;content&#39;, &#39;title&#39;, &#39;tags&#39; keys.</span>
-<a id="__codelineno-0-423" name="__codelineno-0-423"></a><span class="sd">        concurrency: Max concurrent LLM calls.</span>
-<a id="__codelineno-0-424" name="__codelineno-0-424"></a><span class="sd">        include_summary: Whether to generate summaries (default True).</span>
-<a id="__codelineno-0-425" name="__codelineno-0-425"></a>
-<a id="__codelineno-0-426" name="__codelineno-0-426"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-427" name="__codelineno-0-427"></a><span class="sd">        List of EnrichmentResults in same order as input.</span>
-<a id="__codelineno-0-428" name="__codelineno-0-428"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-429" name="__codelineno-0-429"></a>    <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">concurrency</span><span class="p">)</span>
-<a id="__codelineno-0-430" name="__codelineno-0-430"></a>
-<a id="__codelineno-0-431" name="__codelineno-0-431"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich_with_semaphore</span><span class="p">(</span><span class="n">note</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
-<a id="__codelineno-0-432" name="__codelineno-0-432"></a>        <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
-<a id="__codelineno-0-433" name="__codelineno-0-433"></a>            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrich</span><span class="p">(</span>
-<a id="__codelineno-0-434" name="__codelineno-0-434"></a>                <span class="n">content</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-435" name="__codelineno-0-435"></a>                <span class="n">title</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
-<a id="__codelineno-0-436" name="__codelineno-0-436"></a>                <span class="n">existing_tags</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="p">[]),</span>
-<a id="__codelineno-0-437" name="__codelineno-0-437"></a>                <span class="n">include_summary</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;include_summary&quot;</span><span class="p">,</span> <span class="n">include_summary</span><span class="p">),</span>
-<a id="__codelineno-0-438" name="__codelineno-0-438"></a>            <span class="p">)</span>
-<a id="__codelineno-0-439" name="__codelineno-0-439"></a>
-<a id="__codelineno-0-440" name="__codelineno-0-440"></a>    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
-<a id="__codelineno-0-441" name="__codelineno-0-441"></a>        <span class="o">*</span><span class="p">[</span><span class="n">enrich_with_semaphore</span><span class="p">(</span><span class="n">note</span><span class="p">)</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">],</span>
-<a id="__codelineno-0-442" name="__codelineno-0-442"></a>        <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-443" name="__codelineno-0-443"></a>    <span class="p">)</span>
-<a id="__codelineno-0-444" name="__codelineno-0-444"></a>
-<a id="__codelineno-0-445" name="__codelineno-0-445"></a>    <span class="c1"># Convert exceptions to error results</span>
-<a id="__codelineno-0-446" name="__codelineno-0-446"></a>    <span class="n">final_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnrichmentResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-<a id="__codelineno-0-447" name="__codelineno-0-447"></a>    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
-<a id="__codelineno-0-448" name="__codelineno-0-448"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
-<a id="__codelineno-0-449" name="__codelineno-0-449"></a>            <span class="n">final_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-<a id="__codelineno-0-450" name="__codelineno-0-450"></a>                <span class="n">EnrichmentResult</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
-<a id="__codelineno-0-451" name="__codelineno-0-451"></a>            <span class="p">)</span>
-<a id="__codelineno-0-452" name="__codelineno-0-452"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-453" name="__codelineno-0-453"></a>            <span class="n">final_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
-<a id="__codelineno-0-454" name="__codelineno-0-454"></a>
-<a id="__codelineno-0-455" name="__codelineno-0-455"></a>    <span class="k">return</span> <span class="n">final_results</span>
+<span class="normal"><a href="#__codelineno-0-455">455</a></span>
+<span class="normal"><a href="#__codelineno-0-456">456</a></span>
+<span class="normal"><a href="#__codelineno-0-457">457</a></span>
+<span class="normal"><a href="#__codelineno-0-458">458</a></span>
+<span class="normal"><a href="#__codelineno-0-459">459</a></span>
+<span class="normal"><a href="#__codelineno-0-460">460</a></span>
+<span class="normal"><a href="#__codelineno-0-461">461</a></span>
+<span class="normal"><a href="#__codelineno-0-462">462</a></span>
+<span class="normal"><a href="#__codelineno-0-463">463</a></span>
+<span class="normal"><a href="#__codelineno-0-464">464</a></span>
+<span class="normal"><a href="#__codelineno-0-465">465</a></span>
+<span class="normal"><a href="#__codelineno-0-466">466</a></span>
+<span class="normal"><a href="#__codelineno-0-467">467</a></span>
+<span class="normal"><a href="#__codelineno-0-468">468</a></span>
+<span class="normal"><a href="#__codelineno-0-469">469</a></span>
+<span class="normal"><a href="#__codelineno-0-470">470</a></span>
+<span class="normal"><a href="#__codelineno-0-471">471</a></span>
+<span class="normal"><a href="#__codelineno-0-472">472</a></span>
+<span class="normal"><a href="#__codelineno-0-473">473</a></span>
+<span class="normal"><a href="#__codelineno-0-474">474</a></span>
+<span class="normal"><a href="#__codelineno-0-475">475</a></span>
+<span class="normal"><a href="#__codelineno-0-476">476</a></span>
+<span class="normal"><a href="#__codelineno-0-477">477</a></span>
+<span class="normal"><a href="#__codelineno-0-478">478</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-436" name="__codelineno-0-436"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">batch_enrich</span><span class="p">(</span>
+<a id="__codelineno-0-437" name="__codelineno-0-437"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-438" name="__codelineno-0-438"></a>    <span class="n">notes</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+<a id="__codelineno-0-439" name="__codelineno-0-439"></a>    <span class="n">concurrency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-0-440" name="__codelineno-0-440"></a>    <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-441" name="__codelineno-0-441"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnrichmentResult</span><span class="p">]:</span>
+<a id="__codelineno-0-442" name="__codelineno-0-442"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Enrich multiple notes in parallel.</span>
+<a id="__codelineno-0-443" name="__codelineno-0-443"></a>
+<a id="__codelineno-0-444" name="__codelineno-0-444"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-445" name="__codelineno-0-445"></a><span class="sd">        notes: List of note dicts with &#39;content&#39;, &#39;title&#39;, &#39;tags&#39; keys.</span>
+<a id="__codelineno-0-446" name="__codelineno-0-446"></a><span class="sd">        concurrency: Max concurrent LLM calls.</span>
+<a id="__codelineno-0-447" name="__codelineno-0-447"></a><span class="sd">        include_summary: Whether to generate summaries (default True).</span>
+<a id="__codelineno-0-448" name="__codelineno-0-448"></a>
+<a id="__codelineno-0-449" name="__codelineno-0-449"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-450" name="__codelineno-0-450"></a><span class="sd">        List of EnrichmentResults in same order as input.</span>
+<a id="__codelineno-0-451" name="__codelineno-0-451"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-452" name="__codelineno-0-452"></a>    <span class="n">semaphore</span> <span class="o">=</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Semaphore</span><span class="p">(</span><span class="n">concurrency</span><span class="p">)</span>
+<a id="__codelineno-0-453" name="__codelineno-0-453"></a>
+<a id="__codelineno-0-454" name="__codelineno-0-454"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich_with_semaphore</span><span class="p">(</span><span class="n">note</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
+<a id="__codelineno-0-455" name="__codelineno-0-455"></a>        <span class="k">async</span> <span class="k">with</span> <span class="n">semaphore</span><span class="p">:</span>
+<a id="__codelineno-0-456" name="__codelineno-0-456"></a>            <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">enrich</span><span class="p">(</span>
+<a id="__codelineno-0-457" name="__codelineno-0-457"></a>                <span class="n">content</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-458" name="__codelineno-0-458"></a>                <span class="n">title</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">),</span>
+<a id="__codelineno-0-459" name="__codelineno-0-459"></a>                <span class="n">existing_tags</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="p">[]),</span>
+<a id="__codelineno-0-460" name="__codelineno-0-460"></a>                <span class="n">include_summary</span><span class="o">=</span><span class="n">note</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;include_summary&quot;</span><span class="p">,</span> <span class="n">include_summary</span><span class="p">),</span>
+<a id="__codelineno-0-461" name="__codelineno-0-461"></a>            <span class="p">)</span>
+<a id="__codelineno-0-462" name="__codelineno-0-462"></a>
+<a id="__codelineno-0-463" name="__codelineno-0-463"></a>    <span class="n">results</span> <span class="o">=</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">gather</span><span class="p">(</span>
+<a id="__codelineno-0-464" name="__codelineno-0-464"></a>        <span class="o">*</span><span class="p">[</span><span class="n">enrich_with_semaphore</span><span class="p">(</span><span class="n">note</span><span class="p">)</span> <span class="k">for</span> <span class="n">note</span> <span class="ow">in</span> <span class="n">notes</span><span class="p">],</span>
+<a id="__codelineno-0-465" name="__codelineno-0-465"></a>        <span class="n">return_exceptions</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-466" name="__codelineno-0-466"></a>    <span class="p">)</span>
+<a id="__codelineno-0-467" name="__codelineno-0-467"></a>
+<a id="__codelineno-0-468" name="__codelineno-0-468"></a>    <span class="c1"># Convert exceptions to error results</span>
+<a id="__codelineno-0-469" name="__codelineno-0-469"></a>    <span class="n">final_results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">EnrichmentResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-0-470" name="__codelineno-0-470"></a>    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+<a id="__codelineno-0-471" name="__codelineno-0-471"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+<a id="__codelineno-0-472" name="__codelineno-0-472"></a>            <span class="n">final_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+<a id="__codelineno-0-473" name="__codelineno-0-473"></a>                <span class="n">EnrichmentResult</span><span class="p">(</span><span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">r</span><span class="p">))</span>
+<a id="__codelineno-0-474" name="__codelineno-0-474"></a>            <span class="p">)</span>
+<a id="__codelineno-0-475" name="__codelineno-0-475"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-476" name="__codelineno-0-476"></a>            <span class="n">final_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+<a id="__codelineno-0-477" name="__codelineno-0-477"></a>
+<a id="__codelineno-0-478" name="__codelineno-0-478"></a>    <span class="k">return</span> <span class="n">final_results</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -8816,7 +8852,7 @@ prompts and thresholds from SourceEnrichmentConfig.</p>
       <tbody>
           <tr class="doc-section-item">
             <td>
-                  <code><a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
+                  <code><a class="autorefs autorefs-internal" title="              EnrichmentResult(auto_tags=list(), auto_class=None, auto_summary=None, auto_importance=0.0, tag_confidence=0.0, class_confidence=0.0, raw_response=None, success=True, error=None)
 
   
       dataclass
@@ -8834,30 +8870,7 @@ prompts and thresholds from SourceEnrichmentConfig.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/enrichment.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-457">457</a></span>
-<span class="normal"><a href="#__codelineno-0-458">458</a></span>
-<span class="normal"><a href="#__codelineno-0-459">459</a></span>
-<span class="normal"><a href="#__codelineno-0-460">460</a></span>
-<span class="normal"><a href="#__codelineno-0-461">461</a></span>
-<span class="normal"><a href="#__codelineno-0-462">462</a></span>
-<span class="normal"><a href="#__codelineno-0-463">463</a></span>
-<span class="normal"><a href="#__codelineno-0-464">464</a></span>
-<span class="normal"><a href="#__codelineno-0-465">465</a></span>
-<span class="normal"><a href="#__codelineno-0-466">466</a></span>
-<span class="normal"><a href="#__codelineno-0-467">467</a></span>
-<span class="normal"><a href="#__codelineno-0-468">468</a></span>
-<span class="normal"><a href="#__codelineno-0-469">469</a></span>
-<span class="normal"><a href="#__codelineno-0-470">470</a></span>
-<span class="normal"><a href="#__codelineno-0-471">471</a></span>
-<span class="normal"><a href="#__codelineno-0-472">472</a></span>
-<span class="normal"><a href="#__codelineno-0-473">473</a></span>
-<span class="normal"><a href="#__codelineno-0-474">474</a></span>
-<span class="normal"><a href="#__codelineno-0-475">475</a></span>
-<span class="normal"><a href="#__codelineno-0-476">476</a></span>
-<span class="normal"><a href="#__codelineno-0-477">477</a></span>
-<span class="normal"><a href="#__codelineno-0-478">478</a></span>
-<span class="normal"><a href="#__codelineno-0-479">479</a></span>
-<span class="normal"><a href="#__codelineno-0-480">480</a></span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-480">480</a></span>
 <span class="normal"><a href="#__codelineno-0-481">481</a></span>
 <span class="normal"><a href="#__codelineno-0-482">482</a></span>
 <span class="normal"><a href="#__codelineno-0-483">483</a></span>
@@ -8961,134 +8974,157 @@ prompts and thresholds from SourceEnrichmentConfig.</p>
 <span class="normal"><a href="#__codelineno-0-581">581</a></span>
 <span class="normal"><a href="#__codelineno-0-582">582</a></span>
 <span class="normal"><a href="#__codelineno-0-583">583</a></span>
-<span class="normal"><a href="#__codelineno-0-584">584</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-457" name="__codelineno-0-457"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich_entity</span><span class="p">(</span>
-<a id="__codelineno-0-458" name="__codelineno-0-458"></a>        <span class="bp">self</span><span class="p">,</span>
-<a id="__codelineno-0-459" name="__codelineno-0-459"></a>        <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-<a id="__codelineno-0-460" name="__codelineno-0-460"></a>        <span class="n">entity_ref</span><span class="p">:</span> <span class="n">EntityRef</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-461" name="__codelineno-0-461"></a>        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-462" name="__codelineno-0-462"></a>        <span class="n">existing_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-463" name="__codelineno-0-463"></a>        <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-<a id="__codelineno-0-464" name="__codelineno-0-464"></a>        <span class="n">source_config</span><span class="p">:</span> <span class="n">SourceEnrichmentConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-465" name="__codelineno-0-465"></a>        <span class="n">config_registry</span><span class="p">:</span> <span class="n">EnrichmentConfigRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-466" name="__codelineno-0-466"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
-<a id="__codelineno-0-467" name="__codelineno-0-467"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Enrich any entity with source-specific LLM-generated metadata.</span>
-<a id="__codelineno-0-468" name="__codelineno-0-468"></a>
-<a id="__codelineno-0-469" name="__codelineno-0-469"></a><span class="sd">        This is the generalized version of `enrich()` that uses source-specific</span>
-<a id="__codelineno-0-470" name="__codelineno-0-470"></a><span class="sd">        prompts and thresholds from SourceEnrichmentConfig.</span>
-<a id="__codelineno-0-471" name="__codelineno-0-471"></a>
-<a id="__codelineno-0-472" name="__codelineno-0-472"></a><span class="sd">        Args:</span>
-<a id="__codelineno-0-473" name="__codelineno-0-473"></a><span class="sd">            content: Entity content (text/markdown).</span>
-<a id="__codelineno-0-474" name="__codelineno-0-474"></a><span class="sd">            entity_ref: Optional EntityRef for source context.</span>
-<a id="__codelineno-0-475" name="__codelineno-0-475"></a><span class="sd">            title: Entity title.</span>
-<a id="__codelineno-0-476" name="__codelineno-0-476"></a><span class="sd">            existing_tags: Existing human-authored tags.</span>
-<a id="__codelineno-0-477" name="__codelineno-0-477"></a><span class="sd">            include_summary: Whether to generate a summary.</span>
-<a id="__codelineno-0-478" name="__codelineno-0-478"></a><span class="sd">            source_config: Explicit source config (overrides registry lookup).</span>
-<a id="__codelineno-0-479" name="__codelineno-0-479"></a><span class="sd">            config_registry: Registry for source config lookup.</span>
-<a id="__codelineno-0-480" name="__codelineno-0-480"></a>
-<a id="__codelineno-0-481" name="__codelineno-0-481"></a><span class="sd">        Returns:</span>
-<a id="__codelineno-0-482" name="__codelineno-0-482"></a><span class="sd">            EnrichmentResult with suggested metadata.</span>
-<a id="__codelineno-0-483" name="__codelineno-0-483"></a><span class="sd">        &quot;&quot;&quot;</span>
-<a id="__codelineno-0-484" name="__codelineno-0-484"></a>        <span class="c1"># Determine source config</span>
-<a id="__codelineno-0-485" name="__codelineno-0-485"></a>        <span class="n">config</span> <span class="o">=</span> <span class="n">source_config</span>
-<a id="__codelineno-0-486" name="__codelineno-0-486"></a>        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entity_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config_registry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-487" name="__codelineno-0-487"></a>            <span class="n">config</span> <span class="o">=</span> <span class="n">config_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span><span class="p">)</span>
-<a id="__codelineno-0-488" name="__codelineno-0-488"></a>
-<a id="__codelineno-0-489" name="__codelineno-0-489"></a>        <span class="c1"># Fall back to default Obsidian config</span>
-<a id="__codelineno-0-490" name="__codelineno-0-490"></a>        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-491" name="__codelineno-0-491"></a>            <span class="n">config</span> <span class="o">=</span> <span class="n">DEFAULT_OBSIDIAN_CONFIG</span>
-<a id="__codelineno-0-492" name="__codelineno-0-492"></a>
-<a id="__codelineno-0-493" name="__codelineno-0-493"></a>        <span class="k">try</span><span class="p">:</span>
-<a id="__codelineno-0-494" name="__codelineno-0-494"></a>            <span class="c1"># Truncate content if too long</span>
-<a id="__codelineno-0-495" name="__codelineno-0-495"></a>            <span class="n">max_length</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">max_content_length</span>
-<a id="__codelineno-0-496" name="__codelineno-0-496"></a>            <span class="n">truncated_content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span><span class="n">max_length</span><span class="p">]</span>
-<a id="__codelineno-0-497" name="__codelineno-0-497"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
-<a id="__codelineno-0-498" name="__codelineno-0-498"></a>                <span class="n">truncated_content</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[Content truncated...]&quot;</span>
-<a id="__codelineno-0-499" name="__codelineno-0-499"></a>
-<a id="__codelineno-0-500" name="__codelineno-0-500"></a>            <span class="c1"># Build classification list</span>
-<a id="__codelineno-0-501" name="__codelineno-0-501"></a>            <span class="n">classifications</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">classifications</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifications</span>
-<a id="__codelineno-0-502" name="__codelineno-0-502"></a>
-<a id="__codelineno-0-503" name="__codelineno-0-503"></a>            <span class="c1"># Build system prompt from config</span>
-<a id="__codelineno-0-504" name="__codelineno-0-504"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">system_prompt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<a id="__codelineno-0-505" name="__codelineno-0-505"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">classifications</span><span class="p">)</span>
-<a id="__codelineno-0-506" name="__codelineno-0-506"></a>            <span class="p">)</span>
-<a id="__codelineno-0-507" name="__codelineno-0-507"></a>
-<a id="__codelineno-0-508" name="__codelineno-0-508"></a>            <span class="c1"># If we&#39;re not including summary, modify the prompt</span>
-<a id="__codelineno-0-509" name="__codelineno-0-509"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">include_summary</span><span class="p">:</span>
-<a id="__codelineno-0-510" name="__codelineno-0-510"></a>                <span class="c1"># Remove summary-related instructions from system prompt</span>
-<a id="__codelineno-0-511" name="__codelineno-0-511"></a>                <span class="n">system_prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_summary_from_prompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">)</span>
-<a id="__codelineno-0-512" name="__codelineno-0-512"></a>
-<a id="__codelineno-0-513" name="__codelineno-0-513"></a>            <span class="c1"># Build user prompt</span>
-<a id="__codelineno-0-514" name="__codelineno-0-514"></a>            <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-<a id="__codelineno-0-515" name="__codelineno-0-515"></a>            <span class="k">if</span> <span class="n">existing_tags</span><span class="p">:</span>
-<a id="__codelineno-0-516" name="__codelineno-0-516"></a>                <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Existing tags: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">existing_tags</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
-<a id="__codelineno-0-517" name="__codelineno-0-517"></a>
-<a id="__codelineno-0-518" name="__codelineno-0-518"></a>            <span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity_ref</span><span class="o">.</span><span class="n">entity_type</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;note&quot;</span>
-<a id="__codelineno-0-519" name="__codelineno-0-519"></a>            <span class="n">summary_instruction</span> <span class="o">=</span> <span class="s2">&quot; Summary is REQUIRED.&quot;</span> <span class="k">if</span> <span class="n">include_summary</span> <span class="k">else</span> <span class="s2">&quot; Do NOT include a summary.&quot;</span>
-<a id="__codelineno-0-520" name="__codelineno-0-520"></a>
-<a id="__codelineno-0-521" name="__codelineno-0-521"></a>            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">user_prompt_template</span><span class="p">:</span>
-<a id="__codelineno-0-522" name="__codelineno-0-522"></a>                <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">user_prompt_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-<a id="__codelineno-0-523" name="__codelineno-0-523"></a>                    <span class="n">title</span><span class="o">=</span><span class="n">title</span> <span class="ow">or</span> <span class="s2">&quot;Untitled&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-524" name="__codelineno-0-524"></a>                    <span class="n">existing_tags_section</span><span class="o">=</span><span class="n">existing_tags_section</span><span class="p">,</span>
-<a id="__codelineno-0-525" name="__codelineno-0-525"></a>                    <span class="n">content</span><span class="o">=</span><span class="n">truncated_content</span><span class="p">,</span>
-<a id="__codelineno-0-526" name="__codelineno-0-526"></a>                    <span class="n">entity_type</span><span class="o">=</span><span class="n">entity_type</span><span class="p">,</span>
-<a id="__codelineno-0-527" name="__codelineno-0-527"></a>                    <span class="n">summary_instruction</span><span class="o">=</span><span class="n">summary_instruction</span><span class="p">,</span>
-<a id="__codelineno-0-528" name="__codelineno-0-528"></a>                <span class="p">)</span>
-<a id="__codelineno-0-529" name="__codelineno-0-529"></a>            <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-530" name="__codelineno-0-530"></a>                <span class="c1"># Fall back to default template</span>
-<a id="__codelineno-0-531" name="__codelineno-0-531"></a>                <span class="n">user_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Analyze this </span><span class="si">{</span><span class="n">entity_type</span><span class="si">}</span><span class="s2"> and suggest metadata:</span>
-<a id="__codelineno-0-532" name="__codelineno-0-532"></a>
-<a id="__codelineno-0-533" name="__codelineno-0-533"></a><span class="s2">---</span>
-<a id="__codelineno-0-534" name="__codelineno-0-534"></a><span class="s2">Title: </span><span class="si">{</span><span class="n">title</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;Untitled&#39;</span><span class="si">}</span>
-<a id="__codelineno-0-535" name="__codelineno-0-535"></a><span class="si">{</span><span class="n">existing_tags_section</span><span class="si">}</span>
-<a id="__codelineno-0-536" name="__codelineno-0-536"></a><span class="s2">---</span>
-<a id="__codelineno-0-537" name="__codelineno-0-537"></a>
-<a id="__codelineno-0-538" name="__codelineno-0-538"></a><span class="si">{</span><span class="n">truncated_content</span><span class="si">}</span>
-<a id="__codelineno-0-539" name="__codelineno-0-539"></a>
-<a id="__codelineno-0-540" name="__codelineno-0-540"></a><span class="s2">---</span>
-<a id="__codelineno-0-541" name="__codelineno-0-541"></a>
-<a id="__codelineno-0-542" name="__codelineno-0-542"></a><span class="s2">Respond with JSON only, no markdown formatting.</span><span class="si">{</span><span class="n">summary_instruction</span><span class="si">}</span>
-<a id="__codelineno-0-543" name="__codelineno-0-543"></a><span class="s2">&quot;&quot;&quot;</span>
-<a id="__codelineno-0-544" name="__codelineno-0-544"></a>
-<a id="__codelineno-0-545" name="__codelineno-0-545"></a>            <span class="c1"># Use config-specific temperature and model</span>
-<a id="__codelineno-0-546" name="__codelineno-0-546"></a>            <span class="n">temperature</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">temperature</span>
-<a id="__codelineno-0-547" name="__codelineno-0-547"></a>            <span class="n">model</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
-<a id="__codelineno-0-548" name="__codelineno-0-548"></a>
-<a id="__codelineno-0-549" name="__codelineno-0-549"></a>            <span class="c1"># Call LLM</span>
-<a id="__codelineno-0-550" name="__codelineno-0-550"></a>            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
-<a id="__codelineno-0-551" name="__codelineno-0-551"></a>                <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">,</span>
-<a id="__codelineno-0-552" name="__codelineno-0-552"></a>                <span class="n">user_prompt</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
-<a id="__codelineno-0-553" name="__codelineno-0-553"></a>                <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
-<a id="__codelineno-0-554" name="__codelineno-0-554"></a>                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
-<a id="__codelineno-0-555" name="__codelineno-0-555"></a>                <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
-<a id="__codelineno-0-556" name="__codelineno-0-556"></a>            <span class="p">)</span>
-<a id="__codelineno-0-557" name="__codelineno-0-557"></a>
-<a id="__codelineno-0-558" name="__codelineno-0-558"></a>            <span class="c1"># Parse JSON response with config-specific classifications</span>
-<a id="__codelineno-0-559" name="__codelineno-0-559"></a>            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response_with_config</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">classifications</span><span class="p">)</span>
-<a id="__codelineno-0-560" name="__codelineno-0-560"></a>            <span class="n">result</span><span class="o">.</span><span class="n">raw_response</span> <span class="o">=</span> <span class="n">response</span>
-<a id="__codelineno-0-561" name="__codelineno-0-561"></a>
-<a id="__codelineno-0-562" name="__codelineno-0-562"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
-<a id="__codelineno-0-563" name="__codelineno-0-563"></a>                <span class="s2">&quot;entity_enriched&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-564" name="__codelineno-0-564"></a>                <span class="n">source_id</span><span class="o">=</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-565" name="__codelineno-0-565"></a>                <span class="n">entity_type</span><span class="o">=</span><span class="n">entity_type</span><span class="p">,</span>
-<a id="__codelineno-0-566" name="__codelineno-0-566"></a>                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-<a id="__codelineno-0-567" name="__codelineno-0-567"></a>                <span class="n">auto_tags</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
-<a id="__codelineno-0-568" name="__codelineno-0-568"></a>                <span class="n">auto_class</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
-<a id="__codelineno-0-569" name="__codelineno-0-569"></a>                <span class="n">include_summary</span><span class="o">=</span><span class="n">include_summary</span><span class="p">,</span>
-<a id="__codelineno-0-570" name="__codelineno-0-570"></a>                <span class="n">has_summary</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_summary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
-<a id="__codelineno-0-571" name="__codelineno-0-571"></a>            <span class="p">)</span>
-<a id="__codelineno-0-572" name="__codelineno-0-572"></a>
-<a id="__codelineno-0-573" name="__codelineno-0-573"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-<a id="__codelineno-0-574" name="__codelineno-0-574"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-<a id="__codelineno-0-575" name="__codelineno-0-575"></a>                <span class="s2">&quot;entity_enrichment_failed&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-576" name="__codelineno-0-576"></a>                <span class="n">source_id</span><span class="o">=</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-577" name="__codelineno-0-577"></a>                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
-<a id="__codelineno-0-578" name="__codelineno-0-578"></a>            <span class="p">)</span>
-<a id="__codelineno-0-579" name="__codelineno-0-579"></a>            <span class="k">return</span> <span class="n">EnrichmentResult</span><span class="p">(</span>
-<a id="__codelineno-0-580" name="__codelineno-0-580"></a>                <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-<a id="__codelineno-0-581" name="__codelineno-0-581"></a>                <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
-<a id="__codelineno-0-582" name="__codelineno-0-582"></a>            <span class="p">)</span>
-<a id="__codelineno-0-583" name="__codelineno-0-583"></a>        <span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-0-584" name="__codelineno-0-584"></a>            <span class="k">return</span> <span class="n">result</span>
+<span class="normal"><a href="#__codelineno-0-584">584</a></span>
+<span class="normal"><a href="#__codelineno-0-585">585</a></span>
+<span class="normal"><a href="#__codelineno-0-586">586</a></span>
+<span class="normal"><a href="#__codelineno-0-587">587</a></span>
+<span class="normal"><a href="#__codelineno-0-588">588</a></span>
+<span class="normal"><a href="#__codelineno-0-589">589</a></span>
+<span class="normal"><a href="#__codelineno-0-590">590</a></span>
+<span class="normal"><a href="#__codelineno-0-591">591</a></span>
+<span class="normal"><a href="#__codelineno-0-592">592</a></span>
+<span class="normal"><a href="#__codelineno-0-593">593</a></span>
+<span class="normal"><a href="#__codelineno-0-594">594</a></span>
+<span class="normal"><a href="#__codelineno-0-595">595</a></span>
+<span class="normal"><a href="#__codelineno-0-596">596</a></span>
+<span class="normal"><a href="#__codelineno-0-597">597</a></span>
+<span class="normal"><a href="#__codelineno-0-598">598</a></span>
+<span class="normal"><a href="#__codelineno-0-599">599</a></span>
+<span class="normal"><a href="#__codelineno-0-600">600</a></span>
+<span class="normal"><a href="#__codelineno-0-601">601</a></span>
+<span class="normal"><a href="#__codelineno-0-602">602</a></span>
+<span class="normal"><a href="#__codelineno-0-603">603</a></span>
+<span class="normal"><a href="#__codelineno-0-604">604</a></span>
+<span class="normal"><a href="#__codelineno-0-605">605</a></span>
+<span class="normal"><a href="#__codelineno-0-606">606</a></span>
+<span class="normal"><a href="#__codelineno-0-607">607</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-480" name="__codelineno-0-480"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">enrich_entity</span><span class="p">(</span>
+<a id="__codelineno-0-481" name="__codelineno-0-481"></a>        <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-482" name="__codelineno-0-482"></a>        <span class="n">content</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-483" name="__codelineno-0-483"></a>        <span class="n">entity_ref</span><span class="p">:</span> <span class="n">EntityRef</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-484" name="__codelineno-0-484"></a>        <span class="n">title</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-485" name="__codelineno-0-485"></a>        <span class="n">existing_tags</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-486" name="__codelineno-0-486"></a>        <span class="n">include_summary</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-0-487" name="__codelineno-0-487"></a>        <span class="n">source_config</span><span class="p">:</span> <span class="n">SourceEnrichmentConfig</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-488" name="__codelineno-0-488"></a>        <span class="n">config_registry</span><span class="p">:</span> <span class="n">EnrichmentConfigRegistry</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-489" name="__codelineno-0-489"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnrichmentResult</span><span class="p">:</span>
+<a id="__codelineno-0-490" name="__codelineno-0-490"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Enrich any entity with source-specific LLM-generated metadata.</span>
+<a id="__codelineno-0-491" name="__codelineno-0-491"></a>
+<a id="__codelineno-0-492" name="__codelineno-0-492"></a><span class="sd">        This is the generalized version of `enrich()` that uses source-specific</span>
+<a id="__codelineno-0-493" name="__codelineno-0-493"></a><span class="sd">        prompts and thresholds from SourceEnrichmentConfig.</span>
+<a id="__codelineno-0-494" name="__codelineno-0-494"></a>
+<a id="__codelineno-0-495" name="__codelineno-0-495"></a><span class="sd">        Args:</span>
+<a id="__codelineno-0-496" name="__codelineno-0-496"></a><span class="sd">            content: Entity content (text/markdown).</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a><span class="sd">            entity_ref: Optional EntityRef for source context.</span>
+<a id="__codelineno-0-498" name="__codelineno-0-498"></a><span class="sd">            title: Entity title.</span>
+<a id="__codelineno-0-499" name="__codelineno-0-499"></a><span class="sd">            existing_tags: Existing human-authored tags.</span>
+<a id="__codelineno-0-500" name="__codelineno-0-500"></a><span class="sd">            include_summary: Whether to generate a summary.</span>
+<a id="__codelineno-0-501" name="__codelineno-0-501"></a><span class="sd">            source_config: Explicit source config (overrides registry lookup).</span>
+<a id="__codelineno-0-502" name="__codelineno-0-502"></a><span class="sd">            config_registry: Registry for source config lookup.</span>
+<a id="__codelineno-0-503" name="__codelineno-0-503"></a>
+<a id="__codelineno-0-504" name="__codelineno-0-504"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a><span class="sd">            EnrichmentResult with suggested metadata.</span>
+<a id="__codelineno-0-506" name="__codelineno-0-506"></a><span class="sd">        &quot;&quot;&quot;</span>
+<a id="__codelineno-0-507" name="__codelineno-0-507"></a>        <span class="c1"># Determine source config</span>
+<a id="__codelineno-0-508" name="__codelineno-0-508"></a>        <span class="n">config</span> <span class="o">=</span> <span class="n">source_config</span>
+<a id="__codelineno-0-509" name="__codelineno-0-509"></a>        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">entity_ref</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">config_registry</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-510" name="__codelineno-0-510"></a>            <span class="n">config</span> <span class="o">=</span> <span class="n">config_registry</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span><span class="p">)</span>
+<a id="__codelineno-0-511" name="__codelineno-0-511"></a>
+<a id="__codelineno-0-512" name="__codelineno-0-512"></a>        <span class="c1"># Fall back to default Obsidian config</span>
+<a id="__codelineno-0-513" name="__codelineno-0-513"></a>        <span class="k">if</span> <span class="n">config</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-514" name="__codelineno-0-514"></a>            <span class="n">config</span> <span class="o">=</span> <span class="n">DEFAULT_OBSIDIAN_CONFIG</span>
+<a id="__codelineno-0-515" name="__codelineno-0-515"></a>
+<a id="__codelineno-0-516" name="__codelineno-0-516"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-0-517" name="__codelineno-0-517"></a>            <span class="c1"># Truncate content if too long</span>
+<a id="__codelineno-0-518" name="__codelineno-0-518"></a>            <span class="n">max_length</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">max_content_length</span>
+<a id="__codelineno-0-519" name="__codelineno-0-519"></a>            <span class="n">truncated_content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span><span class="n">max_length</span><span class="p">]</span>
+<a id="__codelineno-0-520" name="__codelineno-0-520"></a>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_length</span><span class="p">:</span>
+<a id="__codelineno-0-521" name="__codelineno-0-521"></a>                <span class="n">truncated_content</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">[Content truncated...]&quot;</span>
+<a id="__codelineno-0-522" name="__codelineno-0-522"></a>
+<a id="__codelineno-0-523" name="__codelineno-0-523"></a>            <span class="c1"># Build classification list</span>
+<a id="__codelineno-0-524" name="__codelineno-0-524"></a>            <span class="n">classifications</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">classifications</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">classifications</span>
+<a id="__codelineno-0-525" name="__codelineno-0-525"></a>
+<a id="__codelineno-0-526" name="__codelineno-0-526"></a>            <span class="c1"># Build system prompt from config</span>
+<a id="__codelineno-0-527" name="__codelineno-0-527"></a>            <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">system_prompt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<a id="__codelineno-0-528" name="__codelineno-0-528"></a>                <span class="n">classifications</span><span class="o">=</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">classifications</span><span class="p">)</span>
+<a id="__codelineno-0-529" name="__codelineno-0-529"></a>            <span class="p">)</span>
+<a id="__codelineno-0-530" name="__codelineno-0-530"></a>
+<a id="__codelineno-0-531" name="__codelineno-0-531"></a>            <span class="c1"># If we&#39;re not including summary, modify the prompt</span>
+<a id="__codelineno-0-532" name="__codelineno-0-532"></a>            <span class="k">if</span> <span class="ow">not</span> <span class="n">include_summary</span><span class="p">:</span>
+<a id="__codelineno-0-533" name="__codelineno-0-533"></a>                <span class="c1"># Remove summary-related instructions from system prompt</span>
+<a id="__codelineno-0-534" name="__codelineno-0-534"></a>                <span class="n">system_prompt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_remove_summary_from_prompt</span><span class="p">(</span><span class="n">system_prompt</span><span class="p">)</span>
+<a id="__codelineno-0-535" name="__codelineno-0-535"></a>
+<a id="__codelineno-0-536" name="__codelineno-0-536"></a>            <span class="c1"># Build user prompt</span>
+<a id="__codelineno-0-537" name="__codelineno-0-537"></a>            <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-0-538" name="__codelineno-0-538"></a>            <span class="k">if</span> <span class="n">existing_tags</span><span class="p">:</span>
+<a id="__codelineno-0-539" name="__codelineno-0-539"></a>                <span class="n">existing_tags_section</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Existing tags: </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">existing_tags</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-0-540" name="__codelineno-0-540"></a>
+<a id="__codelineno-0-541" name="__codelineno-0-541"></a>            <span class="n">entity_type</span> <span class="o">=</span> <span class="n">entity_ref</span><span class="o">.</span><span class="n">entity_type</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;note&quot;</span>
+<a id="__codelineno-0-542" name="__codelineno-0-542"></a>            <span class="n">summary_instruction</span> <span class="o">=</span> <span class="s2">&quot; Summary is REQUIRED.&quot;</span> <span class="k">if</span> <span class="n">include_summary</span> <span class="k">else</span> <span class="s2">&quot; Do NOT include a summary.&quot;</span>
+<a id="__codelineno-0-543" name="__codelineno-0-543"></a>
+<a id="__codelineno-0-544" name="__codelineno-0-544"></a>            <span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">user_prompt_template</span><span class="p">:</span>
+<a id="__codelineno-0-545" name="__codelineno-0-545"></a>                <span class="n">user_prompt</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">user_prompt_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+<a id="__codelineno-0-546" name="__codelineno-0-546"></a>                    <span class="n">title</span><span class="o">=</span><span class="n">title</span> <span class="ow">or</span> <span class="s2">&quot;Untitled&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-547" name="__codelineno-0-547"></a>                    <span class="n">existing_tags_section</span><span class="o">=</span><span class="n">existing_tags_section</span><span class="p">,</span>
+<a id="__codelineno-0-548" name="__codelineno-0-548"></a>                    <span class="n">content</span><span class="o">=</span><span class="n">truncated_content</span><span class="p">,</span>
+<a id="__codelineno-0-549" name="__codelineno-0-549"></a>                    <span class="n">entity_type</span><span class="o">=</span><span class="n">entity_type</span><span class="p">,</span>
+<a id="__codelineno-0-550" name="__codelineno-0-550"></a>                    <span class="n">summary_instruction</span><span class="o">=</span><span class="n">summary_instruction</span><span class="p">,</span>
+<a id="__codelineno-0-551" name="__codelineno-0-551"></a>                <span class="p">)</span>
+<a id="__codelineno-0-552" name="__codelineno-0-552"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-553" name="__codelineno-0-553"></a>                <span class="c1"># Fall back to default template</span>
+<a id="__codelineno-0-554" name="__codelineno-0-554"></a>                <span class="n">user_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;Analyze this </span><span class="si">{</span><span class="n">entity_type</span><span class="si">}</span><span class="s2"> and suggest metadata:</span>
+<a id="__codelineno-0-555" name="__codelineno-0-555"></a>
+<a id="__codelineno-0-556" name="__codelineno-0-556"></a><span class="s2">---</span>
+<a id="__codelineno-0-557" name="__codelineno-0-557"></a><span class="s2">Title: </span><span class="si">{</span><span class="n">title</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s1">&#39;Untitled&#39;</span><span class="si">}</span>
+<a id="__codelineno-0-558" name="__codelineno-0-558"></a><span class="si">{</span><span class="n">existing_tags_section</span><span class="si">}</span>
+<a id="__codelineno-0-559" name="__codelineno-0-559"></a><span class="s2">---</span>
+<a id="__codelineno-0-560" name="__codelineno-0-560"></a>
+<a id="__codelineno-0-561" name="__codelineno-0-561"></a><span class="si">{</span><span class="n">truncated_content</span><span class="si">}</span>
+<a id="__codelineno-0-562" name="__codelineno-0-562"></a>
+<a id="__codelineno-0-563" name="__codelineno-0-563"></a><span class="s2">---</span>
+<a id="__codelineno-0-564" name="__codelineno-0-564"></a>
+<a id="__codelineno-0-565" name="__codelineno-0-565"></a><span class="s2">Respond with JSON only, no markdown formatting.</span><span class="si">{</span><span class="n">summary_instruction</span><span class="si">}</span>
+<a id="__codelineno-0-566" name="__codelineno-0-566"></a><span class="s2">&quot;&quot;&quot;</span>
+<a id="__codelineno-0-567" name="__codelineno-0-567"></a>
+<a id="__codelineno-0-568" name="__codelineno-0-568"></a>            <span class="c1"># Use config-specific temperature and model</span>
+<a id="__codelineno-0-569" name="__codelineno-0-569"></a>            <span class="n">temperature</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">temperature</span>
+<a id="__codelineno-0-570" name="__codelineno-0-570"></a>            <span class="n">model</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">model</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+<a id="__codelineno-0-571" name="__codelineno-0-571"></a>
+<a id="__codelineno-0-572" name="__codelineno-0-572"></a>            <span class="c1"># Call LLM</span>
+<a id="__codelineno-0-573" name="__codelineno-0-573"></a>            <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">llm_service</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+<a id="__codelineno-0-574" name="__codelineno-0-574"></a>                <span class="n">system_prompt</span><span class="o">=</span><span class="n">system_prompt</span><span class="p">,</span>
+<a id="__codelineno-0-575" name="__codelineno-0-575"></a>                <span class="n">user_prompt</span><span class="o">=</span><span class="n">user_prompt</span><span class="p">,</span>
+<a id="__codelineno-0-576" name="__codelineno-0-576"></a>                <span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">,</span>
+<a id="__codelineno-0-577" name="__codelineno-0-577"></a>                <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+<a id="__codelineno-0-578" name="__codelineno-0-578"></a>                <span class="n">max_tokens</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-0-579" name="__codelineno-0-579"></a>            <span class="p">)</span>
+<a id="__codelineno-0-580" name="__codelineno-0-580"></a>
+<a id="__codelineno-0-581" name="__codelineno-0-581"></a>            <span class="c1"># Parse JSON response with config-specific classifications</span>
+<a id="__codelineno-0-582" name="__codelineno-0-582"></a>            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response_with_config</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">classifications</span><span class="p">)</span>
+<a id="__codelineno-0-583" name="__codelineno-0-583"></a>            <span class="n">result</span><span class="o">.</span><span class="n">raw_response</span> <span class="o">=</span> <span class="n">response</span>
+<a id="__codelineno-0-584" name="__codelineno-0-584"></a>
+<a id="__codelineno-0-585" name="__codelineno-0-585"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+<a id="__codelineno-0-586" name="__codelineno-0-586"></a>                <span class="s2">&quot;entity_enriched&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-587" name="__codelineno-0-587"></a>                <span class="n">source_id</span><span class="o">=</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-588" name="__codelineno-0-588"></a>                <span class="n">entity_type</span><span class="o">=</span><span class="n">entity_type</span><span class="p">,</span>
+<a id="__codelineno-0-589" name="__codelineno-0-589"></a>                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+<a id="__codelineno-0-590" name="__codelineno-0-590"></a>                <span class="n">auto_tags</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_tags</span><span class="p">,</span>
+<a id="__codelineno-0-591" name="__codelineno-0-591"></a>                <span class="n">auto_class</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_class</span><span class="p">,</span>
+<a id="__codelineno-0-592" name="__codelineno-0-592"></a>                <span class="n">include_summary</span><span class="o">=</span><span class="n">include_summary</span><span class="p">,</span>
+<a id="__codelineno-0-593" name="__codelineno-0-593"></a>                <span class="n">has_summary</span><span class="o">=</span><span class="n">result</span><span class="o">.</span><span class="n">auto_summary</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-0-594" name="__codelineno-0-594"></a>            <span class="p">)</span>
+<a id="__codelineno-0-595" name="__codelineno-0-595"></a>
+<a id="__codelineno-0-596" name="__codelineno-0-596"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+<a id="__codelineno-0-597" name="__codelineno-0-597"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
+<a id="__codelineno-0-598" name="__codelineno-0-598"></a>                <span class="s2">&quot;entity_enrichment_failed&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-599" name="__codelineno-0-599"></a>                <span class="n">source_id</span><span class="o">=</span><span class="n">entity_ref</span><span class="o">.</span><span class="n">source_id</span> <span class="k">if</span> <span class="n">entity_ref</span> <span class="k">else</span> <span class="s2">&quot;unknown&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-600" name="__codelineno-0-600"></a>                <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+<a id="__codelineno-0-601" name="__codelineno-0-601"></a>            <span class="p">)</span>
+<a id="__codelineno-0-602" name="__codelineno-0-602"></a>            <span class="k">return</span> <span class="n">EnrichmentResult</span><span class="p">(</span>
+<a id="__codelineno-0-603" name="__codelineno-0-603"></a>                <span class="n">success</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<a id="__codelineno-0-604" name="__codelineno-0-604"></a>                <span class="n">error</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span>
+<a id="__codelineno-0-605" name="__codelineno-0-605"></a>            <span class="p">)</span>
+<a id="__codelineno-0-606" name="__codelineno-0-606"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-0-607" name="__codelineno-0-607"></a>            <span class="k">return</span> <span class="n">result</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -5087,6 +5087,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../file_indexer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    file_indexer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../health/" class="md-nav__link">
         
   
@@ -5387,6 +5415,28 @@
     <span class="md-ellipsis">
       
         get_statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_kernel.services.index_state.IndexStateStore.list_by_source_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_by_source_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_kernel.services.index_state.IndexStateStore.list_by_entity_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_by_entity_type
       
     </span>
   </a>
@@ -7948,6 +7998,28 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#agent_kernel.services.index_state.IndexStateStore.list_by_source_path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_by_source_path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#agent_kernel.services.index_state.IndexStateStore.list_by_entity_type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_by_entity_type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#agent_kernel.services.index_state.IndexStateStore.delete" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -9715,6 +9787,246 @@ is fully indexed across all stores.</p>
 <div class="doc doc-object doc-function">
 
 
+<h4 id="agent_kernel.services.index_state.IndexStateStore.list_by_source_path" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">list_by_source_path</span><span class="p">(</span><span class="n">source_path</span><span class="p">)</span></code>
+
+<a href="#agent_kernel.services.index_state.IndexStateStore.list_by_source_path" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>List entities by source path.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>source_path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>The source file path to search for.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="              EntityIndexState(entity_id, entity_type, source_path=None, content_hash=None, doc_indexed_at=None, graph_indexed_at=None, vector_indexed_at=None, enriched_at=None, doc_status=IndexStatus.PENDING, graph_status=IndexStatus.PENDING, vector_status=IndexStatus.PENDING, index_version=1, created_at=utc_now(), updated_at=utc_now(), last_error=None, error_count=0)
+
+  
+      dataclass
+   (agent_kernel.services.index_state.EntityIndexState)" href="#agent_kernel.services.index_state.EntityIndexState">EntityIndexState</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of matching states.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agent_kernel/services/index_state.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-474">474</a></span>
+<span class="normal"><a href="#__codelineno-0-475">475</a></span>
+<span class="normal"><a href="#__codelineno-0-476">476</a></span>
+<span class="normal"><a href="#__codelineno-0-477">477</a></span>
+<span class="normal"><a href="#__codelineno-0-478">478</a></span>
+<span class="normal"><a href="#__codelineno-0-479">479</a></span>
+<span class="normal"><a href="#__codelineno-0-480">480</a></span>
+<span class="normal"><a href="#__codelineno-0-481">481</a></span>
+<span class="normal"><a href="#__codelineno-0-482">482</a></span>
+<span class="normal"><a href="#__codelineno-0-483">483</a></span>
+<span class="normal"><a href="#__codelineno-0-484">484</a></span>
+<span class="normal"><a href="#__codelineno-0-485">485</a></span>
+<span class="normal"><a href="#__codelineno-0-486">486</a></span>
+<span class="normal"><a href="#__codelineno-0-487">487</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-474" name="__codelineno-0-474"></a><span class="k">def</span><span class="w"> </span><span class="nf">list_by_source_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityIndexState</span><span class="p">]:</span>
+<a id="__codelineno-0-475" name="__codelineno-0-475"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;List entities by source path.</span>
+<a id="__codelineno-0-476" name="__codelineno-0-476"></a>
+<a id="__codelineno-0-477" name="__codelineno-0-477"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-478" name="__codelineno-0-478"></a><span class="sd">        source_path: The source file path to search for.</span>
+<a id="__codelineno-0-479" name="__codelineno-0-479"></a>
+<a id="__codelineno-0-480" name="__codelineno-0-480"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-481" name="__codelineno-0-481"></a><span class="sd">        List of matching states.</span>
+<a id="__codelineno-0-482" name="__codelineno-0-482"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-483" name="__codelineno-0-483"></a>    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-0-484" name="__codelineno-0-484"></a>        <span class="s2">&quot;SELECT * FROM index_states WHERE source_path = ?&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-485" name="__codelineno-0-485"></a>        <span class="p">(</span><span class="n">source_path</span><span class="p">,),</span>
+<a id="__codelineno-0-486" name="__codelineno-0-486"></a>    <span class="p">)</span>
+<a id="__codelineno-0-487" name="__codelineno-0-487"></a>    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_row_to_state</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="agent_kernel.services.index_state.IndexStateStore.list_by_entity_type" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">list_by_entity_type</span><span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">limit</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span></code>
+
+<a href="#agent_kernel.services.index_state.IndexStateStore.list_by_entity_type" class="headerlink" title="Permanent link">&para;</a></h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>List all entities of a given type.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                <code>entity_type</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Entity type to filter by.</p>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>limit</code>
+            </td>
+            <td>
+                  <code><span title="int">int</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Maximum number to return.</p>
+              </div>
+            </td>
+            <td>
+                  <code>10000</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="list">list</span>[<a class="autorefs autorefs-internal" title="              EntityIndexState(entity_id, entity_type, source_path=None, content_hash=None, doc_indexed_at=None, graph_indexed_at=None, vector_indexed_at=None, enriched_at=None, doc_status=IndexStatus.PENDING, graph_status=IndexStatus.PENDING, vector_status=IndexStatus.PENDING, index_version=1, created_at=utc_now(), updated_at=utc_now(), last_error=None, error_count=0)
+
+  
+      dataclass
+   (agent_kernel.services.index_state.EntityIndexState)" href="#agent_kernel.services.index_state.EntityIndexState">EntityIndexState</a>]</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of matching states.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/agent_kernel/services/index_state.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-489">489</a></span>
+<span class="normal"><a href="#__codelineno-0-490">490</a></span>
+<span class="normal"><a href="#__codelineno-0-491">491</a></span>
+<span class="normal"><a href="#__codelineno-0-492">492</a></span>
+<span class="normal"><a href="#__codelineno-0-493">493</a></span>
+<span class="normal"><a href="#__codelineno-0-494">494</a></span>
+<span class="normal"><a href="#__codelineno-0-495">495</a></span>
+<span class="normal"><a href="#__codelineno-0-496">496</a></span>
+<span class="normal"><a href="#__codelineno-0-497">497</a></span>
+<span class="normal"><a href="#__codelineno-0-498">498</a></span>
+<span class="normal"><a href="#__codelineno-0-499">499</a></span>
+<span class="normal"><a href="#__codelineno-0-500">500</a></span>
+<span class="normal"><a href="#__codelineno-0-501">501</a></span>
+<span class="normal"><a href="#__codelineno-0-502">502</a></span>
+<span class="normal"><a href="#__codelineno-0-503">503</a></span>
+<span class="normal"><a href="#__codelineno-0-504">504</a></span>
+<span class="normal"><a href="#__codelineno-0-505">505</a></span>
+<span class="normal"><a href="#__codelineno-0-506">506</a></span>
+<span class="normal"><a href="#__codelineno-0-507">507</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-489" name="__codelineno-0-489"></a><span class="k">def</span><span class="w"> </span><span class="nf">list_by_entity_type</span><span class="p">(</span>
+<a id="__codelineno-0-490" name="__codelineno-0-490"></a>    <span class="bp">self</span><span class="p">,</span>
+<a id="__codelineno-0-491" name="__codelineno-0-491"></a>    <span class="n">entity_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-0-492" name="__codelineno-0-492"></a>    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">,</span>
+<a id="__codelineno-0-493" name="__codelineno-0-493"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityIndexState</span><span class="p">]:</span>
+<a id="__codelineno-0-494" name="__codelineno-0-494"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;List all entities of a given type.</span>
+<a id="__codelineno-0-495" name="__codelineno-0-495"></a>
+<a id="__codelineno-0-496" name="__codelineno-0-496"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-497" name="__codelineno-0-497"></a><span class="sd">        entity_type: Entity type to filter by.</span>
+<a id="__codelineno-0-498" name="__codelineno-0-498"></a><span class="sd">        limit: Maximum number to return.</span>
+<a id="__codelineno-0-499" name="__codelineno-0-499"></a>
+<a id="__codelineno-0-500" name="__codelineno-0-500"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-501" name="__codelineno-0-501"></a><span class="sd">        List of matching states.</span>
+<a id="__codelineno-0-502" name="__codelineno-0-502"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-503" name="__codelineno-0-503"></a>    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-0-504" name="__codelineno-0-504"></a>        <span class="s2">&quot;SELECT * FROM index_states WHERE entity_type = ? LIMIT ?&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-505" name="__codelineno-0-505"></a>        <span class="p">(</span><span class="n">entity_type</span><span class="p">,</span> <span class="n">limit</span><span class="p">),</span>
+<a id="__codelineno-0-506" name="__codelineno-0-506"></a>    <span class="p">)</span>
+<a id="__codelineno-0-507" name="__codelineno-0-507"></a>    <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">_row_to_state</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()]</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
 <h4 id="agent_kernel.services.index_state.IndexStateStore.delete" class="doc doc-heading">
 <code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">delete</span><span class="p">(</span><span class="n">entity_id</span><span class="p">)</span></code>
 
@@ -9782,35 +10094,35 @@ is fully indexed across all stores.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/index_state.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-474">474</a></span>
-<span class="normal"><a href="#__codelineno-0-475">475</a></span>
-<span class="normal"><a href="#__codelineno-0-476">476</a></span>
-<span class="normal"><a href="#__codelineno-0-477">477</a></span>
-<span class="normal"><a href="#__codelineno-0-478">478</a></span>
-<span class="normal"><a href="#__codelineno-0-479">479</a></span>
-<span class="normal"><a href="#__codelineno-0-480">480</a></span>
-<span class="normal"><a href="#__codelineno-0-481">481</a></span>
-<span class="normal"><a href="#__codelineno-0-482">482</a></span>
-<span class="normal"><a href="#__codelineno-0-483">483</a></span>
-<span class="normal"><a href="#__codelineno-0-484">484</a></span>
-<span class="normal"><a href="#__codelineno-0-485">485</a></span>
-<span class="normal"><a href="#__codelineno-0-486">486</a></span>
-<span class="normal"><a href="#__codelineno-0-487">487</a></span>
-<span class="normal"><a href="#__codelineno-0-488">488</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-474" name="__codelineno-0-474"></a><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-<a id="__codelineno-0-475" name="__codelineno-0-475"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an index state.</span>
-<a id="__codelineno-0-476" name="__codelineno-0-476"></a>
-<a id="__codelineno-0-477" name="__codelineno-0-477"></a><span class="sd">    Args:</span>
-<a id="__codelineno-0-478" name="__codelineno-0-478"></a><span class="sd">        entity_id: The entity ID.</span>
-<a id="__codelineno-0-479" name="__codelineno-0-479"></a>
-<a id="__codelineno-0-480" name="__codelineno-0-480"></a><span class="sd">    Returns:</span>
-<a id="__codelineno-0-481" name="__codelineno-0-481"></a><span class="sd">        True if deleted.</span>
-<a id="__codelineno-0-482" name="__codelineno-0-482"></a><span class="sd">    &quot;&quot;&quot;</span>
-<a id="__codelineno-0-483" name="__codelineno-0-483"></a>    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
-<a id="__codelineno-0-484" name="__codelineno-0-484"></a>        <span class="s2">&quot;DELETE FROM index_states WHERE entity_id = ?&quot;</span><span class="p">,</span>
-<a id="__codelineno-0-485" name="__codelineno-0-485"></a>        <span class="p">(</span><span class="n">entity_id</span><span class="p">,),</span>
-<a id="__codelineno-0-486" name="__codelineno-0-486"></a>    <span class="p">)</span>
-<a id="__codelineno-0-487" name="__codelineno-0-487"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<a id="__codelineno-0-488" name="__codelineno-0-488"></a>    <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">rowcount</span> <span class="o">&gt;</span> <span class="mi">0</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-509">509</a></span>
+<span class="normal"><a href="#__codelineno-0-510">510</a></span>
+<span class="normal"><a href="#__codelineno-0-511">511</a></span>
+<span class="normal"><a href="#__codelineno-0-512">512</a></span>
+<span class="normal"><a href="#__codelineno-0-513">513</a></span>
+<span class="normal"><a href="#__codelineno-0-514">514</a></span>
+<span class="normal"><a href="#__codelineno-0-515">515</a></span>
+<span class="normal"><a href="#__codelineno-0-516">516</a></span>
+<span class="normal"><a href="#__codelineno-0-517">517</a></span>
+<span class="normal"><a href="#__codelineno-0-518">518</a></span>
+<span class="normal"><a href="#__codelineno-0-519">519</a></span>
+<span class="normal"><a href="#__codelineno-0-520">520</a></span>
+<span class="normal"><a href="#__codelineno-0-521">521</a></span>
+<span class="normal"><a href="#__codelineno-0-522">522</a></span>
+<span class="normal"><a href="#__codelineno-0-523">523</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-509" name="__codelineno-0-509"></a><span class="k">def</span><span class="w"> </span><span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">entity_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-0-510" name="__codelineno-0-510"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Delete an index state.</span>
+<a id="__codelineno-0-511" name="__codelineno-0-511"></a>
+<a id="__codelineno-0-512" name="__codelineno-0-512"></a><span class="sd">    Args:</span>
+<a id="__codelineno-0-513" name="__codelineno-0-513"></a><span class="sd">        entity_id: The entity ID.</span>
+<a id="__codelineno-0-514" name="__codelineno-0-514"></a>
+<a id="__codelineno-0-515" name="__codelineno-0-515"></a><span class="sd">    Returns:</span>
+<a id="__codelineno-0-516" name="__codelineno-0-516"></a><span class="sd">        True if deleted.</span>
+<a id="__codelineno-0-517" name="__codelineno-0-517"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-0-518" name="__codelineno-0-518"></a>    <span class="n">cursor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span>
+<a id="__codelineno-0-519" name="__codelineno-0-519"></a>        <span class="s2">&quot;DELETE FROM index_states WHERE entity_id = ?&quot;</span><span class="p">,</span>
+<a id="__codelineno-0-520" name="__codelineno-0-520"></a>        <span class="p">(</span><span class="n">entity_id</span><span class="p">,),</span>
+<a id="__codelineno-0-521" name="__codelineno-0-521"></a>    <span class="p">)</span>
+<a id="__codelineno-0-522" name="__codelineno-0-522"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+<a id="__codelineno-0-523" name="__codelineno-0-523"></a>    <span class="k">return</span> <span class="n">cursor</span><span class="o">.</span><span class="n">rowcount</span> <span class="o">&gt;</span> <span class="mi">0</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -9833,11 +10145,11 @@ is fully indexed across all stores.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agent_kernel/services/index_state.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-490">490</a></span>
-<span class="normal"><a href="#__codelineno-0-491">491</a></span>
-<span class="normal"><a href="#__codelineno-0-492">492</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-490" name="__codelineno-0-490"></a><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<a id="__codelineno-0-491" name="__codelineno-0-491"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Close the database connection.&quot;&quot;&quot;</span>
-<a id="__codelineno-0-492" name="__codelineno-0-492"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-525">525</a></span>
+<span class="normal"><a href="#__codelineno-0-526">526</a></span>
+<span class="normal"><a href="#__codelineno-0-527">527</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-525" name="__codelineno-0-525"></a><span class="k">def</span><span class="w"> </span><span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-0-526" name="__codelineno-0-526"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Close the database connection.&quot;&quot;&quot;</span>
+<a id="__codelineno-0-527" name="__codelineno-0-527"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

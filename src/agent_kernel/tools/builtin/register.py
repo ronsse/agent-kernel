@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import TYPE_CHECKING
+
 import structlog
 
 from agent_kernel.capabilities.dev_agent_runner import (
@@ -9,7 +11,14 @@ from agent_kernel.capabilities.dev_agent_runner import (
     agent_runner_run_v1,
 )
 from agent_kernel.tools.broker import ToolBroker
+from agent_kernel.tools.adapters.graph_adapter import (
+    graph_get_node,
+    graph_neighbors,
+    graph_query,
+    set_graph_store,
+)
 from agent_kernel.tools.builtin.knowledge import (
+    init_knowledge_tools,
     knowledge_add,
     knowledge_entity_history,
     knowledge_search,
@@ -40,14 +49,25 @@ from agent_kernel.tools.builtin.tasks import (
     sync_tasks,
     update_task,
 )
+
+if TYPE_CHECKING:
+    from agent_kernel.memory.event_log import EventLog
+    from agent_kernel.memory.graph_store import GraphStore
+
 logger = structlog.get_logger(__name__)
 
 
-def register_builtin_tools(broker: ToolBroker) -> None:
+def register_builtin_tools(
+    broker: ToolBroker,
+    graph_store: GraphStore | None = None,
+    event_log: EventLog | None = None,
+) -> None:
     """Register all built-in tools with the broker.
 
     Args:
         broker: The tool broker to register with.
+        graph_store: Optional graph store for graph query tools.
+        event_log: Optional event log for knowledge tools.
     """
     adapter = broker.local_adapter
 
@@ -86,6 +106,17 @@ def register_builtin_tools(broker: ToolBroker) -> None:
     adapter.register("knowledge.add@v1", knowledge_add)
     adapter.register("knowledge.history@v1", knowledge_entity_history)
 
+    # Graph query tools
+    adapter.register("graph.query@v1", graph_query)
+    adapter.register("graph.neighbors@v1", graph_neighbors)
+    adapter.register("graph.get_node@v1", graph_get_node)
+
+    # Initialize graph store for graph adapters
+    if graph_store is not None:
+        set_graph_store(graph_store)
+        init_knowledge_tools(graph_store, event_log=event_log)
+        logger.info("graph_tools_initialized", graph_store=type(graph_store).__name__)
+
     registered_tools = [
         "tasks.list@v1",
         "tasks.create@v1",
@@ -112,6 +143,9 @@ def register_builtin_tools(broker: ToolBroker) -> None:
         "knowledge.search@v1",
         "knowledge.add@v1",
         "knowledge.history@v1",
+        "graph.query@v1",
+        "graph.neighbors@v1",
+        "graph.get_node@v1",
     ]
 
     logger.info(

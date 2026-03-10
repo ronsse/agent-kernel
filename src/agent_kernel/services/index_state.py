@@ -471,6 +471,41 @@ class IndexStateStore:
 
         return stats
 
+    def list_by_source_path(self, source_path: str) -> list[EntityIndexState]:
+        """List entities by source path.
+
+        Args:
+            source_path: The source file path to search for.
+
+        Returns:
+            List of matching states.
+        """
+        cursor = self._conn.execute(
+            "SELECT * FROM index_states WHERE source_path = ?",
+            (source_path,),
+        )
+        return [self._row_to_state(row) for row in cursor.fetchall()]
+
+    def list_by_entity_type(
+        self,
+        entity_type: str,
+        limit: int = 10000,
+    ) -> list[EntityIndexState]:
+        """List all entities of a given type.
+
+        Args:
+            entity_type: Entity type to filter by.
+            limit: Maximum number to return.
+
+        Returns:
+            List of matching states.
+        """
+        cursor = self._conn.execute(
+            "SELECT * FROM index_states WHERE entity_type = ? LIMIT ?",
+            (entity_type, limit),
+        )
+        return [self._row_to_state(row) for row in cursor.fetchall()]
+
     def delete(self, entity_id: str) -> bool:
         """Delete an index state.
 

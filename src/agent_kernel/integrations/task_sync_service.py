@@ -15,7 +15,7 @@ import contextlib
 import hashlib
 import json
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from typing import TYPE_CHECKING, Any
 
 import structlog
@@ -34,6 +34,48 @@ if TYPE_CHECKING:
     from agent_kernel.memory.graph_store import GraphStore
 
 logger = structlog.get_logger(__name__)
+
+
+def _parse_due_date(value: Any) -> date | None:
+    """Parse a due date from various input formats.
+
+    Handles: date objects, datetime objects, ISO strings, YYYY-MM-DD strings.
+    Returns None and logs a warning for unparseable values.
+    """
+    if isinstance(value, date) and not isinstance(value, datetime):
+        return value
+    if isinstance(value, datetime):
+        return value.date()
+    if isinstance(value, str):
+        # Try ISO format first (YYYY-MM-DD or full ISO datetime)
+        try:
+            return date.fromisoformat(value)
+        except ValueError:
+            pass
+        # Try datetime ISO format (e.g., "2026-01-20T10:00:00")
+        try:
+            return datetime.fromisoformat(value).date()
+        except ValueError:
+            pass
+        logger.warning(
+            "unparseable_due_date",
+            value=str(value)[:50],
+            msg="Could not parse due_date string",
+        )
+        return None
+    if isinstance(value, (int, float)):
+        # Unix timestamp
+        try:
+            return datetime.fromtimestamp(value, tz=timezone.utc).date()
+        except (ValueError, OSError):
+            logger.warning("unparseable_due_date_timestamp", value=value)
+            return None
+    logger.warning(
+        "unexpected_due_date_type",
+        type=type(value).__name__,
+        msg="due_date is not a recognized type",
+    )
+    return None
 
 
 @dataclass

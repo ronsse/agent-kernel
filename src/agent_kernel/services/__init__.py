@@ -78,6 +78,11 @@ from agent_kernel.services.resource_extraction import (
     ResourceSummary,
     ResourceType,
 )
+from agent_kernel.services.file_indexer import (
+    FileIndexer,
+    FileIndexResult,
+    FileIndexSummary,
+)
 from agent_kernel.services.experience_miner import ExperienceMiner
 from agent_kernel.services.approval_optimizer import (
     ApprovalAnalysis,
@@ -165,6 +170,10 @@ __all__ = [
     "ApprovalPolicyOptimizer",
     "ApprovalAnalysis",
     "PolicyRecommendation",
+    # File Indexer
+    "FileIndexer",
+    "FileIndexResult",
+    "FileIndexSummary",
     # Workflow Debug
     "WorkflowDebugInfo",
     "collect_debug_info",

@@ -44,9 +44,9 @@ SYSTEM_PROMPT_SUFFIX = """Context format: {context_format}
 {capabilities_section}
 
 Important rules:
-- Only use capabilities from the allowed list above
+- Only use capabilities from the allowed list above, using the EXACT name including the @version suffix (e.g., "tasks.create@v1")
 - Use ONLY the parameter names shown in each capability's schema - do NOT invent parameters
-- Always cite context items you reference (evidence only)
+- You MUST include context_refs_used in your response with ref_type and ref_id from the provided context items
 - Be specific about action arguments
 - Keep summaries concise (1-5 sentences)
 - Mark external writes as requiring approval when appropriate
@@ -412,28 +412,51 @@ class CustomEngine(BaseAgentEngine):
                 if isinstance(ref_data, dict):
                     context_refs.append(ContextRef(**ref_data))
             if not context_refs and agent_profile.context_policy.must_cite:
-                from agent_kernel.prompting.system_prompts import is_system_prompt_ref
-
-                evidence_refs = [
-                    item.ref
-                    for item in context_packet.items
-                    if not is_system_prompt_ref(item.ref)
-                ]
-                if evidence_refs:
-                    context_refs = evidence_refs[:3]
+                logger.warning(
+                    "plan_missing_citations",
+                    intent=context_packet.intent[:100],
+                    context_items=len(context_packet.items),
+                    msg="LLM did not produce context_refs_used; quality gates will catch this",
+                )
 
             # Build actions
             actions = []
             for action_data in _ensure_list(data.get("actions", [])):
                 if isinstance(action_data, dict):
-                    capability_name = (
-                        action_data.get("capability_name")
-                        or action_data.get("capability")
-                        or action_data.get("tool")
-                        or action_data.get("name")
-                    )
+                    capability_name = action_data.get("capability_name")
                     if not capability_name:
+                        # Log when LLM uses wrong key names
+                        alt_keys = [k for k in ("capability", "tool", "name") if k in action_data]
+                        if alt_keys:
+                            logger.warning(
+                                "action_used_wrong_key",
+                                keys_found=alt_keys,
+                                msg="LLM used wrong key for capability_name; action skipped",
+                            )
                         continue
+                    # Validate capability name format
+                    if "@" not in capability_name:
+                        # Try to find matching capability in allowed list
+                        matched = None
+                        for allowed in agent_profile.allowed_capabilities:
+                            base = allowed.split("@")[0]
+                            if base == capability_name or base.endswith(capability_name):
+                                matched = allowed
+                                break
+                        if matched:
+                            logger.info(
+                                "capability_name_normalized",
+                                original=capability_name,
+                                normalized=matched,
+                            )
+                            capability_name = matched
+                        else:
+                            logger.warning(
+                                "invalid_capability_name",
+                                capability_name=capability_name,
+                                msg="Capability name missing @version suffix; action skipped",
+                            )
+                            continue
                     # Parse side_effect - handle string descriptions by defaulting to NONE
                     side_effect_str = action_data.get("side_effect", "none")
                     if isinstance(side_effect_str, str):

@@ -23,6 +23,7 @@ class OutputFormat(str, Enum):
     JSON = "json"
 
 from agent_kernel.context.assembler import ContextAssembler
+from agent_kernel.context_graph.hooks import ContextGraphHooks
 from agent_kernel.core.config import Settings, get_settings
 from agent_kernel.engine.cost_anomaly import CostAnomalyDetector
 from agent_kernel.engine.custom_engine import CustomEngine
@@ -312,7 +313,7 @@ async def _run_workflow_async(
         enable_circuit_breaker=settings.tool_broker_circuit_breaker_enabled,
         timeout_manager=timeout_manager,
     )
-    register_builtin_tools(broker)
+    register_builtin_tools(broker, graph_store=graph_store, event_log=event_log)
     _configure_library_tools(broker, settings.configs_dir)
     _configure_skill_scripts(broker, registry, settings)
     await _configure_mcp_adapter(broker, settings.configs_dir)
@@ -377,6 +378,10 @@ async def _run_workflow_async(
     )
 
     # Set up workflow runner with persistent store
+    context_graph_hooks = ContextGraphHooks(
+        graph_store=graph_store,
+        event_log=event_log,
+    )
     workflow_store = SQLiteWorkflowRunStore(data_dir / "workflows" / "workflows.db")
     runner = WorkflowRunner(
         context_assembler=assembler,
@@ -387,6 +392,7 @@ async def _run_workflow_async(
         trace_store=multi_trace_store,
         cost_anomaly_detector=cost_anomaly_detector,
         experience_miner=experience_miner,
+        context_graph_hooks=context_graph_hooks,
     )
 
     engine = CustomEngine(llm_service=llm_service, capability_registry=registry)
@@ -1127,7 +1133,7 @@ async def _resume_workflow_async(
         enable_circuit_breaker=settings.tool_broker_circuit_breaker_enabled,
         timeout_manager=timeout_manager,
     )
-    register_builtin_tools(broker)
+    register_builtin_tools(broker, graph_store=graph_store, event_log=event_log)
     _configure_library_tools(broker, settings.configs_dir)
     _configure_skill_scripts(broker, registry, settings)
     await _configure_mcp_adapter(broker, settings.configs_dir)
@@ -1183,6 +1189,10 @@ async def _resume_workflow_async(
         llm_service=llm_service,
     )
 
+    context_graph_hooks = ContextGraphHooks(
+        graph_store=graph_store,
+        event_log=event_log,
+    )
     runner = WorkflowRunner(
         context_assembler=assembler,
         executor=executor,
@@ -1192,6 +1202,7 @@ async def _resume_workflow_async(
         trace_store=multi_trace_store,
         cost_anomaly_detector=cost_anomaly_detector,
         experience_miner=experience_miner,
+        context_graph_hooks=context_graph_hooks,
     )
 
     engine = CustomEngine(llm_service=llm_service, capability_registry=registry)
@@ -2745,7 +2756,7 @@ def run_workflow_thinking(
                 enable_circuit_breaker=settings.tool_broker_circuit_breaker_enabled,
                 timeout_manager=timeout_manager,
             )
-            register_builtin_tools(broker, doc_store, graph_store)
+            register_builtin_tools(broker, graph_store=graph_store, event_log=event_log)
             _configure_library_tools(broker, settings.configs_dir)
             _configure_skill_scripts(broker, registry, settings)
             await _configure_mcp_adapter(broker, settings.configs_dir)
@@ -2800,6 +2811,10 @@ def run_workflow_thinking(
                 llm_service=llm_service,
             )
 
+            context_graph_hooks = ContextGraphHooks(
+                graph_store=graph_store,
+                event_log=event_log,
+            )
             workflow_store = SQLiteWorkflowRunStore(data_dir / "workflows" / "workflows.db")
             runner = WorkflowRunner(
                 context_assembler=assembler,
@@ -2810,6 +2825,7 @@ def run_workflow_thinking(
                 workflow_store=workflow_store,
                 cost_anomaly_detector=cost_anomaly_detector,
                 experience_miner=experience_miner,
+                context_graph_hooks=context_graph_hooks,
             )
 
             engine = CustomEngine(llm_service=llm_service, capability_registry=registry)
@@ -3829,7 +3845,7 @@ def serve(
         enable_circuit_breaker=settings.tool_broker_circuit_breaker_enabled,
         timeout_manager=timeout_manager,
     )
-    register_builtin_tools(broker)
+    register_builtin_tools(broker, graph_store=graph_store, event_log=event_log)
     _configure_library_tools(broker, settings.configs_dir)
     _configure_skill_scripts(broker, registry, settings)
 
@@ -3869,6 +3885,10 @@ def serve(
             event_log=event_log,
             trace_store=multi_trace_store,
         )
+        context_graph_hooks = ContextGraphHooks(
+            graph_store=graph_store,
+            event_log=event_log,
+        )
 
         workflow_runner = WorkflowRunner(
             context_assembler=assembler,
@@ -3878,6 +3898,7 @@ def serve(
             workflow_store=workflow_store,
             trace_store=multi_trace_store,
             cost_anomaly_detector=cost_anomaly_detector,
+            context_graph_hooks=context_graph_hooks,
         )
 
         engine = CustomEngine(llm_service=llm_service, capability_registry=registry)
@@ -4314,7 +4335,7 @@ async def _scheduler_start_async(
         enable_circuit_breaker=settings.tool_broker_circuit_breaker_enabled,
         timeout_manager=timeout_manager,
     )
-    register_builtin_tools(broker)
+    register_builtin_tools(broker, graph_store=graph_store, event_log=event_log)
     _configure_library_tools(broker, settings.configs_dir)
     _configure_skill_scripts(broker, registry, settings)
     await _configure_mcp_adapter(broker, settings.configs_dir)
@@ -4364,6 +4385,10 @@ async def _scheduler_start_async(
         llm_service=llm_service,
     )
 
+    context_graph_hooks = ContextGraphHooks(
+        graph_store=graph_store,
+        event_log=event_log,
+    )
     workflow_store = SQLiteWorkflowRunStore(data_dir / "workflows" / "workflows.db")
     runner = WorkflowRunner(
         context_assembler=assembler,
@@ -4374,6 +4399,7 @@ async def _scheduler_start_async(
         trace_store=multi_trace_store,
         cost_anomaly_detector=cost_anomaly_detector,
         experience_miner=experience_miner,
+        context_graph_hooks=context_graph_hooks,
     )
 
     engine = CustomEngine(llm_service=llm_service, capability_registry=registry)

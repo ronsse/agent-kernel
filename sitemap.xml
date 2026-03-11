@@ -2,978 +2,978 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/APPROVAL_SYSTEM/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/CONFIGURATION/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/DIAGRAMMING/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/PLANNING/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/RULES_ARCHITECTURE/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/SKILLS_PORTABILITY_GUIDE/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/TRACE_ANALYSIS_AGENT/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/changelog/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/contributing/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/analysis/storage-workflow-optimization-analysis/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/architecture/ARCHITECTURAL_RECOMMENDATIONS/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/architecture/COMPONENT_EXTRACTION_GUIDE/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/architecture/SCALABILITY_ANALYSIS/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/context-assembler/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/executor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/schemas/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/tool-broker/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/concepts/tracing/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/00-overview/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/01-schemas/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/02-memory/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/03-tools/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/04-context/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/05-engines/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/06-executor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/07-tracing/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/08-build-order/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/09-trace-analysis/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/10-framework-agnosticism/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/11-thinking-policy/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/12-integration-patterns/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/13-context-retrieval/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/14-embedding-strategy/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/15-auto-tagging/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/16-hybrid-search/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/17-universal-context-system/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/18-context-memory-taxonomy/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/23-agent-context-graph-technical-spec/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/24-agent-integration-contract/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/25-cli-first-evaluation/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/design/leadership-diagrams/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/examples/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/examples/minimal-agent/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/examples/multi-agent-debate/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/examples/personal-assistant/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/examples/tool-workflow/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/getting-started/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/getting-started/quickstart/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/architecture/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/framework-agnosticism/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/public-private/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/skills/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/thinking-escalation/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/guides/trust-boundaries/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/SUMMARY/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/_import_utils/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/_version/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/plugins/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/api/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/api/server/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/capabilities/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/capabilities/dev_agent_runner/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/assembler/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/executor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/gates/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/pack_resolver/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/planner/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/playbook_resolver/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context/source_registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/compaction/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/decomposer/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/experience_bridge/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/freshness/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/hooks/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/ingestion/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/query/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/retention/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/types/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/extractors/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/extractors/manual_extractor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/context_graph/extractors/trace_extractor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/config/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/errors/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/ids/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/migrations/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/agent/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/base/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/capability/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/context/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/context_pack/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/enrichment_config/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/entity/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/experience/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/graph/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/knowledge/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/llm/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/note/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/plan/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/retention/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/retrieval/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/skill/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/source_descriptor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/task/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/thinking/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/trace/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/core/schemas/workflow/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/adaptive_thinking/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/agent_engine/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/cost_anomaly/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/critic/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/custom_engine/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/escalation/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/integration_tier/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/success_rate_router/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/thinking_metrics/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/engine/thinking_policy/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/approval/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/approval_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/executor/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/interactive/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/notifiers/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/policies/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/executor/quality_gates/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/calendar_sync/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/calendar_sync_service/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/task_backend/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/task_sync/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/task_sync_orchestrator/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/task_sync_service/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/integrations/google/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/derivation_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/document_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/entity_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/event_log/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/experience_hooks/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/experience_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/factory/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/graph_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/vector_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/connection/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/derivation_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/document_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/entity_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/event_log/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/experience_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/graph_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/memory/postgres/vector_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/notifications/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/prompting/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/prompting/registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/prompting/serializers/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/prompting/system_prompts/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/scheduler/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/scheduler/file_watcher/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/scheduler/scheduler/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/approval_optimizer/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/embedding/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/enrichment/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/enrichment_registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/experience_miner/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/file_indexer/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/health/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/hybrid_search/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/index_state/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/llm/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/llm_cache/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/reserved_blocks/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/resource_extraction/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/retention_jobs/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/task_manager/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/task_parser/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/vault_indexer/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/vault_sync/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/vault_watcher/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/services/workflow_debug/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/skills/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/skills/graph_sync/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/skills/policy/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/skills/script_registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/skills/store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adaptive_timeout/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/broker/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/idempotency/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/rate_limiter/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/registry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/retry/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/base/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/graph_adapter/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/http/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/local_function/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/mcp/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/skill_script/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/subprocess/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/task_adapter/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/trace_adapter/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/adapters/vector_adapter/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/knowledge/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/notes/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/obsidian/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/register/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/builtin/tasks/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/code_quality/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/context_curator/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/dep_audit/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/git_ops/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/github_ops/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/loader/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/library/skills/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/mcp/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tools/mcp/server_manager/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/trace_store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/sinks/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/sinks/jsonl_sink/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/sinks/postgres_sink/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/tracing/sinks/sqlite_sink/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/validators/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/validators/config_validator/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/validators/results/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/validators/skill_validator/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/workflows/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/workflows/config_cache/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/workflows/runner/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/workflows/spec/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
     <url>
          <loc>https://agent-kernel.github.io/agent-kernel/reference/agent_kernel/workflows/store/</loc>
-         <lastmod>2026-03-10</lastmod>
+         <lastmod>2026-03-11</lastmod>
     </url>
 </urlset>

@@ -47,7 +47,7 @@ api = [
 ]
 mcp = ["mcp>=1.0.0"]
 dev = [
-    "pytest>=8.0",
+    "pytest>=9.0.3",
     "pytest-asyncio>=0.24",
     "pytest-cov>=4.0",
     "ruff>=0.8",
